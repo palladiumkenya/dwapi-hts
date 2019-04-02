@@ -23,3 +23,4 @@
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.Tests.pdb
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/bin/Debug/netcoreapp2.2/Dwapi.Hts.Core.pdb
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.Infrastructure.pdb
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/obj/Debug/netcoreapp2.2/Dwapi.Hts.Core.Tests.csprojAssemblyReference.cache

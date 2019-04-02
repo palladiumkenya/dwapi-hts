@@ -66,7 +66,6 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
             var patientIndices = Builder<HtsClient>.CreateListOfSize(count)
                 .All().With(x=>x.SiteCode=siteCode)
                 .With(x => x.FacilityId = facilityId)
-                .With(x=>x.RowId=0)
                 .Build()
                 .ToList();
             return patientIndices;
@@ -78,10 +77,10 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
                 .All().With(x=>x.Status==ManifestStatus.Staged)
                 .Build()
                 .ToList();
-            
+
             foreach (var manifest in manifests)
             {
-                
+
                 manifest.Cargoes = Builder<Cargo>.CreateListOfSize(childcount)
                     .All()
                     .With(x => x.ManifestId == manifest.Id)
