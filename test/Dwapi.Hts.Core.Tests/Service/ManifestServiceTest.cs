@@ -35,7 +35,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
-                .AddScoped<IMasterPatientIndexRepository, MasterPatientIndexRepository>()
+                .AddScoped<IHtsClientRepository, HtsClientRepository>()
                 .AddScoped<IManifestRepository, ManifestRepository>()
                 .AddScoped<IManifestService, ManifestService>()
                 .AddMediatR(typeof(ValidateFacilityHandler))

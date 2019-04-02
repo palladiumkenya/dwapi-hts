@@ -17,12 +17,12 @@ namespace Dwapi.Hts.Controllers
         private readonly IMediator _mediator;
         private readonly IManifestService _manifestService;
         private readonly IMpiService _mpiService;
-        private readonly IMasterPatientIndexRepository _masterPatientIndexRepository;
+        private readonly IHtsClientRepository _htsClientRepository;
 
-        public HtsController(IMediator mediator, IManifestRepository manifestRepository, IMasterPatientIndexRepository masterPatientIndexRepository, IManifestService manifestService, IMpiService mpiService)
+        public HtsController(IMediator mediator, IManifestRepository manifestRepository, IHtsClientRepository htsClientRepository, IManifestService manifestService, IMpiService mpiService)
         {
             _mediator = mediator;
-            _masterPatientIndexRepository = masterPatientIndexRepository;
+            _htsClientRepository = htsClientRepository;
             _manifestService = manifestService;
             _mpiService = mpiService;
         }

@@ -20,8 +20,8 @@ namespace Dwapi.Hts.Core.Tests.Service
     public class MpiServiceTests
     {
         private ServiceProvider _serviceProvider;
-        private List<MasterPatientIndex> _patientIndices;
-        private List<MasterPatientIndex> _patientIndicesSiteB;
+        private List<HtsClient> _patientIndices;
+        private List<HtsClient> _patientIndicesSiteB;
         private HtsContext _context;
         private IMpiService _mpiService;
         private IManifestService _manifestService;
@@ -40,7 +40,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
-                .AddScoped<IMasterPatientIndexRepository, MasterPatientIndexRepository>()
+                .AddScoped<IHtsClientRepository, HtsClientRepository>()
                 .AddScoped<IManifestRepository, ManifestRepository>()
                 .AddScoped<IMpiService, MpiService>()
                 .AddScoped<IManifestService, ManifestService>()

@@ -10,15 +10,15 @@ using Dwapi.Hts.SharedKernel.Infrastructure.Data;
 
 namespace Dwapi.Hts.Infrastructure.Data.Repository
 {
-    public class MasterPatientIndexRepository : BaseRepository<MasterPatientIndex,Guid>, IMasterPatientIndexRepository
+    public class HtsClientRepository : BaseRepository<HtsClient,Guid>, IHtsClientRepository
     {
-        public MasterPatientIndexRepository(HtsContext context) : base(context)
+        public HtsClientRepository(HtsContext context) : base(context)
         {
         }
 
-        public void Process(Guid facilityId,IEnumerable<MasterPatientIndex> masterPatientIndices)
+        public void Process(Guid facilityId,IEnumerable<HtsClient> clients)
         {
-            var mpi = masterPatientIndices.ToList();
+            var mpi = clients.ToList();
 
             if (mpi.Any())
             {

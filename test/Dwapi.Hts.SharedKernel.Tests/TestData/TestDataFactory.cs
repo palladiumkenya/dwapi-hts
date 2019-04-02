@@ -52,7 +52,7 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
             {
                 n++;
                 facility.SiteCode = n;
-                facility.MasterPatientIndices = Builder<MasterPatientIndex>.CreateListOfSize(childcount)
+                facility.MasterPatientIndices = Builder<HtsClient>.CreateListOfSize(childcount)
                     .All()
                     .With(x => x.FacilityId == facility.Id)
                     .Build()
@@ -61,9 +61,9 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
             return facilities;
         }
 
-        public static List<MasterPatientIndex> TestMasterPatientIndices(int siteCode,Guid facilityId, int count = 5)
+        public static List<HtsClient> TestMasterPatientIndices(int siteCode,Guid facilityId, int count = 5)
         {
-            var patientIndices = Builder<MasterPatientIndex>.CreateListOfSize(count)
+            var patientIndices = Builder<HtsClient>.CreateListOfSize(count)
                 .All().With(x=>x.SiteCode=siteCode)
                 .With(x => x.FacilityId = facilityId)
                 .With(x=>x.RowId=0)

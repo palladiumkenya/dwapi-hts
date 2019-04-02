@@ -7,9 +7,9 @@ namespace Dwapi.Hts.Core.Command
 {
     public class SaveMpi : IRequest<Guid>
     {
-        public IEnumerable<MasterPatientIndex> MasterPatientIndices { get; set; }
+        public IEnumerable<HtsClient> MasterPatientIndices { get; set; }
 
-        public SaveMpi( IEnumerable<MasterPatientIndex> masterPatientIndices)
+        public SaveMpi( IEnumerable<HtsClient> masterPatientIndices)
         {
   
             MasterPatientIndices = masterPatientIndices;

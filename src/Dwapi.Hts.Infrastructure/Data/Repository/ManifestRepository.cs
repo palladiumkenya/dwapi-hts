@@ -18,7 +18,7 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
         {
             var ids = string.Join(',', manifests.Select(x =>$"'{x.FacilityId}'"));
             ExecSql(
-                $"DELETE FROM {nameof(HtsContext.MasterPatientIndices)} WHERE {nameof(MasterPatientIndex.FacilityId)} in ({ids})");
+                $"DELETE FROM {nameof(HtsContext.MasterPatientIndices)} WHERE {nameof(HtsClient.FacilityId)} in ({ids})");
 
 
             var mids = string.Join(',', manifests.Select(x => $"'{x.Id}'"));

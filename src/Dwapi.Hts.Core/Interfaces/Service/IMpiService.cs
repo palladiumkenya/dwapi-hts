@@ -5,6 +5,6 @@ namespace Dwapi.Hts.Core.Interfaces.Service
 {
     public interface IMpiService
     {
-        void Process(IEnumerable<MasterPatientIndex> masterPatientIndices);
+        void Process(IEnumerable<HtsClient> masterPatientIndices);
     }
 }

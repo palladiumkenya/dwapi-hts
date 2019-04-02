@@ -6,8 +6,8 @@ using Dwapi.Hts.SharedKernel.Interfaces;
 
 namespace Dwapi.Hts.Core.Interfaces.Repository
 {
-    public interface IMasterPatientIndexRepository : IRepository<MasterPatientIndex,Guid>
+    public interface IHtsClientRepository : IRepository<HtsClient,Guid>
     {
-        void Process(Guid facilityId,IEnumerable<MasterPatientIndex> masterPatientIndices);
+        void Process(Guid facilityId,IEnumerable<HtsClient> clients);
     }
 }

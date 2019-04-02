@@ -73,7 +73,7 @@ namespace Dwapi.Hts
 
             services.AddScoped<IFacilityRepository, FacilityRepository>();
             services.AddScoped<IManifestRepository, ManifestRepository>();
-            services.AddScoped<IMasterPatientIndexRepository, MasterPatientIndexRepository>();
+            services.AddScoped<IHtsClientRepository, HtsClientRepository>();
 
             services.AddScoped<IManifestService, ManifestService>();
             services.AddScoped<IMpiService, MpiService>();

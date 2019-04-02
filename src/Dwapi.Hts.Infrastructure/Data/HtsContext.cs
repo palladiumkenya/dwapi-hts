@@ -19,7 +19,7 @@ namespace Dwapi.Hts.Infrastructure.Data
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Manifest> Manifests { get; set; }
         public DbSet<Cargo> Cargoes { get; set; }
-        public DbSet<MasterPatientIndex> MasterPatientIndices { get; set; }
+        public DbSet<HtsClient> MasterPatientIndices { get; set; }
 
         public HtsContext(DbContextOptions<HtsContext> options) : base(options)
         {
@@ -29,11 +29,6 @@ namespace Dwapi.Hts.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder
-                .Entity<MasterPatientIndex>()
-                .Property(u => u.RowId)
-                .UseSqlServerIdentityColumn();
-
             DapperPlusManager.Entity<Docket>().Key(x => x.Id).Table($"{nameof(HtsContext.Dockets)}");
             DapperPlusManager.Entity<Subscriber>().Key(x => x.Id).Table($"{nameof(HtsContext.Subscribers)}");
 
@@ -42,7 +37,7 @@ namespace Dwapi.Hts.Infrastructure.Data
             DapperPlusManager.Entity<Facility>().Key(x => x.Id).Table($"{nameof(HtsContext.Facilities)}");
             DapperPlusManager.Entity<Manifest>().Key(x => x.Id).Table($"{nameof(HtsContext.Manifests)}");
             DapperPlusManager.Entity<Cargo>().Key(x => x.Id).Table($"{nameof(HtsContext.Cargoes)}");
-            DapperPlusManager.Entity<MasterPatientIndex>().Key(x => x.Id).Table($"{nameof(HtsContext.MasterPatientIndices)}");
+            DapperPlusManager.Entity<HtsClient>().Key(x => x.Id).Table($"{nameof(HtsContext.MasterPatientIndices)}");
 
         }
 

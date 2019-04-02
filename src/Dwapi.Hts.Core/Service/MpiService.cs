@@ -12,21 +12,21 @@ namespace Dwapi.Hts.Core.Service
 {
     public class MpiService : IMpiService
     {
-        private readonly IMasterPatientIndexRepository _manifestRepository;
+        private readonly IHtsClientRepository _manifestRepository;
         private readonly IFacilityRepository _facilityRepository;
         private List<SiteProfile> _siteProfiles = new List<SiteProfile>();
 
-        public MpiService(IMasterPatientIndexRepository manifestRepository, IFacilityRepository facilityRepository)
+        public MpiService(IHtsClientRepository manifestRepository, IFacilityRepository facilityRepository)
         {
             _manifestRepository = manifestRepository;
             _facilityRepository = facilityRepository;
         }
 
-        public void Process(IEnumerable<MasterPatientIndex> masterPatientIndices)
+        public void Process(IEnumerable<HtsClient> masterPatientIndices)
         {
             _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
 
-            var batch = new List<MasterPatientIndex>();
+            var batch = new List<HtsClient>();
             int count = 0;
 
             foreach (var masterPatientIndex in masterPatientIndices)
@@ -46,7 +46,7 @@ namespace Dwapi.Hts.Core.Service
                 {
                     _manifestRepository.CreateBulk(batch);
                     count = 0;
-                    batch = new List<MasterPatientIndex>();
+                    batch = new List<HtsClient>();
                 }
 
             }
