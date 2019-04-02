@@ -1,0 +1,86 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.SharedKernel.Tests/Dwapi.Hts.SharedKernel.Tests.csproj",
+    "projectName": "Dwapi.Hts.SharedKernel.Tests",
+    "projectPath": "/Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.SharedKernel.Tests/Dwapi.Hts.SharedKernel.Tests.csproj",
+    "outputPath": "/Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.SharedKernel.Tests/obj/",
+    "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
+    "originalTargetFrameworks": [
+      "netcoreapp2.2"
+    ],
+    "frameworks": {
+      "netcoreapp2.2": {
+        "projectReferences": {
+          "/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Dwapi.Hts.Core.csproj": {
+            "projectPath": "/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Dwapi.Hts.Core.csproj"
+          },
+          "/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/Dwapi.Hts.SharedKernel.csproj": {
+            "projectPath": "/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/Dwapi.Hts.SharedKernel.csproj"
+          }
+        }
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.2": {
+      "dependencies": {
+        "CSharpFunctionalExtensions": {
+          "target": "Package",
+          "version": "[1.18.0, )"
+        },
+        "CsvHelper": {
+          "target": "Package",
+          "version": "[12.1.2, )"
+        },
+        "MediatR": {
+          "target": "Package",
+          "version": "[6.0.0, )"
+        },
+        "Microsoft.NET.Test.Sdk": {
+          "target": "Package",
+          "version": "[16.0.1, )"
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.2.0, )",
+          "autoReferenced": true
+        },
+        "NBuilder": {
+          "target": "Package",
+          "version": "[6.0.0, )"
+        },
+        "NUnit": {
+          "target": "Package",
+          "version": "[3.11.0, )"
+        },
+        "NUnit3TestAdapter": {
+          "target": "Package",
+          "version": "[3.13.0, )"
+        },
+        "Serilog": {
+          "target": "Package",
+          "version": "[2.8.0, )"
+        },
+        "Serilog.Sinks.NUnit": {
+          "target": "Package",
+          "version": "[1.0.1, )"
+        }
+      },
+      "imports": [
+        "net461"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}

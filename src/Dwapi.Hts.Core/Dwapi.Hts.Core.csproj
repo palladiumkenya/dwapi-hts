@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Dwapi.Hts.SharedKernel\Dwapi.Hts.SharedKernel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Data" Version="3.0.0" />
+      <PackageReference Include="CSharpFunctionalExtensions" Version="1.18.0" />
+      <PackageReference Include="CsvHelper" Version="12.1.2" />
+      <PackageReference Include="Serilog" Version="2.8.0" />
+    </ItemGroup>
+
+</Project>

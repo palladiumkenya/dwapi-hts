@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="8.0.0" />
+        <PackageReference Include="AutoMapper.Data" Version="3.0.0" />
+        <PackageReference Include="CSharpFunctionalExtensions" Version="1.18.0" />
+        <PackageReference Include="CsvHelper" Version="12.1.2" />
+        <PackageReference Include="Dapper" Version="1.60.6" />
+        <PackageReference Include="Dapper.Contrib" Version="1.60.1" />
+        <PackageReference Include="EFCore.Seeder" Version="2.1.0" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.0" />
+        <PackageReference Include="Hangfire.SqlServer" Version="1.7.0" />
+        <PackageReference Include="MediatR" Version="6.0.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+        <PackageReference Include="Serilog" Version="2.8.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+        <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+        <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="2.0.0" />
+        <PackageReference Include="Z.Dapper.Plus" Version="1.5.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Dwapi.Hts.Infrastructure\Dwapi.Hts.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

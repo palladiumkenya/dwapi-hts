@@ -1,0 +1,9 @@
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.deps.json
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.dll
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.pdb
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/obj/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.csprojAssemblyReference.cache
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/obj/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.csproj.CoreCompileInputs.cache
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/obj/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.AssemblyInfoInputs.cache
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/obj/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.AssemblyInfo.cs
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/obj/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.dll
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.SharedKernel/obj/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.pdb

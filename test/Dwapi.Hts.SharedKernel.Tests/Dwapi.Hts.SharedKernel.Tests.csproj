@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CSharpFunctionalExtensions" Version="1.18.0" />
+        <PackageReference Include="CsvHelper" Version="12.1.2" />
+        <PackageReference Include="MediatR" Version="6.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+        <PackageReference Include="NBuilder" Version="6.0.0" />
+        <PackageReference Include="NUnit" Version="3.11.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+        <PackageReference Include="Serilog" Version="2.8.0" />
+        <PackageReference Include="Serilog.Sinks.NUnit" Version="1.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Dwapi.Hts.Core\Dwapi.Hts.Core.csproj" />
+      <ProjectReference Include="..\..\src\Dwapi.Hts.SharedKernel\Dwapi.Hts.SharedKernel.csproj" />
+    </ItemGroup>
+
+</Project>

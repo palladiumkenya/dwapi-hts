@@ -1,0 +1,16 @@
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.deps.json
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.dll
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.pdb
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.Core.dll
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.dll
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.Infrastructure.dll
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.Core.pdb
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.Infrastructure.pdb
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.pdb
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/obj/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.csprojAssemblyReference.cache
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/obj/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/obj/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.AssemblyInfoInputs.cache
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/obj/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.AssemblyInfo.cs
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/obj/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.csproj.CopyComplete
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/obj/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.dll
+/Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Infrastructure/obj/Debug/netcoreapp2.2/Dwapi.Hts.Infrastructure.pdb
