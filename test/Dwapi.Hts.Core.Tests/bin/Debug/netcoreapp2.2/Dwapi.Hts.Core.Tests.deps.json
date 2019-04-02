@@ -1713,6 +1713,7 @@
       },
       "Dwapi.Hts.Infrastructure/1.0.0": {
         "dependencies": {
+          "AutoMapper": "8.0.0",
           "CSharpFunctionalExtensions": "1.18.0",
           "CsvHelper": "12.1.2",
           "Dapper": "1.60.6",

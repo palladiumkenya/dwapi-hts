@@ -23,13 +23,13 @@ namespace Dwapi.Hts.Core.Tests.CommandHandler
         public void Init()
         {
             _serviceProvider = new ServiceCollection()
-                .AddDbContext<CbsContext>(o => o.UseInMemoryDatabase(Guid.NewGuid().ToString()))
+                .AddDbContext<HtsContext>(o => o.UseInMemoryDatabase(Guid.NewGuid().ToString()))
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
                 .AddMediatR(typeof(ValidateFacilityHandler))
                 .BuildServiceProvider();
 
-            
-           var  context = _serviceProvider.GetService<CbsContext>();
+
+           var  context = _serviceProvider.GetService<HtsContext>();
             context.MasterFacilities.Add(new MasterFacility(1, "XFacility", "XCounty"));
             context.SaveChanges();
         }

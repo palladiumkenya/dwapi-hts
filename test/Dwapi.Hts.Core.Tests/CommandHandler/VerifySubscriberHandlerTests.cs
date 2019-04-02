@@ -28,12 +28,12 @@ namespace Dwapi.Hts.Core.Tests.CommandHandler
         public void Init()
         {
             _serviceProvider = new ServiceCollection()
-                .AddDbContext<CbsContext>(o => o.UseInMemoryDatabase(Guid.NewGuid().ToString()))
+                .AddDbContext<HtsContext>(o => o.UseInMemoryDatabase(Guid.NewGuid().ToString()))
                 .AddTransient<IDocketRepository, DocketRepository>()
                 .AddMediatR(typeof(VerifySubscriberHandler))
                 .BuildServiceProvider();
 
-            var context = _serviceProvider.GetService<CbsContext>();
+            var context = _serviceProvider.GetService<HtsContext>();
             _dockets = TestDataFactory.TestDockets();
             context.Dockets.AddRange(_dockets);
             context.SaveChanges();

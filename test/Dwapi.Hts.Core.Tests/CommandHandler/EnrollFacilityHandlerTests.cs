@@ -19,20 +19,20 @@ namespace Dwapi.Hts.Core.Tests.CommandHandler
     {
         private ServiceProvider _serviceProvider;
         private IMediator _mediator;
-        private CbsContext _context;
+        private HtsContext _context;
 
         [OneTimeSetUp]
         public void Init()
         {
             _serviceProvider = new ServiceCollection()
-                .AddDbContext<CbsContext>(o => o.UseInMemoryDatabase(Guid.NewGuid().ToString()))
+                .AddDbContext<HtsContext>(o => o.UseInMemoryDatabase(Guid.NewGuid().ToString()))
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddMediatR(typeof(ValidateFacilityHandler))
                 .BuildServiceProvider();
 
 
-            _context = _serviceProvider.GetService<CbsContext>();
+            _context = _serviceProvider.GetService<HtsContext>();
             _context.MasterFacilities.Add(new MasterFacility(1, "XFacility", "XCounty"));
             _context.MasterFacilities.Add(new MasterFacility(2, "YFacility", "YCounty"));
             _context.Facilities.Add(new Facility(1, "XFacility District", 1));

@@ -18,7 +18,7 @@ namespace Dwapi.Hts.Core.Tests.Service
     public class ManifestServiceTest
     {
         private ServiceProvider _serviceProvider;
-        private CbsContext _context;
+        private HtsContext _context;
         private IManifestService _manifestService;
         private IMediator _mediator;
 
@@ -32,7 +32,7 @@ namespace Dwapi.Hts.Core.Tests.Service
 
 
             _serviceProvider = new ServiceCollection()
-                .AddDbContext<CbsContext>(o => o.UseSqlServer(connectionString))
+                .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
                 .AddScoped<IMasterPatientIndexRepository, MasterPatientIndexRepository>()
@@ -42,7 +42,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .BuildServiceProvider();
 
 
-            _context = _serviceProvider.GetService<CbsContext>();
+            _context = _serviceProvider.GetService<HtsContext>();
             _context.Database.EnsureDeleted();
             _context.Database.Migrate();
             _context.MasterFacilities.AddRange(TestDataFactory.TestMasterFacilities());
@@ -53,7 +53,7 @@ namespace Dwapi.Hts.Core.Tests.Service
             _context.MasterPatientIndices.AddRange(TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id));
             _context.SaveChanges();
 
-            //1, 
+            //1,
         }
 
         [SetUp]

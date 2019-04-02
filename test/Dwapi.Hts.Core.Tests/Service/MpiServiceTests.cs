@@ -22,7 +22,7 @@ namespace Dwapi.Hts.Core.Tests.Service
         private ServiceProvider _serviceProvider;
         private List<MasterPatientIndex> _patientIndices;
         private List<MasterPatientIndex> _patientIndicesSiteB;
-        private CbsContext _context;
+        private HtsContext _context;
         private IMpiService _mpiService;
         private IManifestService _manifestService;
         private IMediator _mediator;
@@ -37,7 +37,7 @@ namespace Dwapi.Hts.Core.Tests.Service
 
 
             _serviceProvider = new ServiceCollection()
-                .AddDbContext<CbsContext>(o => o.UseSqlServer(connectionString))
+                .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
                 .AddScoped<IMasterPatientIndexRepository, MasterPatientIndexRepository>()
@@ -48,7 +48,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .BuildServiceProvider();
 
 
-            _context = _serviceProvider.GetService<CbsContext>();
+            _context = _serviceProvider.GetService<HtsContext>();
             _context.Database.EnsureDeleted();
             _context.Database.Migrate();
             _context.MasterFacilities.AddRange(TestDataFactory.TestMasterFacilities());
@@ -65,7 +65,7 @@ namespace Dwapi.Hts.Core.Tests.Service
             _manifestService = _serviceProvider.GetService<IManifestService>();
             _mediator = _serviceProvider.GetService<IMediator>();
             _mpiService = _serviceProvider.GetService<IMpiService>();
-            
+
         }
         [Test]
         public void should_Process()

@@ -8,7 +8,6 @@
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/bin/Debug/netcoreapp2.2/Dwapi.Hts.Core.Tests.pdb
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.dll
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/bin/Debug/netcoreapp2.2/Dwapi.Hts.SharedKernel.pdb
-/Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/obj/Debug/netcoreapp2.2/Dwapi.Hts.Core.Tests.csprojAssemblyReference.cache
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/obj/Debug/netcoreapp2.2/Dwapi.Hts.Core.Tests.csproj.CoreCompileInputs.cache
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/obj/Debug/netcoreapp2.2/Dwapi.Hts.Core.Tests.AssemblyInfoInputs.cache
 /Users/koskedk/Projects/hmis/dwh/dwapi/hts/test/Dwapi.Hts.Core.Tests/obj/Debug/netcoreapp2.2/Dwapi.Hts.Core.Tests.AssemblyInfo.cs
