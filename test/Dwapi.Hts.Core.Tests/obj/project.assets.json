@@ -15,6 +15,20 @@
           "lib/netstandard2.0/AutoMapper.dll": {}
         }
       },
+      "AutoMapper.Data/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "AutoMapper": "8.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.Data.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.Data.dll": {}
+        }
+      },
       "CSharpFunctionalExtensions/1.18.0": {
         "type": "package",
         "compile": {
@@ -2407,6 +2421,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
+          "AutoMapper.Data": "3.0.0",
           "CSharpFunctionalExtensions": "1.18.0",
           "CsvHelper": "12.1.2",
           "Dwapi.Hts.SharedKernel": "1.0.0",
@@ -2424,6 +2439,7 @@
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
           "AutoMapper": "8.0.0",
+          "AutoMapper.Data": "3.0.0",
           "CSharpFunctionalExtensions": "1.18.0",
           "CsvHelper": "12.1.2",
           "Dapper": "1.60.6",
@@ -2528,6 +2544,19 @@
         "lib/netstandard2.0/AutoMapper.dll",
         "lib/netstandard2.0/AutoMapper.pdb",
         "lib/netstandard2.0/AutoMapper.xml"
+      ]
+    },
+    "AutoMapper.Data/3.0.0": {
+      "sha512": "NYlDmnrk9xKtl/miWbNuYzFGl6OZY+Sn2Twgwu6ReO4xCvxOXEKbKfhJFWwJa4TjBKEDDG1tzIN2LhFTjMFxNA==",
+      "type": "package",
+      "path": "automapper.data/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "automapper.data.3.0.0.nupkg.sha512",
+        "automapper.data.nuspec",
+        "lib/net461/AutoMapper.Data.dll",
+        "lib/netstandard2.0/AutoMapper.Data.dll"
       ]
     },
     "CSharpFunctionalExtensions/1.18.0": {
