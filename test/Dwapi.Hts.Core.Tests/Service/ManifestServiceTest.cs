@@ -49,8 +49,8 @@ namespace Dwapi.Hts.Core.Tests.Service
             var facilities = TestDataFactory.TestFacilities();
             _context.Facilities.AddRange(facilities);
             _context.SaveChanges();
-            _context.MasterPatientIndices.AddRange(TestDataFactory.TestMasterPatientIndices(1, facilities.First(x => x.SiteCode == 1).Id));
-            _context.MasterPatientIndices.AddRange(TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id));
+            _context.Clients.AddRange(TestDataFactory.TestMasterPatientIndices(1, facilities.First(x => x.SiteCode == 1).Id));
+            _context.Clients.AddRange(TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id));
             _context.SaveChanges();
 
             //1,
@@ -66,7 +66,7 @@ namespace Dwapi.Hts.Core.Tests.Service
         [Test]
         public void should_Clear_By_Site()
         {
-            var sitePatients = _context.MasterPatientIndices.ToList();
+            var sitePatients = _context.Clients.ToList();
             Assert.True(sitePatients.Any(x=>x.SiteCode==1));
             Assert.True(sitePatients.Any(x => x.SiteCode == 2));
 
@@ -75,7 +75,7 @@ namespace Dwapi.Hts.Core.Tests.Service
             var id=_mediator.Send(new SaveManifest(manifests.First())).Result;
             _manifestService.Process();
 
-            var remainingPatients = _context.MasterPatientIndices.ToList();
+            var remainingPatients = _context.Clients.ToList();
             Assert.False(remainingPatients.Any(x => x.SiteCode == 1));
             Assert.True(remainingPatients.Any(x => x.SiteCode == 2));
         }

@@ -23,7 +23,7 @@ namespace Dwapi.Hts.Core.Tests.Service
         private List<HtsClient> _patientIndices;
         private List<HtsClient> _patientIndicesSiteB;
         private HtsContext _context;
-        private IMpiService _mpiService;
+        private IHtsService _htsService;
         private IManifestService _manifestService;
         private IMediator _mediator;
 
@@ -42,7 +42,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
                 .AddScoped<IHtsClientRepository, HtsClientRepository>()
                 .AddScoped<IManifestRepository, ManifestRepository>()
-                .AddScoped<IMpiService, MpiService>()
+                .AddScoped<IHtsService, HtsService>()
                 .AddScoped<IManifestService, ManifestService>()
                 .AddMediatR(typeof(ValidateFacilityHandler))
                 .BuildServiceProvider();
@@ -64,17 +64,17 @@ namespace Dwapi.Hts.Core.Tests.Service
         {
             _manifestService = _serviceProvider.GetService<IManifestService>();
             _mediator = _serviceProvider.GetService<IMediator>();
-            _mpiService = _serviceProvider.GetService<IMpiService>();
+            _htsService = _serviceProvider.GetService<IHtsService>();
 
         }
         [Test]
         public void should_Process()
         {
-            var patients = _context.MasterPatientIndices.ToList();
+            var patients = _context.Clients.ToList();
             Assert.False(patients.Any());
 
-            _mpiService.Process(_patientIndices);
-            var savedPatients = _context.MasterPatientIndices.ToList();
+            _htsService.Process(_patientIndices);
+            var savedPatients = _context.Clients.ToList();
             Assert.True(savedPatients.Any());
         }
 
@@ -84,19 +84,19 @@ namespace Dwapi.Hts.Core.Tests.Service
             var manifests = TestDataFactory.TestManifests();
             manifests[0].SiteCode = 1;
             manifests[1].SiteCode = 2;
-            var patients = _context.MasterPatientIndices.ToList();
+            var patients = _context.Clients.ToList();
             Assert.False(patients.Any());
 
             var id = _mediator.Send(new SaveManifest(manifests[0])).Result;
             _manifestService.Process();
-            _mpiService.Process(_patientIndices);
-            Assert.True(_context.MasterPatientIndices.Any(x=>x.SiteCode==1));
+            _htsService.Process(_patientIndices);
+            Assert.True(_context.Clients.Any(x=>x.SiteCode==1));
 
             var id2 = _mediator.Send(new SaveManifest(manifests[1])).Result;
             _manifestService.Process();
-            _mpiService.Process(_patientIndicesSiteB);
-            Assert.True(_context.MasterPatientIndices.Any(x => x.SiteCode == 1));
-            Assert.True(_context.MasterPatientIndices.Any(x => x.SiteCode == 2));
+            _htsService.Process(_patientIndicesSiteB);
+            Assert.True(_context.Clients.Any(x => x.SiteCode == 1));
+            Assert.True(_context.Clients.Any(x => x.SiteCode == 2));
         }
     }
 }

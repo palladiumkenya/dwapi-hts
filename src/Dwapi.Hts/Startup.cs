@@ -76,7 +76,7 @@ namespace Dwapi.Hts
             services.AddScoped<IHtsClientRepository, HtsClientRepository>();
 
             services.AddScoped<IManifestService, ManifestService>();
-            services.AddScoped<IMpiService, MpiService>();
+            services.AddScoped<IHtsService, HtsService>();
             var container = new Container();
             container.Populate(services);
             ServiceProvider = container.GetInstance<IServiceProvider>();

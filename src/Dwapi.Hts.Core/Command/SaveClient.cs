@@ -5,13 +5,13 @@ using MediatR;
 
 namespace Dwapi.Hts.Core.Command
 {
-    public class SaveMpi : IRequest<Guid>
+    public class SaveClient : IRequest<Guid>
     {
         public IEnumerable<HtsClient> MasterPatientIndices { get; set; }
 
-        public SaveMpi( IEnumerable<HtsClient> masterPatientIndices)
+        public SaveClient( IEnumerable<HtsClient> masterPatientIndices)
         {
-  
+
             MasterPatientIndices = masterPatientIndices;
         }
     }
