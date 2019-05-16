@@ -52,7 +52,7 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
             {
                 n++;
                 facility.SiteCode = n;
-                facility.MasterPatientIndices = Builder<HtsClient>.CreateListOfSize(childcount)
+                facility.Clients = Builder<HtsClient>.CreateListOfSize(childcount)
                     .All()
                     .With(x => x.FacilityId == facility.Id)
                     .Build()

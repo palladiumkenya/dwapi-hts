@@ -28,6 +28,11 @@ namespace Dwapi.Hts.Core.Service
 
         public void Process(IEnumerable<HtsClient> clients)
         {
+            if(null==clients)
+                return;
+            if(!clients.Any())
+                return;
+
             _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
 
             var batch = new List<HtsClient>();
@@ -64,6 +69,11 @@ namespace Dwapi.Hts.Core.Service
 
         public void Process(IEnumerable<HtsClientLinkage> linkages)
         {
+            if(null==linkages)
+                return;
+            if(!linkages.Any())
+                return;
+
             _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
 
             var batch = new List<HtsClientLinkage>();
@@ -98,6 +108,11 @@ namespace Dwapi.Hts.Core.Service
 
         public void Process(IEnumerable<HtsClientPartner> partners)
         {
+            if(null==partners)
+                return;
+            if(!partners.Any())
+                return;
+
             _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
 
             var batch = new List<HtsClientPartner>();

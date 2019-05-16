@@ -74,6 +74,8 @@ namespace Dwapi.Hts
             services.AddScoped<IFacilityRepository, FacilityRepository>();
             services.AddScoped<IManifestRepository, ManifestRepository>();
             services.AddScoped<IHtsClientRepository, HtsClientRepository>();
+            services.AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>();
+            services.AddScoped<IHtsClientPartnerRepository, HtsClientPartnerRepository>();
 
             services.AddScoped<IManifestService, ManifestService>();
             services.AddScoped<IHtsService, HtsService>();
@@ -118,7 +120,7 @@ namespace Dwapi.Hts
 
             try
             {
-                DapperPlusManager.AddLicense("1755;701-ThePalladiumGroup", "9005d618-3965-8877-97a5-7a27cbb21c8f");
+                DapperPlusManager.AddLicense("1755;700-ThePalladiumGroup", "2073303b-0cfc-fbb9-d45f-1723bb282a3c");
                 if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
                 {
                     throw new Exception(licenseErrorMessage);
@@ -156,7 +158,7 @@ namespace Dwapi.Hts
             try
             {
                 context.Database.Migrate();
-                //context.EnsureSeeded();
+                context.EnsureSeeded();
                 Log.Debug($"initializing Database context: {contextName} [OK]");
             }
             catch (Exception e)

@@ -7,12 +7,12 @@ namespace Dwapi.Hts.Core.Command
 {
     public class SavePartner : IRequest<Guid>
     {
-        public IEnumerable<HtsClientPartner> MasterPatientIndices { get; set; }
+        public IEnumerable<HtsClientPartner> ClientPartners { get; set; }
 
-        public SavePartner( IEnumerable<HtsClientPartner> masterPatientIndices)
+        public SavePartner( IEnumerable<HtsClientPartner> clientPartners)
         {
 
-            MasterPatientIndices = masterPatientIndices;
+            ClientPartners = clientPartners;
         }
     }
 }

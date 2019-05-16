@@ -11,7 +11,9 @@ namespace Dwapi.Hts.Core.Domain
         [MaxLength(120)] public string Name { get; set; }
         public int? MasterFacilityId { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
-        public ICollection<HtsClient> MasterPatientIndices { get; set; }=new List<HtsClient>();
+        public ICollection<HtsClient> Clients { get; set; }=new List<HtsClient>();
+        public ICollection<HtsClientLinkage> Linkages { get; set; }=new List<HtsClientLinkage>();
+        public ICollection<HtsClientPartner> Partners { get; set; }=new List<HtsClientPartner>();
         public ICollection<Manifest> Manifests { get; set; }=new List<Manifest>();
 
         public Facility()
