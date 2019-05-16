@@ -100,7 +100,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.Linkages));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientLinkages));
                 return Ok(new
                 {
                     BatchKey = id
@@ -122,7 +122,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.Partners));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientPartners));
                 return Ok(new
                 {
                     BatchKey = id

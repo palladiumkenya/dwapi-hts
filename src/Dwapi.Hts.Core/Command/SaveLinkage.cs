@@ -7,12 +7,12 @@ namespace Dwapi.Hts.Core.Command
 {
     public class SaveLinkage : IRequest<Guid>
     {
-        public IEnumerable<HtsClientLinkage> Linkages { get; set; }
+        public IEnumerable<HtsClientLinkage> ClientLinkages { get; set; }
 
-        public SaveLinkage( IEnumerable<HtsClientLinkage> linkages)
+        public SaveLinkage( IEnumerable<HtsClientLinkage> clientLinkages)
         {
 
-            Linkages = linkages;
+            ClientLinkages = clientLinkages;
         }
     }
 }

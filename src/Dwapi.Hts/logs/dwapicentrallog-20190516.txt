@@ -1,0 +1,103 @@
+2019-05-16 10:26:59.172 +03:00 [Fatal] Unable to start Kestrel.
+System.IO.IOException: Failed to bind to address https://127.0.0.1:5001: address already in use. ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use ---> System.Net.Sockets.SocketException: Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransport.BindAsync()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransport.BindAsync()
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.<>c__DisplayClass21_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IServerAddressesFeature addresses, KestrelServerOptions serverOptions, ILogger logger, Func`2 createBinding)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+2019-05-16 10:26:59.236 +03:00 [Fatal] Host terminated unexpectedly
+System.IO.IOException: Failed to bind to address https://127.0.0.1:5001: address already in use. ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use ---> System.Net.Sockets.SocketException: Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransport.BindAsync()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransport.BindAsync()
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.<>c__DisplayClass21_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IServerAddressesFeature addresses, KestrelServerOptions serverOptions, ILogger logger, Func`2 createBinding)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.Internal.WebHost.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.WebHostExtensions.RunAsync(IWebHost host, CancellationToken token, String shutdownMessage)
+   at Microsoft.AspNetCore.Hosting.WebHostExtensions.RunAsync(IWebHost host, CancellationToken token)
+   at Microsoft.AspNetCore.Hosting.WebHostExtensions.Run(IWebHost host)
+   at Dwapi.Hts.Program.Main(String[] args) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts/Program.cs:line 30
+2019-05-16 10:57:15.532 +03:00 [Error] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Dwapi.Hts.Core.Interfaces.Repository.IHtsClientLinkageRepository' while attempting to activate 'Dwapi.Hts.Core.Service.HtsService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(Type serviceType, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(Type serviceType, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(Type serviceType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.CreateServiceAccessor(Type serviceType)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-05-16 11:37:56.917 +03:00 [Error] Facility Id missing 10001
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10001
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:02.593 +03:00 [Error] Facility Id missing 10001
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10001
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:02.696 +03:00 [Error] Facility Id missing 10001
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10001
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:02.798 +03:00 [Error] Facility Id missing 10001
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10001
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:02.899 +03:00 [Error] Facility Id missing 10001
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10001
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:04.409 +03:00 [Error] Facility Id missing 10002
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10002
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:04.510 +03:00 [Error] Facility Id missing 10002
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10002
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:04.609 +03:00 [Error] Facility Id missing 10002
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10002
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:04.741 +03:00 [Error] Facility Id missing 10002
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10002
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
+2019-05-16 11:38:04.880 +03:00 [Error] Facility Id missing 10002
+Dwapi.Hts.SharedKernel.Exceptions.FacilityNotFoundException: Facility not found with MFL Code 10002
+   at Dwapi.Hts.Core.Service.HtsService.GetFacilityId(Int32 siteCode) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 154
+   at Dwapi.Hts.Core.Service.HtsService.Process(IEnumerable`1 clients) in /Users/koskedk/Projects/hmis/dwh/dwapi/hts/src/Dwapi.Hts.Core/Service/HtsService.cs:line 45
