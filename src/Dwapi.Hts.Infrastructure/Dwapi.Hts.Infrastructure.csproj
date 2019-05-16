@@ -26,4 +26,13 @@
       <ProjectReference Include="..\Dwapi.Hts.Core\Dwapi.Hts.Core.csproj" />
       <ProjectReference Include="..\Dwapi.Hts.SharedKernel.Infrastructure\Dwapi.Hts.SharedKernel.Infrastructure.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Seed\Docket.csv" />
+      <EmbeddedResource Include="Seed\Docket.csv" />
+      <None Remove="Seed\MasterFacility.csv" />
+      <EmbeddedResource Include="Seed\MasterFacility.csv" />
+      <None Remove="Seed\Subscriber.csv" />
+      <EmbeddedResource Include="Seed\Subscriber.csv" />
+    </ItemGroup>
 </Project>

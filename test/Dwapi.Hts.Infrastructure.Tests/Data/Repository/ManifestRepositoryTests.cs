@@ -59,10 +59,10 @@ namespace Dwapi.Hts.Infrastructure.Tests.Data.Repository
         [Test]
         public void should_Clear_With_Manifest_Facility()
         {
-            var patients = _context.MasterPatientIndices;
+            var patients = _context.Clients;
             Assert.True(patients.Any());
            _manifestRepository.ClearFacility(_manifests);
-            var nopatients = _context.MasterPatientIndices;
+            var nopatients = _context.Clients;
             Assert.False(nopatients.Any());
         }
     }

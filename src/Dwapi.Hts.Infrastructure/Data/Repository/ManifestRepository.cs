@@ -18,18 +18,22 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
         {
             var ids = string.Join(',', manifests.Select(x =>$"'{x.FacilityId}'"));
             ExecSql(
-                $"DELETE FROM {nameof(HtsContext.MasterPatientIndices)} WHERE {nameof(HtsClient.FacilityId)} in ({ids})");
-
+                $@"
+                    DELETE FROM {nameof(HtsContext.Clients)} WHERE {nameof(HtsClient.FacilityId)} in ({ids});
+                    DELETE FROM {nameof(HtsContext.ClientLinkages)} WHERE {nameof(HtsClientLinkage.FacilityId)} in ({ids});
+                    DELETE FROM {nameof(HtsContext.ClientPartners)} WHERE {nameof(HtsClientPartner.FacilityId)} in ({ids});
+                 "
+                );
 
             var mids = string.Join(',', manifests.Select(x => $"'{x.Id}'"));
             ExecSql(
                 $@"
-                    UPDATE 
-                        {nameof(HtsContext.Manifests)} 
-                    SET 
+                    UPDATE
+                        {nameof(HtsContext.Manifests)}
+                    SET
                         {nameof(Manifest.Status)}={(int)ManifestStatus.Processed},
                         {nameof(Manifest.StatusDate)}=GETDATE()
-                    WHERE 
+                    WHERE
                         {nameof(Manifest.Id)} in ({mids})");
         }
     }

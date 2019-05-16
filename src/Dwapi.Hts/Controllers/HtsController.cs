@@ -16,15 +16,15 @@ namespace Dwapi.Hts.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IManifestService _manifestService;
-        private readonly IMpiService _mpiService;
+        private readonly IHtsService _htsService;
         private readonly IHtsClientRepository _htsClientRepository;
 
-        public HtsController(IMediator mediator, IManifestRepository manifestRepository, IHtsClientRepository htsClientRepository, IManifestService manifestService, IMpiService mpiService)
+        public HtsController(IMediator mediator, IManifestRepository manifestRepository, IHtsClientRepository htsClientRepository, IManifestService manifestService, IHtsService htsService)
         {
             _mediator = mediator;
             _htsClientRepository = htsClientRepository;
             _manifestService = manifestService;
-            _mpiService = mpiService;
+            _htsService = htsService;
         }
 
         // POST api/cbs/verify
@@ -70,15 +70,59 @@ namespace Dwapi.Hts.Controllers
         }
 
         // POST api/cbs/Mpi
-        [HttpPost("Mpi")]
-        public IActionResult ProcessMpi([FromBody] SaveMpi mpi)
+        [HttpPost("Clients")]
+        public IActionResult ProcessClient([FromBody] SaveClient client)
         {
-            if (null == mpi)
+            if (null == client)
                 return BadRequest();
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _mpiService.Process(mpi.MasterPatientIndices));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.Clients));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        // POST api/cbs/Mpi
+        [HttpPost("Linkages")]
+        public IActionResult ProcessLinkages([FromBody] SaveLinkage client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientLinkages));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        // POST api/cbs/Mpi
+        [HttpPost("Partners")]
+        public IActionResult ProcessPartners([FromBody] SavePartner client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientPartners));
                 return Ok(new
                 {
                     BatchKey = id
