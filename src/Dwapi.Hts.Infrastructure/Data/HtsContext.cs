@@ -54,7 +54,7 @@ namespace Dwapi.Hts.Infrastructure.Data
 
             SeederConfiguration.ResetConfiguration(csvConfig, null, typeof(HtsContext).GetTypeInfo().Assembly);
 
-            MasterFacilities.SeedDbSetIfEmpty($"{nameof(MasterFacility)}");
+        //    MasterFacilities.SeedDbSetIfEmpty($"{nameof(MasterFacility)}");
             Dockets.SeedDbSetIfEmpty($"{nameof(Docket)}");
             SaveChanges();
             Subscribers.SeedDbSetIfEmpty($"{nameof(Subscriber)}");
