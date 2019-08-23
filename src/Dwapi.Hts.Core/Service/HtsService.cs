@@ -16,14 +16,27 @@ namespace Dwapi.Hts.Core.Service
         private readonly IHtsClientLinkageRepository _linkageRepository;
         private readonly IHtsClientPartnerRepository _partnerRepository;
         private readonly IFacilityRepository _facilityRepository;
+
+
+        private readonly IHtsClientTestsRepository _htsClientTestsRepository;
+        private readonly IHtsClientTracingRepository _clientTracingRepository;
+        private readonly IHtsPartnerNotificationServicesRepository _htsPartnerNotificationServicesRepository;
+        private readonly IHtsPartnerTracingRepository _partnerTracingRepository;
+        private readonly IHtsHtsTestKitsRepository _kitsRepository;
+
         private List<SiteProfile> _siteProfiles = new List<SiteProfile>();
 
-        public HtsService(IHtsClientRepository clientRepository, IHtsClientLinkageRepository linkageRepository, IHtsClientPartnerRepository partnerRepository, IFacilityRepository facilityRepository)
+        public HtsService(IHtsClientRepository clientRepository, IHtsClientLinkageRepository linkageRepository, IHtsClientPartnerRepository partnerRepository, IFacilityRepository facilityRepository, IHtsClientTestsRepository htsClientTestsRepository, IHtsClientTracingRepository clientTracingRepository, IHtsPartnerNotificationServicesRepository htsPartnerNotificationServicesRepository, IHtsPartnerTracingRepository partnerTracingRepository, IHtsHtsTestKitsRepository kitsRepository)
         {
             _clientRepository = clientRepository;
             _linkageRepository = linkageRepository;
             _partnerRepository = partnerRepository;
             _facilityRepository = facilityRepository;
+            _htsClientTestsRepository = htsClientTestsRepository;
+            _clientTracingRepository = clientTracingRepository;
+            _htsPartnerNotificationServicesRepository = htsPartnerNotificationServicesRepository;
+            _partnerTracingRepository = partnerTracingRepository;
+            _kitsRepository = kitsRepository;
         }
 
         public void Process(IEnumerable<HtsClient> clients)
@@ -143,6 +156,196 @@ namespace Dwapi.Hts.Core.Service
             if (batch.Any())
                 _partnerRepository.CreateBulk(batch);
 
+        }
+
+        public void Process(IEnumerable<HtsClientTests> clientTestses)
+        {
+            if(null==clientTestses)
+                return;
+            if(!clientTestses.Any())
+                return;
+
+            _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
+
+            var batch = new List<HtsClientTests>();
+            int count = 0;
+
+            foreach (var partner in clientTestses)
+            {
+                try
+                {
+                    partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    batch.Add(partner);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e, $"Facility Id missing {partner.SiteCode}");
+                }
+
+
+                if (count == 1000)
+                {
+                    _htsClientTestsRepository.CreateBulk(batch);
+                    count = 0;
+                    batch = new List<HtsClientTests>();
+                }
+
+            }
+
+            if (batch.Any())
+                _htsClientTestsRepository.CreateBulk(batch);
+        }
+
+        public void Process(IEnumerable<HtsClientTracing> clientTracings)
+        {
+            if(null==clientTracings)
+                return;
+            if(!clientTracings.Any())
+                return;
+
+            _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
+
+            var batch = new List<HtsClientTracing>();
+            int count = 0;
+
+            foreach (var partner in clientTracings)
+            {
+                try
+                {
+                    partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    batch.Add(partner);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e, $"Facility Id missing {partner.SiteCode}");
+                }
+
+
+                if (count == 1000)
+                {
+                    _clientTracingRepository.CreateBulk(batch);
+                    count = 0;
+                    batch = new List<HtsClientTracing>();
+                }
+
+            }
+
+            if (batch.Any())
+                _clientTracingRepository.CreateBulk(batch);
+        }
+
+        public void Process(IEnumerable<HtsPartnerNotificationServices> partners)
+        {
+            if(null==partners)
+                return;
+            if(!partners.Any())
+                return;
+
+            _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
+
+            var batch = new List<HtsPartnerNotificationServices>();
+            int count = 0;
+
+            foreach (var partner in partners)
+            {
+                try
+                {
+                    partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    batch.Add(partner);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e, $"Facility Id missing {partner.SiteCode}");
+                }
+
+
+                if (count == 1000)
+                {
+                    _htsPartnerNotificationServicesRepository.CreateBulk(batch);
+                    count = 0;
+                    batch = new List<HtsPartnerNotificationServices>();
+                }
+
+            }
+
+            if (batch.Any())
+                _htsPartnerNotificationServicesRepository.CreateBulk(batch);
+        }
+
+        public void Process(IEnumerable<HtsPartnerTracing> partners)
+        {
+            if(null==partners)
+                return;
+            if(!partners.Any())
+                return;
+
+            _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
+
+            var batch = new List<HtsPartnerTracing>();
+            int count = 0;
+
+            foreach (var partner in partners)
+            {
+                try
+                {
+                    partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    batch.Add(partner);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e, $"Facility Id missing {partner.SiteCode}");
+                }
+
+
+                if (count == 1000)
+                {
+                    _partnerTracingRepository.CreateBulk(batch);
+                    count = 0;
+                    batch = new List<HtsPartnerTracing>();
+                }
+
+            }
+
+            if (batch.Any())
+                _partnerTracingRepository.CreateBulk(batch);
+        }
+
+        public void Process(IEnumerable<HtsTestKits> kits)
+        {
+            if(null==kits)
+                return;
+            if(!kits.Any())
+                return;
+
+            _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
+
+            var batch = new List<HtsTestKits>();
+            int count = 0;
+
+            foreach (var partner in kits)
+            {
+                try
+                {
+                    partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    batch.Add(partner);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e, $"Facility Id missing {partner.SiteCode}");
+                }
+
+
+                if (count == 1000)
+                {
+                    _kitsRepository.CreateBulk(batch);
+                    count = 0;
+                    batch = new List<HtsTestKits>();
+                }
+
+            }
+
+            if (batch.Any())
+                _kitsRepository.CreateBulk(batch);
         }
 
         public Guid GetFacilityId(int siteCode)
