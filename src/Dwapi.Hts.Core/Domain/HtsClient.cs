@@ -23,9 +23,8 @@ namespace Dwapi.Hts.Core.Domain
         public virtual string Status { get; set; }
         public virtual DateTime? StatusDate { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
-        public Guid FacilityId { get; set; }
 
-        public int EncounterId { get; set; }
+        public int? EncounterId { get; set; }
         public DateTime? VisitDate { get; set; }
         public DateTime? Dob { get; set; }
         public string Gender { get; set; }
@@ -55,6 +54,13 @@ namespace Dwapi.Hts.Core.Domain
         public string PatientDisabled{ get; set; }
         public string DisabilityType { get; set; }
         public string PatientConsented{ get; set; }
+        public  string County	 { get; set; }
+        public  string  SubCounty	 { get; set; }
+        public  string Ward	 { get; set; }
+
+        public Guid FacilityId { get; set; }
+
+
 
         public HtsClient()
         {

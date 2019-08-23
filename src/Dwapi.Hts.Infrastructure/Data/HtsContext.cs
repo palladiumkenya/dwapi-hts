@@ -23,6 +23,17 @@ namespace Dwapi.Hts.Infrastructure.Data
         public DbSet<HtsClientLinkage> ClientLinkages { get; set; }
         public DbSet<HtsClientPartner> ClientPartners { get; set; }
 
+
+        public DbSet<HtsClientTests> HtsClientTests { get; set; }
+
+        public DbSet<HtsClientTracing> HtsClientTracing { get; set; }
+
+        public DbSet<HtsPartnerNotificationServices> HtsPartnerNotificationServices { get; set; }
+
+        public DbSet<HtsPartnerTracing> HtsPartnerTracings { get; set; }
+
+        public DbSet<HtsTestKits> HtsTestKits { get; set; }
+
         public HtsContext(DbContextOptions<HtsContext> options) : base(options)
         {
         }
@@ -43,6 +54,11 @@ namespace Dwapi.Hts.Infrastructure.Data
             DapperPlusManager.Entity<HtsClientLinkage>().Key(x => x.Id).Table($"{nameof(HtsContext.ClientLinkages)}");
             DapperPlusManager.Entity<HtsClientPartner>().Key(x => x.Id).Table($"{nameof(HtsContext.ClientPartners)}");
 
+            DapperPlusManager.Entity<HtsClientTests>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsClientTests)}");
+            DapperPlusManager.Entity<HtsClientTracing>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsClientTracing)}");
+            DapperPlusManager.Entity<HtsPartnerNotificationServices>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsPartnerNotificationServices)}");
+            DapperPlusManager.Entity<HtsPartnerTracing>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsPartnerTracings)}");
+            DapperPlusManager.Entity<HtsTestKits>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsTestKits)}");
         }
 
         public override void EnsureSeeded()

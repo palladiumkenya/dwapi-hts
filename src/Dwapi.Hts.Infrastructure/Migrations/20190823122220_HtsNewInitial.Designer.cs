@@ -4,14 +4,16 @@ using Dwapi.Hts.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dwapi.Hts.Infrastructure.Migrations
 {
     [DbContext(typeof(HtsContext))]
-    partial class HtsContextModelSnapshot : ModelSnapshot
+    [Migration("20190823122220_HtsNewInitial")]
+    partial class HtsNewInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -431,47 +433,37 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("Age");
+                    b.Property<string>("ClientSelfTested");
 
-                    b.Property<string>("CccNumber");
+                    b.Property<string>("ClientTestedAs");
 
-                    b.Property<string>("CurrentlyLivingWithIndexClient");
+                    b.Property<string>("Consent");
 
-                    b.Property<DateTime?>("DateElicited");
+                    b.Property<string>("CoupleDiscordant");
 
                     b.Property<DateTime?>("DateExtracted");
 
-                    b.Property<DateTime?>("Dob");
-
                     b.Property<string>("Emr");
+
+                    b.Property<int?>("EncounterId");
+
+                    b.Property<string>("EntryPoint");
+
+                    b.Property<string>("EverTestedForHiv");
 
                     b.Property<Guid>("FacilityId");
 
-                    b.Property<string>("FacilityLinkedTo");
-
                     b.Property<string>("FacilityName");
+
+                    b.Property<string>("FinalTestResult");
 
                     b.Property<string>("HtsNumber");
 
-                    b.Property<string>("IpvScreeningOutcome");
+                    b.Property<int?>("MonthsSinceLastTest");
 
-                    b.Property<string>("KnowledgeOfHivStatus");
-
-                    b.Property<DateTime?>("LinkDateLinkedToCare");
-
-                    b.Property<string>("LinkedToCare");
-
-                    b.Property<string>("MaritalStatus");
-
-                    b.Property<int?>("PartnerPatientPk");
-
-                    b.Property<int?>("PartnerPersonID");
+                    b.Property<string>("PatientGivenResult");
 
                     b.Property<int>("PatientPk");
-
-                    b.Property<string>("PnsApproach");
-
-                    b.Property<string>("PnsConsent");
 
                     b.Property<bool?>("Processed");
 
@@ -479,17 +471,23 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("QueueId");
 
-                    b.Property<string>("RelationsipToIndexClient");
-
-                    b.Property<string>("ScreenedForIpv");
-
-                    b.Property<string>("Sex");
-
                     b.Property<int>("SiteCode");
 
                     b.Property<string>("Status");
 
                     b.Property<DateTime?>("StatusDate");
+
+                    b.Property<string>("TbScreening");
+
+                    b.Property<DateTime>("TestDate");
+
+                    b.Property<string>("TestResult1");
+
+                    b.Property<string>("TestResult2");
+
+                    b.Property<string>("TestStrategy");
+
+                    b.Property<string>("TestType");
 
                     b.HasKey("Id");
 

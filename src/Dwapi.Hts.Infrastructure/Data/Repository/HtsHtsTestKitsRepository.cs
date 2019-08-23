@@ -7,13 +7,13 @@ using Dwapi.Hts.SharedKernel.Infrastructure.Data;
 
 namespace Dwapi.Hts.Infrastructure.Data.Repository
 {
-    public class HtsClientLinkageRepository : BaseRepository<HtsClientLinkage,Guid>, IHtsClientLinkageRepository
+    public class HtsHtsTestKitsRepository : BaseRepository<HtsTestKits,Guid>, IHtsHtsTestKitsRepository
     {
-        public HtsClientLinkageRepository(HtsContext context) : base(context)
+        public HtsHtsTestKitsRepository(HtsContext context) : base(context)
         {
         }
 
-        public void Process(Guid facilityId,IEnumerable<HtsClientLinkage> clients)
+        public void Process(Guid facilityId,IEnumerable<HtsTestKits> clients)
         {
             var mpi = clients.ToList();
 
