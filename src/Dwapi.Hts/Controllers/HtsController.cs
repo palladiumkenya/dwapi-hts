@@ -27,7 +27,7 @@ namespace Dwapi.Hts.Controllers
             _htsService = htsService;
         }
 
-        // POST api/cbs/verify
+        // POST api/Hts/verify
         [HttpPost("Verify")]
         public async Task<IActionResult> Verify([FromBody] VerifySubscriber subscriber)
         {
@@ -46,7 +46,7 @@ namespace Dwapi.Hts.Controllers
             }
         }
 
-        // POST api/cbs/Manifest
+        // POST api/Hts/Manifest
         [HttpPost("Manifest")]
         public async Task<IActionResult> ProcessManifest([FromBody] SaveManifest manifest)
         {
@@ -69,7 +69,7 @@ namespace Dwapi.Hts.Controllers
             }
         }
 
-        // POST api/cbs/Mpi
+        // POST api/Hts/Clients
         [HttpPost("Clients")]
         public IActionResult ProcessClient([FromBody] SaveClient client)
         {
@@ -91,7 +91,7 @@ namespace Dwapi.Hts.Controllers
             }
         }
 
-        // POST api/cbs/Mpi
+        // POST api/Hts/Linkages
         [HttpPost("Linkages")]
         public IActionResult ProcessLinkages([FromBody] SaveLinkage client)
         {
@@ -113,7 +113,7 @@ namespace Dwapi.Hts.Controllers
             }
         }
 
-        // POST api/cbs/Mpi
+        // POST api/Hts/Partners
         [HttpPost("Partners")]
         public IActionResult ProcessPartners([FromBody] SavePartner client)
         {
@@ -123,6 +123,112 @@ namespace Dwapi.Hts.Controllers
             try
             {
                 var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientPartners));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+        // POST api/Hts/HtsClientTests
+        [HttpPost("HtsClientTests")]
+        public IActionResult ProcessTests([FromBody] SaveClientTests client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsClientTestses));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+        // POST api/Hts/HtsClientTracings
+        [HttpPost("HtsClientTracings")]
+        public IActionResult ProcessTracings([FromBody] SaveClientTracings client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsClientTracings));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+        // POST api/Hts/Pns
+        [HttpPost("Pns")]
+        public IActionResult ProcessPns([FromBody] SavePns client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsPns));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+        // POST api/Hts/HtsPartnerTracings
+        [HttpPost("HtsPartnerTracings")]
+        public IActionResult ProcessTracings([FromBody] SavePartnerTracing client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsPartnerTracings));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        // POST api/Hts/HtsTestKits
+        [HttpPost("HtsTestKits")]
+        public IActionResult ProcessKits([FromBody] SaveKits client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsTestKits));
                 return Ok(new
                 {
                     BatchKey = id
