@@ -77,6 +77,14 @@ namespace Dwapi.Hts
             services.AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>();
             services.AddScoped<IHtsClientPartnerRepository, HtsClientPartnerRepository>();
 
+            //services.AddScoped<IHtsClientRepository, HtsClientRepository>();
+            services.AddScoped<IHtsClientTestsRepository, HtsClientTestsRepository>();
+            services.AddScoped<IHtsClientTracingRepository, HtsClientTracingRepository>();
+            services.AddScoped<IHtsPartnerTracingRepository, HtsPartnerTracingRepository>();
+            services.AddScoped<IHtsPartnerNotificationServicesRepository, HtsPartnerNotificationServicesRepository>();
+            services.AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>();
+            services.AddScoped<IHtsHtsTestKitsRepository, HtsHtsTestKitsRepository>();
+
             services.AddScoped<IManifestService, ManifestService>();
             services.AddScoped<IHtsService, HtsService>();
             var container = new Container();
