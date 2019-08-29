@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -58,6 +59,9 @@ namespace Dwapi.Hts
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var connectionString = Configuration["ConnectionStrings:DwapiConnection"];
+
+            var liveSync= Configuration["LiveSync"];
+
             try
             {
                 services.AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString, x => x.MigrationsAssembly(typeof(HtsContext).GetTypeInfo().Assembly.GetName().Name)));
@@ -87,6 +91,17 @@ namespace Dwapi.Hts
 
             services.AddScoped<IManifestService, ManifestService>();
             services.AddScoped<IHtsService, HtsService>();
+            services.AddScoped<ILiveSyncService, LiveSyncService>();
+            if (!string.IsNullOrWhiteSpace(liveSync))
+            {
+                Uri endPointA = new Uri(liveSync); // this is the endpoint HttpClient will hit
+                HttpClient httpClient = new HttpClient()
+                {
+                    BaseAddress = endPointA,
+                };
+                services.AddSingleton<HttpClient>(httpClient);
+            }
+
             var container = new Container();
             container.Populate(services);
             ServiceProvider = container.GetInstance<IServiceProvider>();

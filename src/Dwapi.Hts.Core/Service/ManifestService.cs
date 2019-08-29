@@ -8,10 +8,12 @@ namespace Dwapi.Hts.Core.Service
     public class ManifestService:IManifestService
     {
         private readonly IManifestRepository _manifestRepository;
+        private  readonly ILiveSyncService _liveSyncService;
 
-        public ManifestService(IManifestRepository manifestRepository)
+        public ManifestService(IManifestRepository manifestRepository, ILiveSyncService liveSyncService)
         {
             _manifestRepository = manifestRepository;
+            _liveSyncService = liveSyncService;
         }
 
         public void Process()
@@ -20,6 +22,12 @@ namespace Dwapi.Hts.Core.Service
             if (manifests.Any())
             {
                 _manifestRepository.ClearFacility(manifests);
+
+                foreach (var manifest in manifests)
+                {
+                    var clientCount = _manifestRepository.GetPatientCount(manifest.Id);
+                    _liveSyncService.SyncManifest(manifest,clientCount);
+                }
             }
         }
     }

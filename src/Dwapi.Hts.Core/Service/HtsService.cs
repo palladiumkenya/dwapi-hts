@@ -23,10 +23,11 @@ namespace Dwapi.Hts.Core.Service
         private readonly IHtsPartnerNotificationServicesRepository _htsPartnerNotificationServicesRepository;
         private readonly IHtsPartnerTracingRepository _partnerTracingRepository;
         private readonly IHtsHtsTestKitsRepository _kitsRepository;
+        private readonly ILiveSyncService _syncService;
 
         private List<SiteProfile> _siteProfiles = new List<SiteProfile>();
 
-        public HtsService(IHtsClientRepository clientRepository, IHtsClientLinkageRepository linkageRepository, IHtsClientPartnerRepository partnerRepository, IFacilityRepository facilityRepository, IHtsClientTestsRepository htsClientTestsRepository, IHtsClientTracingRepository clientTracingRepository, IHtsPartnerNotificationServicesRepository htsPartnerNotificationServicesRepository, IHtsPartnerTracingRepository partnerTracingRepository, IHtsHtsTestKitsRepository kitsRepository)
+        public HtsService(IHtsClientRepository clientRepository, IHtsClientLinkageRepository linkageRepository, IHtsClientPartnerRepository partnerRepository, IFacilityRepository facilityRepository, IHtsClientTestsRepository htsClientTestsRepository, IHtsClientTracingRepository clientTracingRepository, IHtsPartnerNotificationServicesRepository htsPartnerNotificationServicesRepository, IHtsPartnerTracingRepository partnerTracingRepository, IHtsHtsTestKitsRepository kitsRepository, ILiveSyncService syncService)
         {
             _clientRepository = clientRepository;
             _linkageRepository = linkageRepository;
@@ -37,10 +38,13 @@ namespace Dwapi.Hts.Core.Service
             _htsPartnerNotificationServicesRepository = htsPartnerNotificationServicesRepository;
             _partnerTracingRepository = partnerTracingRepository;
             _kitsRepository = kitsRepository;
+            _syncService = syncService;
         }
 
         public void Process(IEnumerable<HtsClient> clients)
         {
+            List<Guid> facilityIds=new List<Guid>();
+
             if(null==clients)
                 return;
             if(!clients.Any())
@@ -57,6 +61,8 @@ namespace Dwapi.Hts.Core.Service
                 {
                     client.FacilityId = GetFacilityId(client.SiteCode);
                     batch.Add(client);
+
+                    facilityIds.Add(client.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -76,12 +82,15 @@ namespace Dwapi.Hts.Core.Service
             if (batch.Any())
                 _clientRepository.CreateBulk(batch);
 
-
+            SyncClients(facilityIds);
 
         }
 
         public void Process(IEnumerable<HtsClientLinkage> linkages)
         {
+            List<Guid> facilityIds=new List<Guid>();
+
+
             if(null==linkages)
                 return;
             if(!linkages.Any())
@@ -98,6 +107,7 @@ namespace Dwapi.Hts.Core.Service
                 {
                     linkage.FacilityId = GetFacilityId(linkage.SiteCode);
                     batch.Add(linkage);
+                    facilityIds.Add(linkage.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -117,10 +127,15 @@ namespace Dwapi.Hts.Core.Service
             if (batch.Any())
                 _linkageRepository.CreateBulk(batch);
 
+            SyncClients(facilityIds);
+
         }
 
         public void Process(IEnumerable<HtsClientPartner> partners)
         {
+            List<Guid> facilityIds=new List<Guid>();
+
+
             if(null==partners)
                 return;
             if(!partners.Any())
@@ -137,6 +152,7 @@ namespace Dwapi.Hts.Core.Service
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
                     batch.Add(partner);
+                    facilityIds.Add(partner.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -156,10 +172,15 @@ namespace Dwapi.Hts.Core.Service
             if (batch.Any())
                 _partnerRepository.CreateBulk(batch);
 
+            SyncClients(facilityIds);
+
         }
 
         public void Process(IEnumerable<HtsClientTests> clientTestses)
         {
+
+            List<Guid> facilityIds=new List<Guid>();
+
             if(null==clientTestses)
                 return;
             if(!clientTestses.Any())
@@ -176,6 +197,8 @@ namespace Dwapi.Hts.Core.Service
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
                     batch.Add(partner);
+
+                    facilityIds.Add(partner.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -194,10 +217,15 @@ namespace Dwapi.Hts.Core.Service
 
             if (batch.Any())
                 _htsClientTestsRepository.CreateBulk(batch);
+
+            SyncClients(facilityIds);
         }
 
         public void Process(IEnumerable<HtsClientTracing> clientTracings)
         {
+
+            List<Guid> facilityIds=new List<Guid>();
+
             if(null==clientTracings)
                 return;
             if(!clientTracings.Any())
@@ -214,6 +242,7 @@ namespace Dwapi.Hts.Core.Service
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
                     batch.Add(partner);
+                    facilityIds.Add(partner.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -232,10 +261,14 @@ namespace Dwapi.Hts.Core.Service
 
             if (batch.Any())
                 _clientTracingRepository.CreateBulk(batch);
+
+            SyncClients(facilityIds);
         }
 
         public void Process(IEnumerable<HtsPartnerNotificationServices> partners)
         {
+            List<Guid> facilityIds=new List<Guid>();
+
             if(null==partners)
                 return;
             if(!partners.Any())
@@ -252,6 +285,7 @@ namespace Dwapi.Hts.Core.Service
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
                     batch.Add(partner);
+                    facilityIds.Add(partner.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -270,10 +304,14 @@ namespace Dwapi.Hts.Core.Service
 
             if (batch.Any())
                 _htsPartnerNotificationServicesRepository.CreateBulk(batch);
+
+            SyncClients(facilityIds);
         }
 
         public void Process(IEnumerable<HtsPartnerTracing> partners)
         {
+            List<Guid> facilityIds=new List<Guid>();
+
             if(null==partners)
                 return;
             if(!partners.Any())
@@ -290,6 +328,7 @@ namespace Dwapi.Hts.Core.Service
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
                     batch.Add(partner);
+                    facilityIds.Add(partner.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -308,10 +347,14 @@ namespace Dwapi.Hts.Core.Service
 
             if (batch.Any())
                 _partnerTracingRepository.CreateBulk(batch);
+
+            SyncClients(facilityIds);
         }
 
         public void Process(IEnumerable<HtsTestKits> kits)
         {
+            List<Guid> facilityIds=new List<Guid>();
+
             if(null==kits)
                 return;
             if(!kits.Any())
@@ -328,6 +371,7 @@ namespace Dwapi.Hts.Core.Service
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
                     batch.Add(partner);
+                    facilityIds.Add(partner.FacilityId);
                 }
                 catch (Exception e)
                 {
@@ -346,6 +390,8 @@ namespace Dwapi.Hts.Core.Service
 
             if (batch.Any())
                 _kitsRepository.CreateBulk(batch);
+
+            SyncClients(facilityIds);
         }
 
         public Guid GetFacilityId(int siteCode)
@@ -355,6 +401,14 @@ namespace Dwapi.Hts.Core.Service
                 throw new FacilityNotFoundException(siteCode);
 
             return profile.FacilityId;
+        }
+
+        private void SyncClients(List<Guid> facIlds)
+        {
+            if (facIlds.Any())
+            {
+                _syncService.SyncStats(facIlds.Distinct().ToList());
+            }
         }
     }
 }

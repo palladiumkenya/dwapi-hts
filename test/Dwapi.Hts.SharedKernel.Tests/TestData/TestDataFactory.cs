@@ -57,6 +57,36 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
                     .With(x => x.FacilityId == facility.Id)
                     .Build()
                     .ToList();
+                facility.ClientTestses = Builder<HtsClientTests>.CreateListOfSize(childcount)
+                    .All()
+                    .With(x => x.FacilityId == facility.Id)
+                    .Build()
+                    .ToList();
+                facility.Linkages = Builder<HtsClientLinkage>.CreateListOfSize(childcount)
+                    .All()
+                    .With(x => x.FacilityId == facility.Id)
+                    .Build()
+                    .ToList();
+                facility.ClientTracings = Builder<HtsClientTracing>.CreateListOfSize(childcount)
+                    .All()
+                    .With(x => x.FacilityId == facility.Id)
+                    .Build()
+                    .ToList();
+                facility.PartnerNotifications = Builder<HtsPartnerNotificationServices>.CreateListOfSize(childcount)
+                    .All()
+                    .With(x => x.FacilityId == facility.Id)
+                    .Build()
+                    .ToList();
+                facility.HtsPartnerTracings = Builder<HtsPartnerTracing>.CreateListOfSize(childcount)
+                    .All()
+                    .With(x => x.FacilityId == facility.Id)
+                    .Build()
+                    .ToList();
+                facility.Kitses = Builder<HtsTestKits>.CreateListOfSize(childcount)
+                    .All()
+                    .With(x => x.FacilityId == facility.Id)
+                    .Build()
+                    .ToList();
             }
             return facilities;
         }
@@ -80,7 +110,7 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
 
             foreach (var manifest in manifests)
             {
-
+                manifest.Id=Guid.NewGuid();
                 manifest.Cargoes = Builder<Cargo>.CreateListOfSize(childcount)
                     .All()
                     .With(x => x.ManifestId == manifest.Id)

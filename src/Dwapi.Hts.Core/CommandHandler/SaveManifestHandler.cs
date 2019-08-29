@@ -26,6 +26,7 @@ namespace Dwapi.Hts.Core.CommandHandler
             _repository.Create(request.Manifest);
             await _repository.SaveAsync();
 
+
             return request.Manifest.Id;
         }
     }
