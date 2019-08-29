@@ -13,7 +13,11 @@ namespace Dwapi.Hts.Core.Domain
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public ICollection<HtsClient> Clients { get; set; }=new List<HtsClient>();
         public ICollection<HtsClientLinkage> Linkages { get; set; }=new List<HtsClientLinkage>();
-        public ICollection<HtsClientPartner> Partners { get; set; }=new List<HtsClientPartner>();
+        public ICollection< HtsClientPartner> Partners { get; set; }=new List<HtsClientPartner>();
+        public ICollection<HtsClientTracing> clientTracings { get; set; } = new List<HtsClientTracing>();
+        public ICollection<HtsPartnerNotificationServices> partners { get; set; } = new List<HtsPartnerNotificationServices>();
+        public ICollection<HtsPartnerTracing> partnerTracings { get; set; } = new List<HtsPartnerTracing>();
+        public ICollection<HtsTestKits> kits { get; set; } = new List<HtsTestKits>();
         public ICollection<Manifest> Manifests { get; set; }=new List<Manifest>();
 
         public Facility()
