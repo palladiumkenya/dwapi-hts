@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Net.Http;
 using Dwapi.Hts.Core.Command;
 using Dwapi.Hts.Core.CommandHandler;
 using Dwapi.Hts.Core.Interfaces.Repository;
@@ -12,10 +14,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Z.Dapper.Plus;
 
 namespace Dwapi.Hts.Core.Tests.Service
 {
-    public class ManifestServiceTest
+    public class ManifestHandlersTests
     {
         private ServiceProvider _serviceProvider;
         private HtsContext _context;
@@ -29,19 +32,48 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .AddJsonFile("appsettings.json")
                 .Build();
             var connectionString = config["ConnectionStrings:DwapiConnectionDev"];
-
+            var liveSync = config["LiveSync"];
+            Uri endPointA = new Uri(liveSync); // this is the endpoint HttpClient will hit
+            HttpClient httpClient = new HttpClient()
+            {
+                BaseAddress = endPointA,
+            };
+            DapperPlusManager.AddLicense("1755;700-ThePalladiumGroup", "2073303b-0cfc-fbb9-d45f-1723bb282a3c");
+            if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
+            {
+                throw new Exception(licenseErrorMessage);
+            }
 
             _serviceProvider = new ServiceCollection()
                 .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
+
+                .AddScoped<IDocketRepository, DocketRepository>()
+                .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
+
+                .AddScoped<IFacilityRepository, FacilityRepository>()
+                .AddScoped<IManifestRepository, ManifestRepository>()
+                .AddScoped<IHtsClientRepository, HtsClientRepository>()
+                .AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>()
+                .AddScoped<IHtsClientPartnerRepository, HtsClientPartnerRepository>()
+
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
                 .AddScoped<IHtsClientRepository, HtsClientRepository>()
                 .AddScoped<IManifestRepository, ManifestRepository>()
+
+                .AddScoped<IHtsClientTestsRepository, HtsClientTestsRepository>()
+                .AddScoped<IHtsClientTracingRepository, HtsClientTracingRepository>()
+                .AddScoped<IHtsPartnerTracingRepository, HtsPartnerTracingRepository>()
+                .AddScoped<IHtsPartnerNotificationServicesRepository, HtsPartnerNotificationServicesRepository>()
+                .AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>()
+                .AddScoped<IHtsHtsTestKitsRepository, HtsHtsTestKitsRepository>()
+
+                .AddScoped<IHtsService, HtsService>()
+                .AddScoped<ILiveSyncService, LiveSyncService>()
                 .AddScoped<IManifestService, ManifestService>()
+                .AddSingleton<HttpClient>(httpClient)
                 .AddMediatR(typeof(ValidateFacilityHandler))
                 .BuildServiceProvider();
-
-
             _context = _serviceProvider.GetService<HtsContext>();
             _context.Database.EnsureDeleted();
             _context.Database.Migrate();

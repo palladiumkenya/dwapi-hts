@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Dwapi.Hts.Core.Command;
 using Dwapi.Hts.Core.CommandHandler;
 using Dwapi.Hts.Core.Domain;
@@ -14,10 +16,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Serilog;
+using Z.Dapper.Plus;
 
 namespace Dwapi.Hts.Core.Tests.Service
 {
-    public class MpiServiceTests
+    public class HtsServiceTests
     {
         private ServiceProvider _serviceProvider;
         private List<HtsClient> _patientIndices;
@@ -34,16 +38,51 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .AddJsonFile("appsettings.json")
                 .Build();
             var connectionString = config["ConnectionStrings:DwapiConnectionDev"];
+            var liveSync = config["LiveSync"];
+
+
+                DapperPlusManager.AddLicense("1755;700-ThePalladiumGroup", "2073303b-0cfc-fbb9-d45f-1723bb282a3c");
+                if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
+                {
+                    throw new Exception(licenseErrorMessage);
+                }
+
+
+            Uri endPointA = new Uri(liveSync); // this is the endpoint HttpClient will hit
+            HttpClient httpClient = new HttpClient()
+            {
+                BaseAddress = endPointA,
+            };
 
 
             _serviceProvider = new ServiceCollection()
                 .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
+
+                .AddScoped<IDocketRepository, DocketRepository>()
+                .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
+
+                .AddScoped<IFacilityRepository, FacilityRepository>()
+                .AddScoped<IManifestRepository, ManifestRepository>()
+                .AddScoped<IHtsClientRepository, HtsClientRepository>()
+               .AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>()
+                .AddScoped<IHtsClientPartnerRepository, HtsClientPartnerRepository>()
+
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddScoped<IMasterFacilityRepository, MasterFacilityRepository>()
                 .AddScoped<IHtsClientRepository, HtsClientRepository>()
                 .AddScoped<IManifestRepository, ManifestRepository>()
+
+                .AddScoped<IHtsClientTestsRepository, HtsClientTestsRepository>()
+                .AddScoped<IHtsClientTracingRepository, HtsClientTracingRepository>()
+                .AddScoped<IHtsPartnerTracingRepository, HtsPartnerTracingRepository>()
+                .AddScoped<IHtsPartnerNotificationServicesRepository, HtsPartnerNotificationServicesRepository>()
+                .AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>()
+                .AddScoped<IHtsHtsTestKitsRepository, HtsHtsTestKitsRepository>()
+
                 .AddScoped<IHtsService, HtsService>()
+                .AddScoped<ILiveSyncService, LiveSyncService>()
                 .AddScoped<IManifestService, ManifestService>()
+                .AddSingleton<HttpClient>(httpClient)
                 .AddMediatR(typeof(ValidateFacilityHandler))
                 .BuildServiceProvider();
 
@@ -55,8 +94,9 @@ namespace Dwapi.Hts.Core.Tests.Service
             var facilities = TestDataFactory.TestFacilities();
             _context.Facilities.AddRange(facilities);
             _context.SaveChanges();
-            _patientIndices = TestDataFactory.TestMasterPatientIndices(1, facilities.First(x=>x.SiteCode==1).Id);
-            _patientIndicesSiteB = TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id);
+            _patientIndices = TestDataFactory.TestMasterPatientIndices(1, facilities.First(x => x.SiteCode == 1).Id);
+            _patientIndicesSiteB =
+                TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id);
         }
 
         [SetUp]
@@ -65,18 +105,8 @@ namespace Dwapi.Hts.Core.Tests.Service
             _manifestService = _serviceProvider.GetService<IManifestService>();
             _mediator = _serviceProvider.GetService<IMediator>();
             _htsService = _serviceProvider.GetService<IHtsService>();
-
         }
-        [Test]
-        public void should_Process()
-        {
-            var patients = _context.Clients.ToList();
-            Assert.False(patients.Any());
 
-            _htsService.Process(_patientIndices);
-            var savedPatients = _context.Clients.ToList();
-            Assert.True(savedPatients.Any());
-        }
 
         [Test]
         public void should_Process_After_Manifest()

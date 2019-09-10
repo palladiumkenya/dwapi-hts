@@ -14,12 +14,12 @@ namespace Dwapi.Hts.Infrastructure.Tests.Data.Repository
 {
     [TestFixture]
     [Category("UsesDb")]
-    public class ManifestRepositoryTests
+    public class FacilityRepositoryTests
     {
         private ServiceProvider _serviceProvider;
         private HtsContext _context;
         private List<Facility> _facilities;
-        private IManifestRepository _manifestRepository;
+        private IFacilityRepository _facilityRepository;
         private List<Manifest> _manifests;
 
         [OneTimeSetUp]
@@ -32,6 +32,7 @@ namespace Dwapi.Hts.Infrastructure.Tests.Data.Repository
 
             _serviceProvider = new ServiceCollection()
                 .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
+                .AddTransient<IFacilityRepository, FacilityRepository>()
                 .AddTransient<IManifestRepository, ManifestRepository>()
                 .BuildServiceProvider();
 
@@ -53,24 +54,15 @@ namespace Dwapi.Hts.Infrastructure.Tests.Data.Repository
         [SetUp]
         public void Setup()
         {
-            _manifestRepository = _serviceProvider.GetService<IManifestRepository>();
+            _facilityRepository = _serviceProvider.GetService<IFacilityRepository>();
         }
 
         [Test]
         public void should_Clear_With_Manifest_Facility()
-        {
-            var patients = _context.Clients;
-            Assert.True(patients.Any());
-           _manifestRepository.ClearFacility(_manifests);
-            var nopatients = _context.Clients;
-            Assert.False(nopatients.Any());
+        { var stats= _facilityRepository.GetFacStats(_facilities[0].Id);
+            Assert.NotNull(stats);
         }
 
-        [Test]
-        public void should_Get_Count()
-        {
-            var patients = _manifestRepository.GetPatientCount(_manifests.First().Id);
-            Assert.True(patients>0);;
-        }
+
     }
 }

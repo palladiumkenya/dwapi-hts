@@ -2,7 +2,8 @@
 {
     public enum CargoType
     {
-        Patient
+        Patient,
+        Metrics
     }
 
     public enum ManifestStatus
