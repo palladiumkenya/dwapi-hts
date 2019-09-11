@@ -7,12 +7,12 @@ namespace Dwapi.Hts.Core.Command
 {
     public class SaveKits : IRequest<Guid>
     {
-        public IEnumerable<HtsTestKits> HtsTestKits { get; set; }
+        public IEnumerable<HtsTestKits> TestKits { get; set; }
 
-        public SaveKits( IEnumerable<HtsTestKits> clientdata)
+        public SaveKits( IEnumerable<HtsTestKits> testkits)
         {
 
-            HtsTestKits = clientdata;
+            TestKits = testkits;
         }
     }
 }

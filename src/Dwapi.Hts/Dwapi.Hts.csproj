@@ -35,8 +35,4 @@
       <ProjectReference Include="..\Dwapi.Hts.Infrastructure\Dwapi.Hts.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="logs" />
-    </ItemGroup>
-
 </Project>

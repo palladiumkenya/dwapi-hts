@@ -100,7 +100,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientLinkages));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientLinkage));
                 return Ok(new
                 {
                     BatchKey = id
@@ -143,7 +143,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsClientTestses));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientTests));
                 return Ok(new
                 {
                     BatchKey = id
@@ -164,7 +164,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsClientTracings));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.ClientTracing));
                 return Ok(new
                 {
                     BatchKey = id
@@ -185,7 +185,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsPns));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.PartnerNotificationServices));
                 return Ok(new
                 {
                     BatchKey = id
@@ -206,7 +206,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsPartnerTracings));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.PartnerTracing));
                 return Ok(new
                 {
                     BatchKey = id
@@ -228,7 +228,7 @@ namespace Dwapi.Hts.Controllers
 
             try
             {
-                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsTestKits));
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.TestKits));
                 return Ok(new
                 {
                     BatchKey = id
