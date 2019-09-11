@@ -419,3 +419,5 @@ typings
 .DS_Store
 Thumbs.db
 
+/obj
+/logs
