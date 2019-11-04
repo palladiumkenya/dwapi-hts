@@ -115,11 +115,10 @@ namespace Dwapi.Hts
                 app.UseDeveloperExceptionPage();
             }
             else
-            {
-               // app.UseHsts();
+            { app.UseHsts();
             }
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
 
             EnsureMigrationOfContext<HtsContext>();
