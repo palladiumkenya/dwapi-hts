@@ -26,6 +26,7 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using Z.Dapper.Plus;
 using StructureMap;
+using Dwapi.Hts.Filters;
 
 namespace Dwapi.Hts
 {
@@ -134,6 +135,9 @@ namespace Dwapi.Hts
             {
                 app.UseHangfireDashboard();
                 app.UseHangfireServer();
+
+                GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute());
+                GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute() { Attempts = 3 });
             }
             catch (Exception e)
             {

@@ -23,5 +23,6 @@ namespace Dwapi.Hts.Core.Domain
             public  string TraceOutcome { get; set; }
             public  DateTime BookingDate { get; set; }
             public Guid FacilityId { get; set; }
-        }
+            public int? PartnerPersonID { get; set; }
+    }
 }
