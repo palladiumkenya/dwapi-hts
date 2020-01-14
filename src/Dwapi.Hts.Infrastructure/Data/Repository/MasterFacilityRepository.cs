@@ -9,5 +9,10 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
         public MasterFacilityRepository(HtsContext context) : base(context)
         {
         }
+
+        public MasterFacility GetBySiteCode(int siteCode)
+        {
+            return DbSet.Find(siteCode);
+        }
     }
 }

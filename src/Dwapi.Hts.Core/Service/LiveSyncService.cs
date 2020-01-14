@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using Dwapi.Hts.Core.Domain;
+using Dwapi.Hts.Core.Domain.Dto;
 using Dwapi.Hts.Core.Exchange;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.Core.Interfaces.Service;
@@ -32,14 +35,12 @@ namespace Dwapi.Hts.Core.Service
         public async void SyncManifest(Manifest manifest,int clientCount)
         {
             string requestEndpoint = "manifest";
-
             try
             {
                 var dto = new ManifestDto(manifest,clientCount);
                 var content = JsonConvert.SerializeObject(dto,_serializerSettings);
                 var toSend=new StringContent(content, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync(requestEndpoint,toSend
-                    );
+                var response = await _httpClient.PostAsync(requestEndpoint,toSend);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception e)
@@ -66,6 +67,27 @@ namespace Dwapi.Hts.Core.Service
                 {
                     Log.Error(e.Message);
                 }
+            }
+        }
+
+        public async void SyncMetrics(List<MetricDto> metrics)
+        {
+
+            string requestEndpoint = "metric";
+
+            try
+            {
+                var content = JsonConvert.SerializeObject(metrics, _serializerSettings);
+
+                var toSend = new StringContent(content, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(requestEndpoint, toSend
+                );
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{requestEndpoint} POST...");
+                Log.Error(e.Message);
             }
         }
     }
