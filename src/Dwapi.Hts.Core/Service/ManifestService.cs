@@ -27,7 +27,14 @@ namespace Dwapi.Hts.Core.Service
             var manifests = _manifestRepository.GetStaged().ToList();
             if (manifests.Any())
             {
-                _manifestRepository.ClearFacility(manifests);
+                try
+                {
+                    _manifestRepository.ClearFacility(manifests);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Clear MANIFEST ERROR ",e);
+                }
 
                 foreach (var manifest in manifests)
                 {
