@@ -5,6 +5,7 @@ using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.SharedKernel.Enums;
 using Dwapi.Hts.SharedKernel.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dwapi.Hts.Infrastructure.Data.Repository
 {
@@ -50,6 +51,20 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
                 return cargo.Items.Split(",").Length;
 
             return 0;
+        }
+
+        public IEnumerable<Manifest> GetStaged()
+        {
+            var ctt = Context as HtsContext;
+            var manifests= DbSet.AsNoTracking().Where(x => x.Status == ManifestStatus.Staged).ToList();
+
+            foreach (var manifest in manifests)
+            {
+                manifest.Cargoes = ctt.Cargoes.AsNoTracking().Where(x => x.Type != CargoType.Patient).ToList();
+            }
+
+            return manifests;
+
         }
     }
 }

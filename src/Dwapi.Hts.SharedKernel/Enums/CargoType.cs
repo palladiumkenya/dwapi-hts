@@ -3,7 +3,8 @@
     public enum CargoType
     {
         Patient,
-        Metrics
+        Metrics,
+        AppMetrics
     }
 
     public enum ManifestStatus
