@@ -38,7 +38,7 @@ namespace Dwapi.Hts.Core.Domain
         public string Linked { get; set; }
         public DateTime? LinkDateLinkedToCare { get; set; }
         public string CccNumber { get; set; }
-        public int Age { get; set; }
+        public int? Age { get; set; }
         public string Sex { get; set; }
         public Guid FacilityId { get; set; }
 

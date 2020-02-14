@@ -20,7 +20,7 @@ namespace Dwapi.Hts.Core.Domain
             public  DateTime? StatusDate { get; set; }
             public  DateTime? DateExtracted { get; set; }
             public  String TracingType { get; set; }
-            public  DateTime TracingDate { get; set; }
+            public  DateTime? TracingDate { get; set; }
             public  string TracingOutcome { get; set; }
             public Guid FacilityId { get; set; }
         }

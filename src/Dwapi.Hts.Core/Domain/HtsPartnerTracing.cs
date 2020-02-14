@@ -19,9 +19,9 @@ namespace Dwapi.Hts.Core.Domain
             public  DateTime? StatusDate { get; set; }
             public  DateTime? DateExtracted { get; set; }
             public  string TraceType { get; set; }
-            public  DateTime TraceDate { get; set; }
+            public  DateTime? TraceDate { get; set; }
             public  string TraceOutcome { get; set; }
-            public  DateTime BookingDate { get; set; }
+            public  DateTime? BookingDate { get; set; }
             public Guid FacilityId { get; set; }
             public int? PartnerPersonID { get; set; }
     }
