@@ -27,6 +27,7 @@ using Serilog;
 using Z.Dapper.Plus;
 using StructureMap;
 using Dwapi.Hts.Filters;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Dwapi.Hts
 {
@@ -118,7 +119,10 @@ namespace Dwapi.Hts
             else
             { app.UseHsts();
             }
-
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             // app.UseHttpsRedirection();
             app.UseMvc();
 
