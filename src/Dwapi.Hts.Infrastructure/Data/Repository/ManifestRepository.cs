@@ -60,7 +60,8 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
 
             foreach (var manifest in manifests)
             {
-                manifest.Cargoes = ctt.Cargoes.AsNoTracking().Where(x => x.Type != CargoType.Patient).ToList();
+                manifest.Cargoes = ctt.Cargoes.AsNoTracking()
+                    .Where(x => x.Type != CargoType.Patient && x.ManifestId == manifest.Id).ToList();
             }
 
             return manifests;

@@ -20,7 +20,6 @@ namespace Dwapi.Hts.Core.Service
     {
         private readonly HttpClient _httpClient;
         private readonly IFacilityRepository _facilityRepository;
-        private readonly IManifestRepository _manifestRepository;
         private JsonSerializerSettings _serializerSettings;
 
         public LiveSyncService(HttpClient httpClient, IFacilityRepository facilityRepository)

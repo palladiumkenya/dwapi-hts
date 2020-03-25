@@ -157,8 +157,9 @@ namespace Dwapi.Hts
             try
             {
                 app.UseHangfireDashboard();
-                app.UseHangfireServer();
 
+                var options = new BackgroundJobServerOptions { WorkerCount = 1 };
+                app.UseHangfireServer(options);
                 GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute());
                 GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute() { Attempts = 3 });
             }
