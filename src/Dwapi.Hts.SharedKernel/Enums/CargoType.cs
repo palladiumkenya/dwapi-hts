@@ -12,4 +12,9 @@
         Staged,
         Processed
     }
+    public enum EmrSetup
+    {
+        SingleFacility,
+        MultiFacility
+    }
 }

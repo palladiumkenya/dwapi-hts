@@ -83,9 +83,26 @@ namespace Dwapi.Hts.Core.Tests.CommandHandler
             Console.WriteLine(facility);
         }
 
+        [Test]
+        public void should_Snap_Enroll_New_Facility()
+        {
+            var facilityId = _mediator.Send(new EnrollFacility(1, "XFac (Ke)", "KenyaEMR")).Result;
+            var facilityIdVer2 = _mediator.Send(new EnrollFacility(1, "XFac (IQ)", "IQCare")).Result;
+
+            var facility = _context.Facilities.Find(facilityId);
+            var mflfacility = _context.MasterFacilities.Find(facility.SiteCode);
+
+            Assert.False(facilityId.IsNullOrEmpty());
+            Assert.AreEqual(facilityId, facility.Id);
+            Assert.True(facility.MasterFacilityId.HasValue);
+            Assert.AreEqual(mflfacility.Id, facility.MasterFacilityId.Value);
+            Console.WriteLine(facility);
+        }
+
+
         private Guid EnrollFacility(Facility facility)
         {
-            return _mediator.Send(new EnrollFacility(facility.SiteCode, facility.Name)).Result;
+            return _mediator.Send(new EnrollFacility(facility.SiteCode, facility.Name,"IQCare")).Result;
         }
     }
 }
