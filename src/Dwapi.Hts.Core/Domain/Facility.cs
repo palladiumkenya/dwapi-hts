@@ -43,11 +43,15 @@ namespace Dwapi.Hts.Core.Domain
 
         public bool EmrChanged(string requestEmr)
         {
+            if (string.IsNullOrWhiteSpace(requestEmr))
+                return false;
+
             if (string.IsNullOrWhiteSpace(Emr))
                 return false;
 
             return !Emr.IsSameAs(requestEmr);
         }
+
         public Facility TakeSnapFrom(MasterFacility snapMfl)
         {
             var fac = this;

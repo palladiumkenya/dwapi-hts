@@ -63,6 +63,11 @@ namespace Dwapi.Hts.Core.Domain
             return 0;
         }
 
+        public string SnapInfo()
+        {
+            return $"{SnapshotSiteCode} | {Id} {SnapshotVersion} {SnapshotDate}";
+        }
+
         public override string ToString()
         {
             return $"{Name} [{County}]";
