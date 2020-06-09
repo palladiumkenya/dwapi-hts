@@ -39,7 +39,7 @@ namespace Dwapi.Hts.Core.CommandHandler
 
             // Take Facility SnapShot
 
-            if (facility.EmrChanged(request.Emr))
+            if (facility.EmrChanged(request.Emr) && request.AllowSnapshot)
             {
                 await _mediator.Send(new SnapMasterFacility(facility.SiteCode), cancellationToken);
 
