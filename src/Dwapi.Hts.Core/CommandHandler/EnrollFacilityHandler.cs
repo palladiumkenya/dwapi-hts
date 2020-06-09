@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Dwapi.Hts.Core.Command;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
+using Dwapi.Hts.SharedKernel.Utils;
 using MediatR;
 
 namespace Dwapi.Hts.Core.CommandHandler
@@ -26,6 +27,8 @@ namespace Dwapi.Hts.Core.CommandHandler
             var mfl =await  _mediator.Send(new ValidateFacility(request.SiteCode), cancellationToken);
 
             var facility =await _facilityRepository.GetAsync(x => x.SiteCode == request.SiteCode);
+
+            request.Emr = request.Emr.IsSameAs("CHAK") ? "IQCare" : request.Emr;
 
             // Enroll New Site
 
