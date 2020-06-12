@@ -14,5 +14,6 @@ namespace Dwapi.Hts.Core.Interfaces.Repository
 
         IEnumerable<StatsDto> GetFacStats(IEnumerable<Guid> facilityIds);
         StatsDto GetFacStats(Guid facilityId);
+        Facility GetBySiteCode(int siteCode);
     }
 }

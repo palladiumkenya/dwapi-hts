@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Dwapi.Hts.SharedKernel.Model;
 
 namespace Dwapi.Hts.Core.Domain
@@ -14,6 +16,9 @@ namespace Dwapi.Hts.Core.Domain
         public string Name { get; set; }
         [MaxLength(120)]
         public string County { get; set; }
+        public DateTime? SnapshotDate { get; set; }
+        public int? SnapshotSiteCode { get; set; }
+        public int? SnapshotVersion { get; set; }
 
         public ICollection<Facility> Mentions { get; set; }=new List<Facility>();
 
@@ -26,6 +31,41 @@ namespace Dwapi.Hts.Core.Domain
             Id = id;
             Name = name;
             County = county;
+        }
+
+        public MasterFacility TakeSnap(List<MasterFacility> mflSnaps)
+        {
+            MasterFacility lastSnap = null;
+
+            if (mflSnaps.Any())
+                lastSnap = mflSnaps
+                    .OrderBy(x => x.SnapshotDate)
+                    .ThenBy(x=>x.SnapshotVersion)
+                    .Last();
+
+            var snapVersion = null == lastSnap ? 1 : lastSnap.GetNextSnapshotVersion();
+
+            var snapSiteCode = Convert.ToInt32($"-{100 + snapVersion}{Id}");
+
+            var fac = this;
+            fac.SnapshotSiteCode = Id;
+            fac.Id =snapSiteCode;
+            fac.SnapshotDate = DateTime.Now;
+            fac.SnapshotVersion = snapVersion;
+            return fac;
+        }
+
+        private int GetNextSnapshotVersion()
+        {
+            if (SnapshotVersion.HasValue)
+                return SnapshotVersion.Value + 1;
+
+            return 0;
+        }
+
+        public string SnapInfo()
+        {
+            return $"{SnapshotSiteCode} | {Id} {SnapshotVersion} {SnapshotDate}";
         }
 
         public override string ToString()

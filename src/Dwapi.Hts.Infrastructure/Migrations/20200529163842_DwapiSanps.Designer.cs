@@ -4,14 +4,16 @@ using Dwapi.Hts.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dwapi.Hts.Infrastructure.Migrations
 {
     [DbContext(typeof(HtsContext))]
-    partial class HtsContextModelSnapshot : ModelSnapshot
+    [Migration("20200529163842_DwapiSanps")]
+    partial class DwapiSanps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,10 +70,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<int>("SiteCode");
 
                     b.Property<DateTime?>("SnapshotDate");
-
-                    b.Property<int?>("SnapshotSiteCode");
-
-                    b.Property<int?>("SnapshotVersion");
 
                     b.HasKey("Id");
 
@@ -657,10 +655,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                         .HasMaxLength(120);
 
                     b.Property<DateTime?>("SnapshotDate");
-
-                    b.Property<int?>("SnapshotSiteCode");
-
-                    b.Property<int?>("SnapshotVersion");
 
                     b.HasKey("Id");
 

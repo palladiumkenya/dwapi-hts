@@ -17,7 +17,6 @@ namespace Dwapi.Hts.Core.Service
         private readonly IHtsClientPartnerRepository _partnerRepository;
         private readonly IFacilityRepository _facilityRepository;
 
-
         private readonly IHtsClientTestsRepository _htsClientTestsRepository;
         private readonly IHtsClientTracingRepository _clientTracingRepository;
         private readonly IHtsPartnerNotificationServicesRepository _htsPartnerNotificationServicesRepository;
@@ -57,6 +56,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var client in clients)
             {
+                count++;
                 try
                 {
                     client.FacilityId = GetFacilityId(client.SiteCode);
@@ -103,6 +103,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var linkage in linkages)
             {
+                count++;
                 try
                 {
                     linkage.FacilityId = GetFacilityId(linkage.SiteCode);
@@ -148,6 +149,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var partner in partners)
             {
+                count++;
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
@@ -193,6 +195,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var partner in clientTestses)
             {
+                count++;
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
@@ -238,6 +241,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var partner in clientTracings)
             {
+                count++;
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
@@ -281,6 +285,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var partner in partners)
             {
+                count++;
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
@@ -324,6 +329,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var partner in partners)
             {
+                count++;
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
@@ -367,6 +373,7 @@ namespace Dwapi.Hts.Core.Service
 
             foreach (var partner in kits)
             {
+                count++;
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);

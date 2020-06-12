@@ -37,6 +37,7 @@ namespace Dwapi.Hts
     {
           public IConfiguration Configuration { get; }
         public static IServiceProvider ServiceProvider { get; private set; }
+        public static bool AllowSnapshot { get; set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -65,7 +66,7 @@ namespace Dwapi.Hts
             var connectionString = Configuration["ConnectionStrings:DwapiConnection"];
 
             var liveSync= Configuration["LiveSync"];
-
+            var allowSnapshot= Configuration["AllowSnapshot"];
             try
             {
                 services.AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString, x => x.MigrationsAssembly(typeof(HtsContext).GetTypeInfo().Assembly.GetName().Name)));
@@ -105,7 +106,8 @@ namespace Dwapi.Hts
                 };
                 services.AddSingleton<HttpClient>(httpClient);
             }
-
+            if (!string.IsNullOrWhiteSpace(allowSnapshot))
+                AllowSnapshot = Convert.ToBoolean(allowSnapshot);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DWAPI Central HTS API", Version = "v1" });

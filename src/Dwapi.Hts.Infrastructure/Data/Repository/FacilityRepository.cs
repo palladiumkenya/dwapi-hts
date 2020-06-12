@@ -81,5 +81,10 @@ select
 
             return null;
         }
+
+        public Facility GetBySiteCode(int siteCode)
+        {
+            return DbSet.FirstOrDefault(x=>x.SiteCode==siteCode);
+        }
     }
 }

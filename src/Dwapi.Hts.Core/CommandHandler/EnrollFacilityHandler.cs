@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Dwapi.Hts.Core.Command;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
+using Dwapi.Hts.SharedKernel.Utils;
 using MediatR;
 
 namespace Dwapi.Hts.Core.CommandHandler
@@ -27,13 +28,32 @@ namespace Dwapi.Hts.Core.CommandHandler
 
             var facility =await _facilityRepository.GetAsync(x => x.SiteCode == request.SiteCode);
 
+            request.Emr = request.Emr.IsSameAs("CHAK") ? "IQCare" : request.Emr;
+
+            // Enroll New Site
+
             if (null == facility)
             {
-                var newFacility = new Facility(request.SiteCode, request.Name, mfl.Id);
+                var newFacility = new Facility(request.SiteCode, request.Name, mfl.Id) {Emr = request.Emr};
                 _facilityRepository.Create(newFacility);
                 await _facilityRepository.SaveAsync();
                 return newFacility.Id;
             }
+
+            // Take Facility SnapShot
+
+            if (facility.EmrChanged(request.Emr) && request.AllowSnapshot)
+            {
+                await _mediator.Send(new SnapMasterFacility(facility.SiteCode), cancellationToken);
+
+                var newFacility = new Facility(request.SiteCode, request.Name, request.SiteCode) {Emr = request.Emr};
+
+                _facilityRepository.Create(newFacility);
+                await _facilityRepository.SaveAsync();
+                return newFacility.Id;
+            }
+
+
 
             return facility.Id;
         }
