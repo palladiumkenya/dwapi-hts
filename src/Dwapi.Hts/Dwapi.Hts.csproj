@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,8 +15,9 @@
         <PackageReference Include="Dapper" Version="1.60.6" />
         <PackageReference Include="Dapper.Contrib" Version="1.60.1" />
         <PackageReference Include="EFCore.Seeder" Version="2.1.0" />
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.0" />
-        <PackageReference Include="Hangfire.SqlServer" Version="1.7.0" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.9" />
+        <PackageReference Include="Hangfire.Core" Version="1.7.9" />
+        <PackageReference Include="Hangfire.SqlServer" Version="1.7.9" />
         <PackageReference Include="MediatR" Version="6.0.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -28,6 +31,7 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
         <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
         <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="2.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
         <PackageReference Include="Z.Dapper.Plus" Version="1.5.1" />
     </ItemGroup>
 

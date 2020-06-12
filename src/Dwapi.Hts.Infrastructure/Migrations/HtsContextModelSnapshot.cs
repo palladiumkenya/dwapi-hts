@@ -58,12 +58,20 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
+                    b.Property<string>("Emr");
+
                     b.Property<int?>("MasterFacilityId");
 
                     b.Property<string>("Name")
                         .HasMaxLength(120);
 
                     b.Property<int>("SiteCode");
+
+                    b.Property<DateTime?>("SnapshotDate");
+
+                    b.Property<int?>("SnapshotSiteCode");
+
+                    b.Property<int?>("SnapshotVersion");
 
                     b.HasKey("Id");
 
@@ -183,11 +191,11 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("CccNumber");
 
-                    b.Property<DateTime>("DateEnrolled");
+                    b.Property<DateTime?>("DateEnrolled");
 
                     b.Property<DateTime?>("DateExtracted");
 
-                    b.Property<DateTime>("DatePrefferedToBeEnrolled");
+                    b.Property<DateTime?>("DatePrefferedToBeEnrolled");
 
                     b.Property<string>("Emr");
 
@@ -217,11 +225,11 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("QueueId");
 
-                    b.Property<DateTime>("ReferralDate");
+                    b.Property<DateTime?>("ReferralDate");
 
                     b.Property<string>("ReportedCCCNumber");
 
-                    b.Property<DateTime>("ReportedStartARTDate");
+                    b.Property<DateTime?>("ReportedStartARTDate");
 
                     b.Property<int>("SiteCode");
 
@@ -243,7 +251,7 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Age");
+                    b.Property<int?>("Age");
 
                     b.Property<string>("CccNumber");
 
@@ -371,7 +379,7 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("TbScreening");
 
-                    b.Property<DateTime>("TestDate");
+                    b.Property<DateTime?>("TestDate");
 
                     b.Property<string>("TestResult1");
 
@@ -382,6 +390,8 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("TestType");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("HtsClientTests");
                 });
@@ -415,13 +425,15 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime?>("StatusDate");
 
-                    b.Property<DateTime>("TracingDate");
+                    b.Property<DateTime?>("TracingDate");
 
                     b.Property<string>("TracingOutcome");
 
                     b.Property<string>("TracingType");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("HtsClientTracing");
                 });
@@ -493,6 +505,8 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FacilityId");
+
                     b.ToTable("HtsPartnerNotificationServices");
                 });
 
@@ -501,7 +515,7 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("BookingDate");
+                    b.Property<DateTime?>("BookingDate");
 
                     b.Property<DateTime?>("DateExtracted");
 
@@ -512,6 +526,8 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("FacilityName");
 
                     b.Property<string>("HtsNumber");
+
+                    b.Property<int?>("PartnerPersonID");
 
                     b.Property<int>("PatientPk");
 
@@ -527,13 +543,15 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime?>("StatusDate");
 
-                    b.Property<DateTime>("TraceDate");
+                    b.Property<DateTime?>("TraceDate");
 
                     b.Property<string>("TraceOutcome");
 
                     b.Property<string>("TraceType");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("HtsPartnerTracings");
                 });
@@ -547,7 +565,7 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("Emr");
 
-                    b.Property<int>("EncounterId");
+                    b.Property<int?>("EncounterId");
 
                     b.Property<Guid>("FacilityId");
 
@@ -587,6 +605,8 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FacilityId");
+
                     b.ToTable("HtsTestKits");
                 });
 
@@ -598,6 +618,12 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<DateTime>("DateArrived");
 
                     b.Property<DateTime>("DateLogged");
+
+                    b.Property<Guid?>("EmrId");
+
+                    b.Property<string>("EmrName");
+
+                    b.Property<int>("EmrSetup");
 
                     b.Property<Guid>("FacilityId");
 
@@ -629,6 +655,12 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(120);
+
+                    b.Property<DateTime?>("SnapshotDate");
+
+                    b.Property<int?>("SnapshotSiteCode");
+
+                    b.Property<int?>("SnapshotVersion");
 
                     b.HasKey("Id");
 
@@ -688,6 +720,46 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                 {
                     b.HasOne("Dwapi.Hts.Core.Domain.Facility")
                         .WithMany("Partners")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dwapi.Hts.Core.Domain.HtsClientTests", b =>
+                {
+                    b.HasOne("Dwapi.Hts.Core.Domain.Facility")
+                        .WithMany("ClientTestses")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dwapi.Hts.Core.Domain.HtsClientTracing", b =>
+                {
+                    b.HasOne("Dwapi.Hts.Core.Domain.Facility")
+                        .WithMany("ClientTracings")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dwapi.Hts.Core.Domain.HtsPartnerNotificationServices", b =>
+                {
+                    b.HasOne("Dwapi.Hts.Core.Domain.Facility")
+                        .WithMany("PartnerNotifications")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dwapi.Hts.Core.Domain.HtsPartnerTracing", b =>
+                {
+                    b.HasOne("Dwapi.Hts.Core.Domain.Facility")
+                        .WithMany("HtsPartnerTracings")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dwapi.Hts.Core.Domain.HtsTestKits", b =>
+                {
+                    b.HasOne("Dwapi.Hts.Core.Domain.Facility")
+                        .WithMany("Kitses")
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

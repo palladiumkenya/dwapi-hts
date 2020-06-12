@@ -7,12 +7,12 @@ namespace Dwapi.Hts.Core.Command
 {
     public class SavePartnerTracing : IRequest<Guid>
     {
-        public IEnumerable<HtsPartnerTracing> HtsPartnerTracings { get; set; }
+        public IEnumerable<HtsPartnerTracing> PartnerTracing { get; set; }
 
-        public SavePartnerTracing( IEnumerable<HtsPartnerTracing> clientdata)
+        public SavePartnerTracing( IEnumerable<HtsPartnerTracing> partnertracing)
         {
 
-            HtsPartnerTracings = clientdata;
+            PartnerTracing = partnertracing;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Dwapi.Hts.Core.Domain
         public  string Status { get; set; }
         public  DateTime? StatusDate { get; set; }
         public  DateTime? DateExtracted { get; set; }
-        public  int EncounterId { get; set; }
+        public  int? EncounterId { get; set; }
         public  string TestKitName1 { get; set; }
         public  string TestKitLotNumber1 { get; set; }
         public  string TestKitExpiry1 { get; set; }

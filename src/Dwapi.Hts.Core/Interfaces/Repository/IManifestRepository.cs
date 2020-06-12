@@ -8,5 +8,7 @@ namespace Dwapi.Hts.Core.Interfaces.Repository
     public interface IManifestRepository : IRepository<Manifest, Guid>
     {
         void ClearFacility(IEnumerable<Manifest> manifests);
+        int GetPatientCount(Guid id);
+        IEnumerable<Manifest> GetStaged();
     }
 }

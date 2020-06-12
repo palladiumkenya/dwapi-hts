@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -25,6 +27,9 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using Z.Dapper.Plus;
 using StructureMap;
+using Dwapi.Hts.Filters;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.OpenApi.Models;
 
 namespace Dwapi.Hts
 {
@@ -32,6 +37,7 @@ namespace Dwapi.Hts
     {
           public IConfiguration Configuration { get; }
         public static IServiceProvider ServiceProvider { get; private set; }
+        public static bool AllowSnapshot { get; set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -58,6 +64,9 @@ namespace Dwapi.Hts
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var connectionString = Configuration["ConnectionStrings:DwapiConnection"];
+
+            var liveSync= Configuration["LiveSync"];
+            var allowSnapshot= Configuration["AllowSnapshot"];
             try
             {
                 services.AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString, x => x.MigrationsAssembly(typeof(HtsContext).GetTypeInfo().Assembly.GetName().Name)));
@@ -77,8 +86,36 @@ namespace Dwapi.Hts
             services.AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>();
             services.AddScoped<IHtsClientPartnerRepository, HtsClientPartnerRepository>();
 
+            //services.AddScoped<IHtsClientRepository, HtsClientRepository>();
+            services.AddScoped<IHtsClientTestsRepository, HtsClientTestsRepository>();
+            services.AddScoped<IHtsClientTracingRepository, HtsClientTracingRepository>();
+            services.AddScoped<IHtsPartnerTracingRepository, HtsPartnerTracingRepository>();
+            services.AddScoped<IHtsPartnerNotificationServicesRepository, HtsPartnerNotificationServicesRepository>();
+            services.AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>();
+            services.AddScoped<IHtsHtsTestKitsRepository, HtsHtsTestKitsRepository>();
+
             services.AddScoped<IManifestService, ManifestService>();
             services.AddScoped<IHtsService, HtsService>();
+            services.AddScoped<ILiveSyncService, LiveSyncService>();
+            if (!string.IsNullOrWhiteSpace(liveSync))
+            {
+                Uri endPointA = new Uri(liveSync); // this is the endpoint HttpClient will hit
+                HttpClient httpClient = new HttpClient()
+                {
+                    BaseAddress = endPointA,
+                };
+                services.AddSingleton<HttpClient>(httpClient);
+            }
+            if (!string.IsNullOrWhiteSpace(allowSnapshot))
+                AllowSnapshot = Convert.ToBoolean(allowSnapshot);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DWAPI Central HTS API", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
             var container = new Container();
             container.Populate(services);
             ServiceProvider = container.GetInstance<IServiceProvider>();
@@ -92,9 +129,21 @@ namespace Dwapi.Hts
                 app.UseDeveloperExceptionPage();
             }
             else
-            {
-               // app.UseHsts();
+            { app.UseHsts();
             }
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DWAPI Central HTS API");
+                c.SupportedSubmitMethods(new Swashbuckle.AspNetCore.SwaggerUI.SubmitMethod[] { });
+            });
 
             // app.UseHttpsRedirection();
             app.UseMvc();
@@ -110,7 +159,11 @@ namespace Dwapi.Hts
             try
             {
                 app.UseHangfireDashboard();
-                app.UseHangfireServer();
+
+                var options = new BackgroundJobServerOptions { WorkerCount = 1 };
+                app.UseHangfireServer(options);
+                GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute());
+                GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute() { Attempts = 3 });
             }
             catch (Exception e)
             {

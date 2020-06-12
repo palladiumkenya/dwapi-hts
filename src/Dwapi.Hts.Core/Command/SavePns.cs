@@ -7,12 +7,12 @@ namespace Dwapi.Hts.Core.Command
 {
     public class SavePns : IRequest<Guid>
     {
-        public IEnumerable<HtsPartnerNotificationServices> HtsPns { get; set; }
+        public IEnumerable<HtsPartnerNotificationServices> PartnerNotificationServices { get; set; }
 
-        public SavePns( IEnumerable<HtsPartnerNotificationServices> clientdata)
+        public SavePns( IEnumerable<HtsPartnerNotificationServices> partnernotificationservices)
         {
 
-            HtsPns = clientdata;
+            PartnerNotificationServices = partnernotificationservices;
         }
     }
 }

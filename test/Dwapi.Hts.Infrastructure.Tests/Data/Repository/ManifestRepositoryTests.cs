@@ -28,7 +28,7 @@ namespace Dwapi.Hts.Infrastructure.Tests.Data.Repository
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var connectionString = config["ConnectionStrings:DwapiConnectionDev"];
+            var connectionString = config["ConnectionStrings:DwapiConnection"];
 
             _serviceProvider = new ServiceCollection()
                 .AddDbContext<HtsContext>(o => o.UseSqlServer(connectionString))
@@ -64,6 +64,13 @@ namespace Dwapi.Hts.Infrastructure.Tests.Data.Repository
            _manifestRepository.ClearFacility(_manifests);
             var nopatients = _context.Clients;
             Assert.False(nopatients.Any());
+        }
+
+        [Test]
+        public void should_Get_Count()
+        {
+            var patients = _manifestRepository.GetPatientCount(_manifests.First().Id);
+            Assert.True(patients>0);;
         }
     }
 }
