@@ -91,20 +91,21 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
             return facilities;
         }
 
-        public static List<HtsClient> TestMasterPatientIndices(int siteCode,Guid facilityId, int count = 5)
+        public static List<HtsClient> TestMasterPatientIndices(int siteCode, Guid facilityId, int count = 5)
         {
             var patientIndices = Builder<HtsClient>.CreateListOfSize(count)
-                .All().With(x=>x.SiteCode=siteCode)
+                .All().With(x => x.SiteCode = siteCode)
                 .With(x => x.FacilityId = facilityId)
                 .Build()
                 .ToList();
+            patientIndices.Take(2).ToList().ForEach(p => p.Project = "IRDO");
             return patientIndices;
         }
 
         public static List<Manifest> TestManifests(int count = 2, int childcount = 3)
         {
             var manifests = Builder<Manifest>.CreateListOfSize(count)
-                .All().With(x=>x.Status==ManifestStatus.Staged)
+                .All().With(x=>x.Status=ManifestStatus.Staged)
                 .Build()
                 .ToList();
 

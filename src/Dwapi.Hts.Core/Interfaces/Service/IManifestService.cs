@@ -3,5 +3,6 @@
     public interface IManifestService
     {
         void Process();
+        void ProcessCommunity();
     }
 }

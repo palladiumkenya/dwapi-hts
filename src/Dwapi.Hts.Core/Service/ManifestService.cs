@@ -27,6 +27,60 @@ namespace Dwapi.Hts.Core.Service
             var manifests = _manifestRepository.GetStaged().ToList();
             if (manifests.Any())
             {
+                var communityManifests = manifests.Where(x => x.EmrSetup == EmrSetup.Community).ToList();
+
+                var otherManifests = manifests.Where(x => x.EmrSetup != EmrSetup.Community).ToList();
+
+                try
+                {
+                    if (otherManifests.Any())
+                        _manifestRepository.ClearFacility(otherManifests);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Clear MANIFEST ERROR ", e);
+                }
+
+                try
+                {
+                    if (communityManifests.Any())
+                        _manifestRepository.ClearFacility(communityManifests, "IRDO");
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Clear COMMUNITY MANIFEST ERROR ", e);
+                }
+
+                foreach (var manifest in manifests)
+                {
+                    var clientCount = _manifestRepository.GetPatientCount(manifest.Id);
+                    _liveSyncService.SyncManifest(manifest,clientCount);
+
+                    try
+                    {
+                        // Get MasterFacility
+                        var masterFacility = _masterFacilityRepository.GetBySiteCode(manifest.SiteCode);
+
+                        if (null != masterFacility)
+                        {
+                            // Sync Metrics
+                            var metricDtos = MetricDto.Generate(masterFacility, manifest);
+                            _liveSyncService.SyncMetrics(metricDtos);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e.Message);
+                    }
+
+                }
+            }
+        }
+        public void ProcessCommunity()
+        {
+            var manifests = _manifestRepository.GetStaged().ToList();
+            if (manifests.Any())
+            {
                 try
                 {
                     _manifestRepository.ClearFacility(manifests);
