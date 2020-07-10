@@ -55,7 +55,7 @@ namespace Dwapi.Hts.Core.Domain
             if (requestEmr.IsSameAs("IQCare") || requestEmr.IsSameAs("KenyaEMR"))
                 return !Emr.IsSameAs(requestEmr);
 
-            return !Emr.IsSameAs(requestEmr);
+            return false;
         }
 
         public Facility TakeSnapFrom(MasterFacility snapMfl)
