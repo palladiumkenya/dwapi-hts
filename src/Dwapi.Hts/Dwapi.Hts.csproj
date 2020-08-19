@@ -41,11 +41,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="logs" />
-      <Folder Include="logs\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Reference Include="Hangfire.Pro, Version=2.2.2.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>..\..\libs\Hangfire.Pro.dll</HintPath>
       </Reference>
