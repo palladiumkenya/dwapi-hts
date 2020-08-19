@@ -9,7 +9,7 @@ namespace Dwapi.Hts.SharedKernel.Model
     {
         [Key, Column(Order = 0)]
         public virtual TId Id { get; set; }
-        public virtual Guid RefId { get; set; }
+        public virtual Guid? RefId { get; set; }
 
         protected Entity()
         {

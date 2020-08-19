@@ -37,7 +37,7 @@ namespace Dwapi.Hts.Core.Domain
         public override void UpdateRefId()
         {
             RefId = Id;
-            Id = LiveGuid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
 
