@@ -1,4 +1,5 @@
 ﻿using System;
+using Dwapi.Hts.SharedKernel.Custom;
 using Dwapi.Hts.SharedKernel.Model;
 
 namespace Dwapi.Hts.Core.Domain
@@ -26,5 +27,11 @@ namespace Dwapi.Hts.Core.Domain
         public  string TestKitExpiry2{ get; set; }
         public  string TestResult2 { get; set; }
         public Guid FacilityId { get; set; }
+
+        public override void UpdateRefId()
+        {
+            RefId = Id;
+            Id = LiveGuid.NewGuid();
+        }
     }
 }

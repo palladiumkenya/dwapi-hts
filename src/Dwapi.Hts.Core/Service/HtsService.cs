@@ -4,6 +4,7 @@ using System.Linq;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.Core.Interfaces.Service;
+using Dwapi.Hts.SharedKernel.Custom;
 using Dwapi.Hts.SharedKernel.Exceptions;
 using Dwapi.Hts.SharedKernel.Model;
 using Serilog;
@@ -60,6 +61,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     client.FacilityId = GetFacilityId(client.SiteCode);
+                    client.UpdateRefId();
                     batch.Add(client);
 
                     facilityIds.Add(client.FacilityId);
@@ -107,6 +109,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     linkage.FacilityId = GetFacilityId(linkage.SiteCode);
+                    linkage.UpdateRefId();
                     batch.Add(linkage);
                     facilityIds.Add(linkage.FacilityId);
                 }
@@ -153,6 +156,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    partner.UpdateRefId();
                     batch.Add(partner);
                     facilityIds.Add(partner.FacilityId);
                 }
@@ -199,6 +203,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    partner.UpdateRefId();
                     batch.Add(partner);
 
                     facilityIds.Add(partner.FacilityId);
@@ -245,6 +250,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    partner.UpdateRefId();
                     batch.Add(partner);
                     facilityIds.Add(partner.FacilityId);
                 }
@@ -289,6 +295,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    partner.UpdateRefId();
                     batch.Add(partner);
                     facilityIds.Add(partner.FacilityId);
                 }
@@ -333,6 +340,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    partner.UpdateRefId();
                     batch.Add(partner);
                     facilityIds.Add(partner.FacilityId);
                 }
@@ -377,6 +385,7 @@ namespace Dwapi.Hts.Core.Service
                 try
                 {
                     partner.FacilityId = GetFacilityId(partner.SiteCode);
+                    partner.UpdateRefId();
                     batch.Add(partner);
                     facilityIds.Add(partner.FacilityId);
                 }

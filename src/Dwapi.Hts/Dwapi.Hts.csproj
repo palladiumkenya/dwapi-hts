@@ -41,6 +41,7 @@
 
     <ItemGroup>
       <Folder Include="logs" />
+      <Folder Include="logs\" />
     </ItemGroup>
 
     <ItemGroup>

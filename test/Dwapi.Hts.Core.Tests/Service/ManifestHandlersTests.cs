@@ -82,8 +82,8 @@ namespace Dwapi.Hts.Core.Tests.Service
             var facilities = TestDataFactory.TestFacilities();
             _context.Facilities.AddRange(facilities);
             _context.SaveChanges();
-            _context.Clients.AddRange(TestDataFactory.TestMasterPatientIndices(1, facilities.First(x => x.SiteCode == 1).Id));
-            _context.Clients.AddRange(TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id));
+            _context.Clients.AddRange(TestDataFactory.TestClients(1, facilities.First(x => x.SiteCode == 1).Id));
+            _context.Clients.AddRange(TestDataFactory.TestClients(2, facilities.First(x => x.SiteCode == 2).Id));
             _context.SaveChanges();
 
             //1,

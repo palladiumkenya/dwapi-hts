@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Dwapi.Hts.SharedKernel.Custom;
 using Dwapi.Hts.SharedKernel.Model;
 
 namespace Dwapi.Hts.Core.Domain
@@ -64,6 +65,12 @@ namespace Dwapi.Hts.Core.Domain
 
         public HtsClient()
         {
+        }
+
+        public override void UpdateRefId()
+        {
+            RefId = Id;
+            Id = LiveGuid.NewGuid();
         }
     }
 }
