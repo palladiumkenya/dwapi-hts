@@ -249,10 +249,11 @@ namespace Dwapi.Hts.Controllers
         {
             try
             {
+                var ver = GetType().Assembly.GetName().Version;
                 return Ok(new
                 {
                     Status="Online",
-                    Ver = "1.1.0",
+                    Ver = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}",
                     Rel ="19AUG201843"
                 });
             }
