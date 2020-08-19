@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Dwapi.Hts.Core.Command;
 using Dwapi.Hts.Core.Interfaces.Repository;
@@ -238,6 +239,26 @@ namespace Dwapi.Hts.Controllers
             catch (Exception e)
             {
                 Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        // POST api/Hts/Status
+        [HttpGet("Status")]
+        public IActionResult GetStatus()
+        {
+            try
+            {
+                return Ok(new
+                {
+                    Status="Online",
+                    Ver = "1.1.0",
+                    Rel ="19AUG201843"
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "status error");
                 return StatusCode(500, e.Message);
             }
         }

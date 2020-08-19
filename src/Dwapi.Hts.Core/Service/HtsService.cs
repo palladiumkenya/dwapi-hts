@@ -7,6 +7,7 @@ using Dwapi.Hts.Core.Interfaces.Service;
 using Dwapi.Hts.SharedKernel.Custom;
 using Dwapi.Hts.SharedKernel.Exceptions;
 using Dwapi.Hts.SharedKernel.Model;
+using Hangfire;
 using Serilog;
 
 namespace Dwapi.Hts.Core.Service
