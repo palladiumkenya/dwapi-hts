@@ -53,7 +53,7 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
             string sql = $@"
 select
 (select top 1 SiteCode from Facilities where id='{facilityId}') FacilityCode,
-(select max(DateCreated) from Clients where facilityid='{facilityId}') Updated,
+(select ISNULL(max(DateCreated),GETDATE()) from Clients where facilityid='{facilityId}') Updated,
 (select count(id) from Clients where facilityid='{facilityId}') HtsClientExtract,
 (select count(id) from ClientLinkages where facilityid='{facilityId}') HtsClientLinkageExtract,
 (select count(id) from HtsClientTests where facilityid='{facilityId}') HtsClientTestsExtract,
