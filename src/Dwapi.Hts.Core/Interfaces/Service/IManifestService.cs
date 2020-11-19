@@ -2,7 +2,6 @@
 {
     public interface IManifestService
     {
-        void Process();
-        void ProcessCommunity();
+        void Process(int siteCode);
     }
 }

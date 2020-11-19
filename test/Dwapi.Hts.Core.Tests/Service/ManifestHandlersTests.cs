@@ -110,7 +110,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 x.EmrSetup = EmrSetup.SingleFacility;
             });
             var id=_mediator.Send(new SaveManifest(manifests.First())).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifests.First().SiteCode);
 
             var remainingPatients = _context.Clients.ToList();
             Assert.False(remainingPatients.Any(x => x.SiteCode == 1 && x.Project!="IRDO"));
@@ -131,7 +131,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 x.EmrSetup = EmrSetup.Community;
             });
             var id=_mediator.Send(new SaveManifest(manifests.First())).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifests.First().SiteCode);
 
             var remainingPatients = _context.Clients.ToList();
             Assert.False(remainingPatients.Any(x => x.SiteCode == 2 && x.Project=="IRDO"));

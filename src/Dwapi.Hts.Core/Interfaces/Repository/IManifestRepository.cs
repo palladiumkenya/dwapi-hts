@@ -11,6 +11,6 @@ namespace Dwapi.Hts.Core.Interfaces.Repository
         void ClearFacility(IEnumerable<Manifest> manifests);
         void ClearFacility(IEnumerable<Manifest> manifests,string project);
         int GetPatientCount(Guid id);
-        IEnumerable<Manifest> GetStaged();
+        IEnumerable<Manifest> GetStaged(int siteCode);
     }
 }

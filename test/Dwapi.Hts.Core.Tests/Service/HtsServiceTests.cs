@@ -120,7 +120,7 @@ namespace Dwapi.Hts.Core.Tests.Service
             Assert.False(patients.Any());
 
             var id = _mediator.Send(new SaveManifest(manifest)).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifest.SiteCode);
             _htsService.Process(_patientIndices);
             Assert.True(_context.Clients.Any(x=>x.SiteCode==1));
         }
@@ -135,12 +135,12 @@ namespace Dwapi.Hts.Core.Tests.Service
             Assert.False(patients.Any());
 
             var id = _mediator.Send(new SaveManifest(manifests[0])).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifests[0].SiteCode);
             _htsService.Process(_patientIndices);
             Assert.True(_context.Clients.Any(x => x.SiteCode == 1));
 
             var id2 = _mediator.Send(new SaveManifest(manifests[1])).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifests[1].SiteCode);
             _htsService.Process(_patientIndicesSiteB);
             Assert.True(_context.Clients.Any(x => x.SiteCode == 1));
             Assert.True(_context.Clients.Any(x => x.SiteCode == 2));

@@ -22,9 +22,9 @@ namespace Dwapi.Hts.Core.Service
             _masterFacilityRepository = masterFacilityRepository;
         }
 
-        public void Process()
+        public void Process(int siteCode)
         {
-            var manifests = _manifestRepository.GetStaged().ToList();
+            var manifests = _manifestRepository.GetStaged(siteCode).ToList();
             if (manifests.Any())
             {
                 var communityManifests = manifests.Where(x => x.EmrSetup == EmrSetup.Community).ToList();
@@ -76,46 +76,5 @@ namespace Dwapi.Hts.Core.Service
                 }
             }
         }
-        public void ProcessCommunity()
-        {
-            var manifests = _manifestRepository.GetStaged().ToList();
-            if (manifests.Any())
-            {
-                try
-                {
-                    _manifestRepository.ClearFacility(manifests);
-                }
-                catch (Exception e)
-                {
-                    Log.Error("Clear MANIFEST ERROR ",e);
-                }
-
-                foreach (var manifest in manifests)
-                {
-                    var clientCount = _manifestRepository.GetPatientCount(manifest.Id);
-                    _liveSyncService.SyncManifest(manifest,clientCount);
-
-                    try
-                    {
-                        // Get MasterFacility
-                        var masterFacility = _masterFacilityRepository.GetBySiteCode(manifest.SiteCode);
-
-                        if (null != masterFacility)
-                        {
-                            // Sync Metrics
-                            var metricDtos = MetricDto.Generate(masterFacility, manifest);
-                            _liveSyncService.SyncMetrics(metricDtos);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e.Message);
-                    }
-
-                }
-            }
-        }
-
-
     }
 }

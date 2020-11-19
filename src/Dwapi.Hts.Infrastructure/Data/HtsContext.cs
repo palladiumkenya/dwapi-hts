@@ -65,7 +65,9 @@ namespace Dwapi.Hts.Infrastructure.Data
         {
             var csvConfig = new Configuration()
             {
-                Delimiter = "|"
+                Delimiter = "|",
+                HeaderValidated = null,
+                MissingFieldFound = null
             };
 
             SeederConfiguration.ResetConfiguration(csvConfig, null, typeof(HtsContext).GetTypeInfo().Assembly);

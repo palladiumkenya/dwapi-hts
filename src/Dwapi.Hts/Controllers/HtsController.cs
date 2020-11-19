@@ -58,7 +58,7 @@ namespace Dwapi.Hts.Controllers
             {
                 manifest.AllowSnapshot = Startup.AllowSnapshot;
                 var faciliyKey = await _mediator.Send(manifest, HttpContext.RequestAborted);
-                BackgroundJob.Enqueue(() => _manifestService.Process());
+                BackgroundJob.Enqueue(() => _manifestService.Process(manifest.Manifest.SiteCode));
                 return Ok(new
                 {
                     FacilityKey = faciliyKey

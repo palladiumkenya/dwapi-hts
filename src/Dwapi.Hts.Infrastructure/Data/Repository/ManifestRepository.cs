@@ -81,10 +81,11 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
             return 0;
         }
 
-        public IEnumerable<Manifest> GetStaged()
+        public IEnumerable<Manifest> GetStaged(int siteCode)
         {
             var ctt = Context as HtsContext;
-            var manifests= DbSet.AsNoTracking().Where(x => x.Status == ManifestStatus.Staged).ToList();
+            var manifests = DbSet.AsNoTracking().Where(x => x.Status == ManifestStatus.Staged && x.SiteCode == siteCode)
+                .ToList();
 
             foreach (var manifest in manifests)
             {
@@ -93,7 +94,6 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
             }
 
             return manifests;
-
         }
     }
 }
