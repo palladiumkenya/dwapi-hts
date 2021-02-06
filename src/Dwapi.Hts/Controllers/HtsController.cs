@@ -254,7 +254,7 @@ namespace Dwapi.Hts.Controllers
                 {
                     Status="Online",
                     Ver = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}",
-                    Rel ="19AUG201843"
+                    Rel ="06FEB211547"
                 });
             }
             catch (Exception e)
