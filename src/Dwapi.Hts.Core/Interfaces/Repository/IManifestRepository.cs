@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.SharedKernel.Enums;
 using Dwapi.Hts.SharedKernel.Interfaces;
@@ -12,5 +13,6 @@ namespace Dwapi.Hts.Core.Interfaces.Repository
         void ClearFacility(IEnumerable<Manifest> manifests,string project);
         int GetPatientCount(Guid id);
         IEnumerable<Manifest> GetStaged(int siteCode);
+        Task EndSession(Guid session);
     }
 }

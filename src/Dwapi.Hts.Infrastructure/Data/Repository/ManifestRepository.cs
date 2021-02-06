@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.SharedKernel.Enums;
@@ -94,6 +96,13 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
             }
 
             return manifests;
+        }
+
+        public async Task EndSession(Guid session)
+        {
+            var end = DateTime.Now;
+            var sql = $"UPDATE {nameof(HtsContext.Manifests)} SET [{nameof(Manifest.End)}]=@end WHERE [{nameof(Manifest.Session)}]=@session";
+            await Context.Database.GetDbConnection().ExecuteAsync(sql, new {session, end});
         }
     }
 }
