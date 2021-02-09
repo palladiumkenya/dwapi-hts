@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dwapi.Hts.Core.Domain;
+using Dwapi.Hts.Core.Domain.Dto;
 using Dwapi.Hts.SharedKernel.Enums;
 using Dwapi.Hts.SharedKernel.Interfaces;
 
@@ -14,5 +15,6 @@ namespace Dwapi.Hts.Core.Interfaces.Repository
         int GetPatientCount(Guid id);
         IEnumerable<Manifest> GetStaged(int siteCode);
         Task EndSession(Guid session);
+        IEnumerable<HandshakeDto> GetSessionHandshakes(Guid session);
     }
 }

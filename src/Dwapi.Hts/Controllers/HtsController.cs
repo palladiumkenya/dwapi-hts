@@ -252,9 +252,9 @@ namespace Dwapi.Hts.Controllers
                 var ver = GetType().Assembly.GetName().Version;
                 return Ok(new
                 {
-                    Status="Online",
-                    Ver = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}",
-                    Rel ="06FEB211547"
+                    name="Dwapi Central - API (HTS)",
+                    status="running",
+                    build ="09FEB211547"
                 });
             }
             catch (Exception e)
