@@ -254,7 +254,7 @@ namespace Dwapi.Hts.Controllers
                 {
                     name="Dwapi Central - API (HTS)",
                     status="running",
-                    build ="09FEB211547"
+                    build ="18FEB21211"
                 });
             }
             catch (Exception e)
