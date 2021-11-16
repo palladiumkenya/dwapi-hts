@@ -43,6 +43,7 @@ namespace Dwapi.Hts.Core.Service
 
                 try
                 {
+                        // TODO: Check DREAMS sites
                     if (communityManifests.Any())
                         _manifestRepository.ClearFacility(communityManifests, "IRDO");
                 }
