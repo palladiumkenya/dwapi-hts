@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
+using Dwapi.Hts.Core.Domain.Dto;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Domain.Dto;
 using Dwapi.Hts.Core.Exchange;
@@ -81,6 +82,24 @@ namespace Dwapi.Hts.Core.Service
                 var toSend = new StringContent(content, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(requestEndpoint, toSend
                 );
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{requestEndpoint} POST...");
+                Log.Error(e.Message);
+            }
+        }
+        
+        public async Task SyncHandshake(List<HandshakeDto> dto)
+        {
+            string requestEndpoint = "handshake";
+
+            try
+            {
+                var content = JsonConvert.SerializeObject(dto,_serializerSettings);
+                var toSend=new StringContent(content, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(requestEndpoint,toSend);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception e)

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
+using Dwapi.Hts.Core.Domain.Dto;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.SharedKernel.Enums;
@@ -43,6 +46,25 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
                         {nameof(Manifest.Id)} in ({mids})");
         }
 
+        public async Task EndSession(Guid session)
+        {
+            var end = DateTime.Now;
+            var sql = $"UPDATE {nameof(HtsContext.Manifests)} SET [{nameof(Manifest.End)}]=@end WHERE [{nameof(Manifest.Session)}]=@session";
+            await Context.Database.GetDbConnection().ExecuteAsync(sql, new {session, end});
+        }
+
+        public IEnumerable<HandshakeDto> GetSessionHandshakes(Guid session)
+        {
+            string sess = session.ToString();;
+            Console.WriteLine("here is the getsessionhandshake ======>"+ sess);
+            var sql = $"SELECT * FROM {nameof(HtsContext.Manifests)} WHERE [{nameof(Manifest.Session)}]=@session";
+            var manifests = Context.Database.GetDbConnection().Query<Manifest>(sql,new{session}).ToList();
+            return manifests.Select(x => new HandshakeDto()
+            {
+                Id = x.Id, End = x.End, Session = x.Session, Start = x.Start
+            });
+        }
+        
         public int GetPatientCount(Guid id)
         {
             var ctt = Context as HtsContext;
