@@ -55,8 +55,6 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
 
         public IEnumerable<HandshakeDto> GetSessionHandshakes(Guid session)
         {
-            string sess = session.ToString();;
-            Console.WriteLine("here is the getsessionhandshake ======>"+ sess);
             var sql = $"SELECT * FROM {nameof(HtsContext.Manifests)} WHERE [{nameof(Manifest.Session)}]=@session";
             var manifests = Context.Database.GetDbConnection().Query<Manifest>(sql,new{session}).ToList();
             return manifests.Select(x => new HandshakeDto()
