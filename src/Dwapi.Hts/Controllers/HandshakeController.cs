@@ -25,7 +25,8 @@ namespace Dwapi.Hts.Controllers
         {
             try
             {
-                
+                var sess = session.ToString();
+                Console.WriteLine("writeline GetSessionHandshakes ===========>"+sess);
                 await _manifestRepository.EndSession(session);
                 var handshakes = _manifestRepository
                     .GetSessionHandshakes(session)
@@ -35,6 +36,8 @@ namespace Dwapi.Hts.Controllers
             }
             catch (Exception e)
             {
+                var sess = session.ToString();
+                Console.WriteLine("error in session ===========>"+sess);
                 Log.Error(e, "handshake error");
                 return StatusCode(500, e.Message);
             }
