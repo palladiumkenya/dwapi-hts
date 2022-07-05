@@ -15,7 +15,7 @@ namespace Dwapi.Hts.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -125,11 +125,15 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<int?>("MonthsLastTested");
 
+                    b.Property<string>("NUPI");
+
                     b.Property<string>("PatientConsented");
 
                     b.Property<string>("PatientDisabled");
 
                     b.Property<int>("PatientPk");
+
+                    b.Property<string>("Pkv");
 
                     b.Property<string>("PopulationType");
 
