@@ -4,14 +4,16 @@ using Dwapi.Hts.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dwapi.Hts.Infrastructure.Migrations
 {
     [DbContext(typeof(HtsContext))]
-    partial class HtsContextModelSnapshot : ModelSnapshot
+    [Migration("20220705094759_HtsNUPIandPkv")]
+    partial class HtsNUPIandPkv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +29,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Items");
 
                     b.Property<Guid>("ManifestId");
-
-                    b.Property<Guid?>("RefId");
 
                     b.Property<int>("Type");
 
@@ -48,8 +48,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("RefId");
-
                     b.HasKey("Id");
 
                     b.ToTable("Dockets");
@@ -68,8 +66,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(120);
-
-                    b.Property<Guid?>("RefId");
 
                     b.Property<int>("SiteCode");
 
@@ -148,8 +144,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Project");
 
                     b.Property<string>("QueueId");
-
-                    b.Property<Guid?>("RefId");
 
                     b.Property<string>("Serial");
 
@@ -237,8 +231,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("QueueId");
 
-                    b.Property<Guid?>("RefId");
-
                     b.Property<DateTime?>("ReferralDate");
 
                     b.Property<string>("ReportedCCCNumber");
@@ -304,8 +296,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Project");
 
                     b.Property<string>("QueueId");
-
-                    b.Property<Guid?>("RefId");
 
                     b.Property<string>("RelationshipToIndexClient");
 
@@ -387,8 +377,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("QueueId");
 
-                    b.Property<Guid?>("RefId");
-
                     b.Property<int>("SiteCode");
 
                     b.Property<string>("Status");
@@ -436,8 +424,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Project");
 
                     b.Property<string>("QueueId");
-
-                    b.Property<Guid?>("RefId");
 
                     b.Property<int>("SiteCode");
 
@@ -511,8 +497,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("QueueId");
 
-                    b.Property<Guid?>("RefId");
-
                     b.Property<string>("RelationsipToIndexClient");
 
                     b.Property<string>("ScreenedForIpv");
@@ -559,8 +543,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("QueueId");
 
-                    b.Property<Guid?>("RefId");
-
                     b.Property<int>("SiteCode");
 
                     b.Property<string>("Status");
@@ -604,8 +586,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Project");
 
                     b.Property<string>("QueueId");
-
-                    b.Property<Guid?>("RefId");
 
                     b.Property<int>("SiteCode");
 
@@ -651,29 +631,19 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<int>("EmrSetup");
 
-                    b.Property<DateTime?>("End");
-
                     b.Property<Guid>("FacilityId");
 
                     b.Property<string>("Name");
 
                     b.Property<int>("Recieved");
 
-                    b.Property<Guid?>("RefId");
-
                     b.Property<int>("Sent");
 
-                    b.Property<Guid?>("Session");
-
                     b.Property<int>("SiteCode");
-
-                    b.Property<DateTime?>("Start");
 
                     b.Property<int>("Status");
 
                     b.Property<DateTime>("StatusDate");
-
-                    b.Property<string>("Tag");
 
                     b.HasKey("Id");
 
@@ -691,8 +661,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(120);
-
-                    b.Property<Guid?>("RefId");
 
                     b.Property<DateTime?>("SnapshotDate");
 
@@ -715,8 +683,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("DocketId");
 
                     b.Property<string>("Name");
-
-                    b.Property<Guid?>("RefId");
 
                     b.HasKey("Id");
 
