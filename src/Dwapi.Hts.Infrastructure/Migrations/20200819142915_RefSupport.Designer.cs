@@ -4,14 +4,16 @@ using Dwapi.Hts.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dwapi.Hts.Infrastructure.Migrations
 {
     [DbContext(typeof(HtsContext))]
-    partial class HtsContextModelSnapshot : ModelSnapshot
+    [Migration("20200819142915_RefSupport")]
+    partial class RefSupport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -647,8 +649,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<int>("EmrSetup");
 
-                    b.Property<DateTime?>("End");
-
                     b.Property<Guid>("FacilityId");
 
                     b.Property<string>("Name");
@@ -659,17 +659,11 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<int>("Sent");
 
-                    b.Property<Guid?>("Session");
-
                     b.Property<int>("SiteCode");
-
-                    b.Property<DateTime?>("Start");
 
                     b.Property<int>("Status");
 
                     b.Property<DateTime>("StatusDate");
-
-                    b.Property<string>("Tag");
 
                     b.HasKey("Id");
 

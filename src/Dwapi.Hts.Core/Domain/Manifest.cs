@@ -19,6 +19,11 @@ namespace Dwapi.Hts.Core.Domain
         public Guid? EmrId { get; set; }
         public string EmrName { get; set; }
         public EmrSetup EmrSetup { get; set; }
+
+        public Guid? Session { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public string Tag { get; set; }
         public ICollection<Cargo> Cargoes { get; set; } = new List<Cargo>();
 
         public Manifest()

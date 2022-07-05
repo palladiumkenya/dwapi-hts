@@ -1,4 +1,5 @@
 using System;
+using Dwapi.Hts.SharedKernel.Custom;
 using Dwapi.Hts.SharedKernel.Model;
 
 namespace Dwapi.Hts.Core.Domain
@@ -32,6 +33,12 @@ namespace Dwapi.Hts.Core.Domain
         public  string ReportedCCCNumber { get; set; }
         public  DateTime? ReportedStartARTDate { get; set; }
         public Guid FacilityId { get; set; }
+
+        public override void UpdateRefId()
+        {
+            RefId = Id;
+            Id = Guid.NewGuid();
+        }
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Dwapi.Hts.Core.Command;
 using Dwapi.Hts.Core.Interfaces.Repository;
@@ -57,7 +58,7 @@ namespace Dwapi.Hts.Controllers
             {
                 manifest.AllowSnapshot = Startup.AllowSnapshot;
                 var faciliyKey = await _mediator.Send(manifest, HttpContext.RequestAborted);
-                BackgroundJob.Enqueue(() => _manifestService.Process());
+                BackgroundJob.Enqueue(() => _manifestService.Process(manifest.Manifest.SiteCode));
                 return Ok(new
                 {
                     FacilityKey = faciliyKey
@@ -238,6 +239,27 @@ namespace Dwapi.Hts.Controllers
             catch (Exception e)
             {
                 Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        // POST api/Hts/Status
+        [HttpGet("Status")]
+        public IActionResult GetStatus()
+        {
+            try
+            {
+                var ver = GetType().Assembly.GetName().Version;
+                return Ok(new
+                {
+                    name="Dwapi Central - API (HTS)",
+                    status="running",
+                    build ="18FEB21211"
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "status error");
                 return StatusCode(500, e.Message);
             }
         }

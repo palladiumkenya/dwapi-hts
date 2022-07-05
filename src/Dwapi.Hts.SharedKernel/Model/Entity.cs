@@ -9,6 +9,7 @@ namespace Dwapi.Hts.SharedKernel.Model
     {
         [Key, Column(Order = 0)]
         public virtual TId Id { get; set; }
+        public virtual Guid? RefId { get; set; }
 
         protected Entity()
         {
@@ -21,6 +22,10 @@ namespace Dwapi.Hts.SharedKernel.Model
         protected Entity(TId id)
         {
             Id = id;
+        }
+
+        public virtual void UpdateRefId()
+        {
         }
 
         public override bool Equals(object obj)

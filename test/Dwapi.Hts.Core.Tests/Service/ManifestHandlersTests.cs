@@ -8,6 +8,7 @@ using Dwapi.Hts.Core.Interfaces.Service;
 using Dwapi.Hts.Core.Service;
 using Dwapi.Hts.Infrastructure.Data;
 using Dwapi.Hts.Infrastructure.Data.Repository;
+using Dwapi.Hts.SharedKernel.Enums;
 using Dwapi.Hts.SharedKernel.Tests.TestData;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -81,8 +82,8 @@ namespace Dwapi.Hts.Core.Tests.Service
             var facilities = TestDataFactory.TestFacilities();
             _context.Facilities.AddRange(facilities);
             _context.SaveChanges();
-            _context.Clients.AddRange(TestDataFactory.TestMasterPatientIndices(1, facilities.First(x => x.SiteCode == 1).Id));
-            _context.Clients.AddRange(TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id));
+            _context.Clients.AddRange(TestDataFactory.TestClients(1, facilities.First(x => x.SiteCode == 1).Id));
+            _context.Clients.AddRange(TestDataFactory.TestClients(2, facilities.First(x => x.SiteCode == 2).Id));
             _context.SaveChanges();
 
             //1,
@@ -103,13 +104,38 @@ namespace Dwapi.Hts.Core.Tests.Service
             Assert.True(sitePatients.Any(x => x.SiteCode == 2));
 
             var manifests = TestDataFactory.TestManifests(1);
-            manifests.ForEach(x => x.SiteCode = 1);
+            manifests.ForEach(x =>
+            {
+                x.SiteCode = 1;
+                x.EmrSetup = EmrSetup.SingleFacility;
+            });
             var id=_mediator.Send(new SaveManifest(manifests.First())).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifests.First().SiteCode);
 
             var remainingPatients = _context.Clients.ToList();
-            Assert.False(remainingPatients.Any(x => x.SiteCode == 1));
-            Assert.True(remainingPatients.Any(x => x.SiteCode == 2));
+            Assert.False(remainingPatients.Any(x => x.SiteCode == 1 && x.Project!="IRDO"));
+            Assert.True(remainingPatients.Any(x => x.SiteCode == 2 && x.Project!="IRDO"));
+        }
+
+        [Test]
+        public void should_Clear_By_Community_Site()
+        {
+            var sitePatients = _context.Clients.ToList();
+            Assert.True(sitePatients.Any(x=>x.SiteCode==1));
+            Assert.True(sitePatients.Any(x => x.SiteCode == 2));
+
+            var manifests = TestDataFactory.TestManifests(1);
+            manifests.ForEach(x =>
+            {
+                x.SiteCode = 2;
+                x.EmrSetup = EmrSetup.Community;
+            });
+            var id=_mediator.Send(new SaveManifest(manifests.First())).Result;
+            _manifestService.Process(manifests.First().SiteCode);
+
+            var remainingPatients = _context.Clients.ToList();
+            Assert.False(remainingPatients.Any(x => x.SiteCode == 2 && x.Project=="IRDO"));
+            Assert.True(remainingPatients.Any(x => x.SiteCode == 1 && x.Project=="IRDO"));
         }
     }
 }
