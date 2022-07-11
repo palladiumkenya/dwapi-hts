@@ -22,18 +22,34 @@ namespace Dwapi.Hts.Core.Service
             _masterFacilityRepository = masterFacilityRepository;
         }
 
-        public void Process()
+        public void Process(int siteCode)
         {
-            var manifests = _manifestRepository.GetStaged().ToList();
+            var manifests = _manifestRepository.GetStaged(siteCode).ToList();
             if (manifests.Any())
             {
+                var communityManifests = manifests.Where(x => x.EmrSetup == EmrSetup.Community).ToList();
+
+                var otherManifests = manifests.Where(x => x.EmrSetup != EmrSetup.Community).ToList();
+
                 try
                 {
-                    _manifestRepository.ClearFacility(manifests);
+                    if (otherManifests.Any())
+                        _manifestRepository.ClearFacility(otherManifests);
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Clear MANIFEST ERROR ",e);
+                    Log.Error("Clear MANIFEST ERROR ", e);
+                }
+
+                try
+                {
+                        // TODO: Check DREAMS sites
+                    if (communityManifests.Any())
+                        _manifestRepository.ClearFacility(communityManifests, "IRDO");
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Clear COMMUNITY MANIFEST ERROR ", e);
                 }
 
                 foreach (var manifest in manifests)
@@ -61,7 +77,5 @@ namespace Dwapi.Hts.Core.Service
                 }
             }
         }
-
-
     }
 }

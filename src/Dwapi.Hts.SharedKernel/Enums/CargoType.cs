@@ -15,6 +15,7 @@
     public enum EmrSetup
     {
         SingleFacility,
-        MultiFacility
+        MultiFacility,
+        Community
     }
 }

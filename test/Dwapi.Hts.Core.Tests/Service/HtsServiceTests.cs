@@ -25,6 +25,7 @@ namespace Dwapi.Hts.Core.Tests.Service
     {
         private ServiceProvider _serviceProvider;
         private List<HtsClient> _patientIndices;
+
         private List<HtsClient> _patientIndicesSiteB;
         private HtsContext _context;
         private IHtsService _htsService;
@@ -41,11 +42,11 @@ namespace Dwapi.Hts.Core.Tests.Service
             var liveSync = config["LiveSync"];
 
 
-                DapperPlusManager.AddLicense("1755;700-ThePalladiumGroup", "2073303b-0cfc-fbb9-d45f-1723bb282a3c");
-                if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
-                {
-                    throw new Exception(licenseErrorMessage);
-                }
+            DapperPlusManager.AddLicense("1755;700-ThePalladiumGroup", "2073303b-0cfc-fbb9-d45f-1723bb282a3c");
+            if (!Z.Dapper.Plus.DapperPlusManager.ValidateLicense(out var licenseErrorMessage))
+            {
+                throw new Exception(licenseErrorMessage);
+            }
 
 
             Uri endPointA = new Uri(liveSync); // this is the endpoint HttpClient will hit
@@ -64,7 +65,7 @@ namespace Dwapi.Hts.Core.Tests.Service
                 .AddScoped<IFacilityRepository, FacilityRepository>()
                 .AddScoped<IManifestRepository, ManifestRepository>()
                 .AddScoped<IHtsClientRepository, HtsClientRepository>()
-               .AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>()
+                .AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>()
                 .AddScoped<IHtsClientPartnerRepository, HtsClientPartnerRepository>()
 
                 .AddScoped<IFacilityRepository, FacilityRepository>()
@@ -94,9 +95,11 @@ namespace Dwapi.Hts.Core.Tests.Service
             var facilities = TestDataFactory.TestFacilities();
             _context.Facilities.AddRange(facilities);
             _context.SaveChanges();
-            _patientIndices = TestDataFactory.TestMasterPatientIndices(1, facilities.First(x => x.SiteCode == 1).Id);
+            _patientIndices = TestDataFactory
+                .TestClients(1, facilities.First(x => x.SiteCode == 1).Id);
             _patientIndicesSiteB =
-                TestDataFactory.TestMasterPatientIndices(2, facilities.First(x => x.SiteCode == 2).Id);
+                TestDataFactory
+                    .TestClients(2, facilities.First(x => x.SiteCode == 2).Id);
         }
 
         [SetUp]
@@ -111,6 +114,20 @@ namespace Dwapi.Hts.Core.Tests.Service
         [Test]
         public void should_Process_After_Manifest()
         {
+            var manifest = TestDataFactory.TestManifests(1).First();
+            manifest.SiteCode = 1;
+            var patients = _context.Clients.ToList();
+            Assert.False(patients.Any());
+
+            var id = _mediator.Send(new SaveManifest(manifest)).Result;
+            _manifestService.Process(manifest.SiteCode);
+            _htsService.Process(_patientIndices);
+            Assert.True(_context.Clients.Any(x=>x.SiteCode==1));
+        }
+
+        [Test]
+        public void should_Process_Recodrds_Without_Clients()
+        {
             var manifests = TestDataFactory.TestManifests();
             manifests[0].SiteCode = 1;
             manifests[1].SiteCode = 2;
@@ -118,12 +135,12 @@ namespace Dwapi.Hts.Core.Tests.Service
             Assert.False(patients.Any());
 
             var id = _mediator.Send(new SaveManifest(manifests[0])).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifests[0].SiteCode);
             _htsService.Process(_patientIndices);
-            Assert.True(_context.Clients.Any(x=>x.SiteCode==1));
+            Assert.True(_context.Clients.Any(x => x.SiteCode == 1));
 
             var id2 = _mediator.Send(new SaveManifest(manifests[1])).Result;
-            _manifestService.Process();
+            _manifestService.Process(manifests[1].SiteCode);
             _htsService.Process(_patientIndicesSiteB);
             Assert.True(_context.Clients.Any(x => x.SiteCode == 1));
             Assert.True(_context.Clients.Any(x => x.SiteCode == 2));

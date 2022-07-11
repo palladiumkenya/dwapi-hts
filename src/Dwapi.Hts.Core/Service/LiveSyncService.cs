@@ -20,15 +20,17 @@ namespace Dwapi.Hts.Core.Service
     {
         private readonly HttpClient _httpClient;
         private readonly IFacilityRepository _facilityRepository;
-        private JsonSerializerSettings _serializerSettings;
+        private readonly JsonSerializerSettings _serializerSettings;
 
         public LiveSyncService(HttpClient httpClient, IFacilityRepository facilityRepository)
         {
             _httpClient = httpClient;
 
             _facilityRepository = facilityRepository;
-            _serializerSettings = new JsonSerializerSettings();
-            _serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            _serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
         }
 
         public async void SyncManifest(Manifest manifest,int clientCount)
@@ -81,6 +83,24 @@ namespace Dwapi.Hts.Core.Service
                 var toSend = new StringContent(content, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(requestEndpoint, toSend
                 );
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{requestEndpoint} POST...");
+                Log.Error(e.Message);
+            }
+        }
+
+        public async Task SyncHandshake(List<HandshakeDto> dto)
+        {
+            string requestEndpoint = "handshake";
+
+            try
+            {
+                var content = JsonConvert.SerializeObject(dto,_serializerSettings);
+                var toSend=new StringContent(content, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(requestEndpoint,toSend);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception e)

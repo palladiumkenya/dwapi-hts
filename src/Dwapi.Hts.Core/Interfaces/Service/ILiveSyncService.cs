@@ -12,5 +12,6 @@ namespace Dwapi.Hts.Core.Interfaces.Service
         void SyncManifest(Manifest manifest,int clientCount);
         void SyncStats(List<Guid> facilityId);
        void SyncMetrics(List<MetricDto> metrics);
+       Task SyncHandshake(List<HandshakeDto> handshakeDtos);
     }
 }
