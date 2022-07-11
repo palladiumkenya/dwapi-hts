@@ -24,6 +24,8 @@ namespace Dwapi.Hts.Core.Domain
         public ICollection<HtsPartnerNotificationServices> PartnerNotifications { get; set; } = new List<HtsPartnerNotificationServices>();
         public ICollection<HtsPartnerTracing> HtsPartnerTracings { get; set; } = new List<HtsPartnerTracing>();
         public ICollection<HtsTestKits> Kitses { get; set; } = new List<HtsTestKits>();
+        public ICollection<HtsEligibilityExtract> Eligibility { get; set; } = new List<HtsEligibilityExtract>();
+
         public ICollection<Manifest> Manifests { get; set; }=new List<Manifest>();
 
         public Facility()

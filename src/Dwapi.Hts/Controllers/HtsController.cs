@@ -241,5 +241,26 @@ namespace Dwapi.Hts.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        // POST api/Hts/HtsEligibility
+        [HttpPost("HtsEligibilityScreening")]
+        public IActionResult ProcessHtsEligibility([FromBody] SaveHtsEligibility client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.HtsEligibility));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
