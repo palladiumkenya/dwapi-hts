@@ -4,14 +4,16 @@ using Dwapi.Hts.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dwapi.Hts.Infrastructure.Migrations
 {
     [DbContext(typeof(HtsContext))]
-    partial class HtsContextModelSnapshot : ModelSnapshot
+    [Migration("20220714181654_HtsEligbilityAddedColumns")]
+    partial class HtsEligbilityAddedColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,8 +467,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("AlcoholSex");
 
-                    b.Property<string>("AssessmentOutcome");
-
                     b.Property<string>("BreastfeedingMother");
 
                     b.Property<string>("CCCNumber");
@@ -521,8 +521,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("Fever");
 
-                    b.Property<string>("ForcedSex");
-
                     b.Property<string>("HtsNumber");
 
                     b.Property<string>("IsHealthWorker");
@@ -567,8 +565,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("ReasonsForIneligibility");
 
-                    b.Property<string>("ReceivedServices");
-
                     b.Property<Guid?>("RefId");
 
                     b.Property<string>("ReferredForTesting");
@@ -602,8 +598,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("TestedHIVBefore");
 
                     b.Property<string>("TraditionalProcedures");
-
-                    b.Property<string>("TypeGBV");
 
                     b.Property<string>("UnknownStatusPartner");
 
