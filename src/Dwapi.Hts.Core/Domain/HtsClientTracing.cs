@@ -23,6 +23,8 @@ namespace Dwapi.Hts.Core.Domain
             public  String TracingType { get; set; }
             public  DateTime? TracingDate { get; set; }
             public  string TracingOutcome { get; set; }
+            public DateTime? Date_Created { get; set; }
+            public DateTime? Date_Last_Modified { get; set; }
             public Guid FacilityId { get; set; }
 
             public override void UpdateRefId()

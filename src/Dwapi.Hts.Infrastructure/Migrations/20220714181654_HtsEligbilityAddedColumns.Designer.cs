@@ -4,14 +4,16 @@ using Dwapi.Hts.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dwapi.Hts.Infrastructure.Migrations
 {
     [DbContext(typeof(HtsContext))]
-    partial class HtsContextModelSnapshot : ModelSnapshot
+    [Migration("20220714181654_HtsEligbilityAddedColumns")]
+    partial class HtsEligbilityAddedColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,10 +105,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime>("DateExtracted");
 
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
-
                     b.Property<string>("DisabilityType");
 
                     b.Property<DateTime?>("Dob");
@@ -137,8 +135,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("NUPI");
 
-                    b.Property<string>("Occupation");
-
                     b.Property<string>("PatientConsented");
 
                     b.Property<string>("PatientDisabled");
@@ -148,8 +144,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Pkv");
 
                     b.Property<string>("PopulationType");
-
-                    b.Property<string>("PriorityPopulationType");
 
                     b.Property<bool?>("Processed");
 
@@ -217,10 +211,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DatePrefferedToBeEnrolled");
 
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
-
                     b.Property<string>("Emr");
 
                     b.Property<string>("EnrolledFacilityName");
@@ -284,10 +274,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("CurrentlyLivingWithIndexClient");
 
                     b.Property<DateTime?>("DateExtracted");
-
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
 
                     b.Property<string>("Emr");
 
@@ -365,8 +351,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Approach");
-
                     b.Property<string>("ClientSelfTested");
 
                     b.Property<string>("ClientTestedAs");
@@ -407,8 +391,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<Guid?>("RefId");
 
-                    b.Property<string>("Setting");
-
                     b.Property<int>("SiteCode");
 
                     b.Property<string>("Status");
@@ -440,10 +422,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("DateExtracted");
-
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
 
                     b.Property<string>("Emr");
 
@@ -489,8 +467,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("AlcoholSex");
 
-                    b.Property<string>("AssessmentOutcome");
-
                     b.Property<string>("BreastfeedingMother");
 
                     b.Property<string>("CCCNumber");
@@ -499,23 +475,19 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("CondomBurst");
 
-                    b.Property<string>("ContactWithTBCase");
-
                     b.Property<string>("Cough");
 
                     b.Property<string>("CoupleDiscordant");
 
                     b.Property<string>("CurrentlyHasSTI");
 
+                    b.Property<string>("CurrentlyHasTB");
+
                     b.Property<string>("CurrentlyOnPep");
 
                     b.Property<string>("CurrentlyOnPrep");
 
-                    b.Property<DateTime?>("DateCreated");
-
                     b.Property<DateTime?>("DateExtracted");
-
-                    b.Property<DateTime?>("DateLastModified");
 
                     b.Property<DateTime?>("DateTestedProvider");
 
@@ -524,6 +496,8 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Department");
 
                     b.Property<string>("EligibleForTest");
+
+                    b.Property<string>("EmotionalViolence");
 
                     b.Property<string>("Emr");
 
@@ -547,8 +521,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("Fever");
 
-                    b.Property<string>("ForcedSex");
-
                     b.Property<string>("HtsNumber");
 
                     b.Property<string>("IsHealthWorker");
@@ -556,8 +528,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("KeyPopulation");
 
                     b.Property<string>("KnownStatusPartner");
-
-                    b.Property<string>("Lethargy");
 
                     b.Property<string>("MoneySex");
 
@@ -573,11 +543,13 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<int?>("NumberOfPartners");
 
-                    b.Property<string>("PartnerHIVStatus");
+                    b.Property<string>("PartnerHivStatus");
 
                     b.Property<int>("PatientPk");
 
                     b.Property<string>("PatientType");
+
+                    b.Property<string>("PhysicalViolence");
 
                     b.Property<string>("PopulationType");
 
@@ -593,8 +565,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<string>("ReasonsForIneligibility");
 
-                    b.Property<string>("ReceivedServices");
-
                     b.Property<Guid?>("RefId");
 
                     b.Property<string>("ReferredForTesting");
@@ -606,6 +576,8 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("ResultOfHIVSelf");
 
                     b.Property<string>("ScreenedTB");
+
+                    b.Property<string>("SexualViolence");
 
                     b.Property<string>("SexuallyActive");
 
@@ -626,8 +598,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("TestedHIVBefore");
 
                     b.Property<string>("TraditionalProcedures");
-
-                    b.Property<string>("TypeGBV");
 
                     b.Property<string>("UnknownStatusPartner");
 
@@ -660,10 +630,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<DateTime?>("DateElicited");
 
                     b.Property<DateTime?>("DateExtracted");
-
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
 
                     b.Property<DateTime?>("Dob");
 
@@ -733,10 +699,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DateExtracted");
 
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
-
                     b.Property<string>("Emr");
 
                     b.Property<Guid>("FacilityId");
@@ -783,10 +745,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DateExtracted");
 
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
-
                     b.Property<string>("Emr");
 
                     b.Property<int?>("EncounterId");
@@ -812,8 +770,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Status");
 
                     b.Property<DateTime?>("StatusDate");
-
-                    b.Property<string>("SyphilisResult");
 
                     b.Property<string>("TestKitExpiry1");
 

@@ -31,6 +31,8 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
                      DELETE FROM {nameof(HtsContext.HtsPartnerNotificationServices)} WHERE {nameof(HtsPartnerNotificationServices.FacilityId)} in ({ids}) AND {nameof(HtsPartnerNotificationServices.Project)} <> 'IRDO';
                      DELETE FROM {nameof(HtsContext.HtsPartnerTracings)} WHERE {nameof(HtsPartnerTracing.FacilityId)} in ({ids}) AND {nameof(HtsPartnerTracing.Project)} <> 'IRDO';
                      DELETE FROM {nameof(HtsContext.HtsTestKits)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsTestKits.Project)} <> 'IRDO';
+                     DELETE FROM {nameof(HtsContext.HtsEligibilityExtract)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsEligibilityExtract.Project)} <> 'IRDO';
+
                  "
                 );
 
@@ -59,6 +61,8 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
                      DELETE FROM {nameof(HtsContext.HtsPartnerNotificationServices)} WHERE {nameof(HtsPartnerNotificationServices.FacilityId)} in ({ids}) AND {nameof(HtsPartnerNotificationServices.Project)}='{project}';
                      DELETE FROM {nameof(HtsContext.HtsPartnerTracings)} WHERE {nameof(HtsPartnerTracing.FacilityId)} in ({ids}) AND {nameof(HtsPartnerTracing.Project)}='{project}';
                      DELETE FROM {nameof(HtsContext.HtsTestKits)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsTestKits.Project)}='${project}';
+                     DELETE FROM {nameof(HtsContext.HtsEligibilityExtract)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsEligibilityExtract.Project)}='${project}';
+
                  "
             );
 
