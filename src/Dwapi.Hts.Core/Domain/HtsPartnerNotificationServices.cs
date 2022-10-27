@@ -37,6 +37,8 @@ namespace Dwapi.Hts.Core.Domain
         public DateTime? Dob { get; set; }
         public DateTime? DateElicited { get; set; }
         public string MaritalStatus { get; set; }
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
         public Guid FacilityId { get; set; }
 
         public override void UpdateRefId()
