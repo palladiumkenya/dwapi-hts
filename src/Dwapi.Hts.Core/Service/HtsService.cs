@@ -25,6 +25,7 @@ namespace Dwapi.Hts.Core.Service
         private readonly IHtsPartnerTracingRepository _partnerTracingRepository;
         private readonly IHtsHtsTestKitsRepository _kitsRepository;
         private readonly IHtsEligibilityExtractRepository _HtsEligibilityExtractRepository;
+        private readonly IHtsRiskScoresRepository _htsRiskScoresRepository;
 
         private readonly ILiveSyncService _syncService;
 
@@ -33,7 +34,8 @@ namespace Dwapi.Hts.Core.Service
         public HtsService(IHtsClientRepository clientRepository, IHtsClientLinkageRepository linkageRepository, IHtsClientPartnerRepository partnerRepository, 
             IFacilityRepository facilityRepository, IHtsClientTestsRepository htsClientTestsRepository, IHtsClientTracingRepository clientTracingRepository, 
             IHtsPartnerNotificationServicesRepository htsPartnerNotificationServicesRepository, IHtsPartnerTracingRepository partnerTracingRepository, 
-            IHtsHtsTestKitsRepository kitsRepository, ILiveSyncService syncService, IHtsEligibilityExtractRepository HtsEligibilityExtractRepository)
+            IHtsHtsTestKitsRepository kitsRepository, ILiveSyncService syncService, IHtsEligibilityExtractRepository HtsEligibilityExtractRepository,
+            IHtsRiskScoresRepository htsRiskScoresRepository)
         {
             _clientRepository = clientRepository;
             _linkageRepository = linkageRepository;
@@ -45,6 +47,7 @@ namespace Dwapi.Hts.Core.Service
             _partnerTracingRepository = partnerTracingRepository;
             _kitsRepository = kitsRepository;
             _HtsEligibilityExtractRepository = HtsEligibilityExtractRepository;
+            _htsRiskScoresRepository = htsRiskScoresRepository;
 
             _syncService = syncService;
         }
@@ -461,6 +464,50 @@ namespace Dwapi.Hts.Core.Service
 
             SyncClients(facilityIds);
         }
+        
+        public void Process(IEnumerable<HtsRiskScores> HtsRiskScores)
+                {
+                    List<Guid> facilityIds=new List<Guid>();
+        
+                    if(null==HtsRiskScores)
+                        return;
+                    if(!HtsRiskScores.Any())
+                        return;
+        
+                    _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
+        
+                    var batch = new List<HtsRiskScores>();
+                    int count = 0;
+        
+                    foreach (var screening in HtsRiskScores)
+                    {
+                        count++;
+                        try
+                        {
+                            screening.FacilityId = GetFacilityId(screening.SiteCode);
+                            batch.Add(screening);
+                            facilityIds.Add(screening.FacilityId);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Error(e, $"Facility Id missing {screening.SiteCode}");
+                        }
+        
+        
+                        if (count == 1000)
+                        {
+                            _htsRiskScoresRepository.CreateBulk(batch);
+                            count = 0;
+                            batch = new List<HtsRiskScores>();
+                        }
+        
+                    }
+        
+                    if (batch.Any())
+                        _htsRiskScoresRepository.CreateBulk(batch);
+        
+                    SyncClients(facilityIds);
+                }
 
         public Guid GetFacilityId(int siteCode)
         {

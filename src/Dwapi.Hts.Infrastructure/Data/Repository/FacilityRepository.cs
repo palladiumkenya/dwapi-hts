@@ -61,7 +61,8 @@ select
 (select count(id) from HtsPartnerNotificationServices where facilityid='{facilityId}') HtsPartnerNotificationServicesExtract,
 (select count(id) from HtsPartnerTracings where facilityid='{facilityId}') HtsPartnerTracingExtract,
 (select count(id) from HtsTestKits where facilityid='{facilityId}') HtsTestKitsExtract,
-(select count(id) from HtsEligibilityExtract where facilityid='{facilityId}') HtsEligibilityExtract
+(select count(id) from HtsEligibilityExtract where facilityid='{facilityId}') HtsEligibilityExtract,
+(select count(id) from HtsRiskScores where facilityid='{facilityId}') HtsRiskScoresExtract
 
                 ";
 
@@ -78,6 +79,7 @@ select
                 stats.AddStats("HtsPartnerTracingExtract",result.HtsPartnerTracingExtract);
                 stats.AddStats("HtsTestKitsExtract",result.HtsTestKitsExtract);
                 stats.AddStats("HtsEligibilityExtract",result.HtsEligibilityExtract);
+                stats.AddStats("HtsRiskScoresExtract",result.HtsRiskScoresExtract);
 
                 return stats;
             }

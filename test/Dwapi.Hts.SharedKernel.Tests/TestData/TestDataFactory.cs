@@ -92,6 +92,11 @@ namespace Dwapi.Hts.SharedKernel.Tests.TestData
                     .With(x => x.FacilityId == facility.Id)
                     .Build()
                     .ToList();
+                facility.RiskScores = Builder<HtsRiskScores>.CreateListOfSize(childcount)
+                    .All()
+                    .With(x => x.FacilityId == facility.Id)
+                    .Build()
+                    .ToList();
             }
             return facilities;
         }

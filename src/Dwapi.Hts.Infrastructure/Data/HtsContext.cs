@@ -34,6 +34,7 @@ namespace Dwapi.Hts.Infrastructure.Data
 
         public DbSet<HtsTestKits> HtsTestKits { get; set; }
         public DbSet<HtsEligibilityExtract> HtsEligibilityExtract { get; set; }
+        public DbSet<HtsRiskScores> HtsRiskScores { get; set; }
 
 
         public HtsContext(DbContextOptions<HtsContext> options) : base(options)
@@ -62,6 +63,7 @@ namespace Dwapi.Hts.Infrastructure.Data
             DapperPlusManager.Entity<HtsPartnerTracing>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsPartnerTracings)}");
             DapperPlusManager.Entity<HtsTestKits>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsTestKits)}");
             DapperPlusManager.Entity<HtsEligibilityExtract>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsEligibilityExtract)}");
+            DapperPlusManager.Entity<HtsRiskScores>().Key(x => x.Id).Table($"{nameof(HtsContext.HtsRiskScores)}");
 
         }
 

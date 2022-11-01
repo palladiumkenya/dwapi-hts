@@ -16,5 +16,7 @@ namespace Dwapi.Hts.Core.Interfaces.Service
         void Process(IEnumerable<HtsPartnerTracing> partnerTracings);
         void Process(IEnumerable<HtsTestKits> kits);
         void Process(IEnumerable<HtsEligibilityExtract> htsEligibility);
+        void Process(IEnumerable<HtsRiskScores> htsRiskScores);
+
     }
 }

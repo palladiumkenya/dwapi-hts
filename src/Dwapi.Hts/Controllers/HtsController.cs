@@ -265,6 +265,29 @@ namespace Dwapi.Hts.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        
+        // POST api/Hts/HtsRiskScores
+        [HttpPost("HtsRiskScores")]
+        public IActionResult ProcessHtsRiskScores([FromBody] SaveHtsRiskScores client)
+        {
+            if (null == client)
+                return BadRequest();
+
+            try
+            {
+                var id=  BackgroundJob.Enqueue(() => _htsService.Process(client.RiskScores));
+                return Ok(new
+                {
+                    BatchKey = id
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+
+                return StatusCode(500, e.Message);
+            }
+        }
 
         // POST api/Hts/Status
         [HttpGet("Status")]

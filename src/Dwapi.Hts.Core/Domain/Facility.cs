@@ -25,6 +25,7 @@ namespace Dwapi.Hts.Core.Domain
         public ICollection<HtsPartnerTracing> HtsPartnerTracings { get; set; } = new List<HtsPartnerTracing>();
         public ICollection<HtsTestKits> Kitses { get; set; } = new List<HtsTestKits>();
         public ICollection<HtsEligibilityExtract> Eligibility { get; set; } = new List<HtsEligibilityExtract>();
+        public ICollection<HtsRiskScores> RiskScores { get; set; } = new List<HtsRiskScores>();
 
         public ICollection<Manifest> Manifests { get; set; }=new List<Manifest>();
 

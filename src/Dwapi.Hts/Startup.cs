@@ -94,6 +94,7 @@ namespace Dwapi.Hts
             services.AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>();
             services.AddScoped<IHtsHtsTestKitsRepository, HtsHtsTestKitsRepository>();
             services.AddScoped<IHtsEligibilityExtractRepository, HtsEligibilityExtractRepository>();
+            services.AddScoped<IHtsRiskScoresRepository, HtsRiskScoresRepository>();
 
 
             services.AddScoped<IManifestService, ManifestService>();
