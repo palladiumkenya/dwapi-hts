@@ -26,6 +26,10 @@ namespace Dwapi.Hts.Core.Domain
         public  string TestKitLotNumber2 { get; set; }
         public  string TestKitExpiry2{ get; set; }
         public  string TestResult2 { get; set; }
+        public  string SyphilisResult { get; set; } 
+        public DateTime? Date_Created { get; set; }
+        public DateTime? Date_Last_Modified { get; set; }
+
         public Guid FacilityId { get; set; }
 
         public override void UpdateRefId()

@@ -60,7 +60,9 @@ select
 (select count(id) from HtsClientTracing where facilityid='{facilityId}') HtsClientTracingExtract,
 (select count(id) from HtsPartnerNotificationServices where facilityid='{facilityId}') HtsPartnerNotificationServicesExtract,
 (select count(id) from HtsPartnerTracings where facilityid='{facilityId}') HtsPartnerTracingExtract,
-(select count(id) from HtsTestKits where facilityid='{facilityId}') HtsTestKitsExtract
+(select count(id) from HtsTestKits where facilityid='{facilityId}') HtsTestKitsExtract,
+(select count(id) from HtsEligibilityExtract where facilityid='{facilityId}') HtsEligibilityExtract
+
                 ";
 
             var result = GetDbConnection().Query<dynamic>(sql).FirstOrDefault();
@@ -75,6 +77,7 @@ select
                 stats.AddStats("HtsPartnerNotificationServicesExtract",result.HtsPartnerNotificationServicesExtract);
                 stats.AddStats("HtsPartnerTracingExtract",result.HtsPartnerTracingExtract);
                 stats.AddStats("HtsTestKitsExtract",result.HtsTestKitsExtract);
+                stats.AddStats("HtsEligibilityExtract",result.HtsEligibilityExtract);
 
                 return stats;
             }

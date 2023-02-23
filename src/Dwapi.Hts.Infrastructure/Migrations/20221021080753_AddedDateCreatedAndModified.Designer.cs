@@ -4,14 +4,16 @@ using Dwapi.Hts.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dwapi.Hts.Infrastructure.Migrations
 {
     [DbContext(typeof(HtsContext))]
-    partial class HtsContextModelSnapshot : ModelSnapshot
+    [Migration("20221021080753_AddedDateCreatedAndModified")]
+    partial class AddedDateCreatedAndModified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,8 +128,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("Gender");
 
                     b.Property<string>("HtsNumber");
-
-                    b.Property<string>("HtsRecencyId");
 
                     b.Property<string>("KeyPop");
 
@@ -379,10 +379,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DateExtracted");
 
-                    b.Property<DateTime?>("Date_Created");
-
-                    b.Property<DateTime?>("Date_Last_Modified");
-
                     b.Property<string>("Emr");
 
                     b.Property<int?>("EncounterId");
@@ -398,10 +394,6 @@ namespace Dwapi.Hts.Infrastructure.Migrations
                     b.Property<string>("FinalTestResult");
 
                     b.Property<string>("HtsNumber");
-
-                    b.Property<string>("HtsRiskCategory");
-
-                    b.Property<decimal?>("HtsRiskScore");
 
                     b.Property<int?>("MonthsSinceLastTest");
 

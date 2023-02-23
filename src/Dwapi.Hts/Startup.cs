@@ -93,6 +93,8 @@ namespace Dwapi.Hts
             services.AddScoped<IHtsPartnerNotificationServicesRepository, HtsPartnerNotificationServicesRepository>();
             services.AddScoped<IHtsClientLinkageRepository, HtsClientLinkageRepository>();
             services.AddScoped<IHtsHtsTestKitsRepository, HtsHtsTestKitsRepository>();
+            services.AddScoped<IHtsEligibilityExtractRepository, HtsEligibilityExtractRepository>();
+
 
             services.AddScoped<IManifestService, ManifestService>();
             services.AddScoped<IHtsService, HtsService>();
