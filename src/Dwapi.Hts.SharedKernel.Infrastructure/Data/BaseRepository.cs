@@ -81,7 +81,7 @@ namespace Dwapi.Hts.SharedKernel.Infrastructure.Data
         {
             using (var cn = new SqlConnection(ConnectionString))
             {
-                cn.Execute(sql);
+                cn.Execute(sql,null,null,0);
             }
             return 1;
         }
@@ -90,7 +90,7 @@ namespace Dwapi.Hts.SharedKernel.Infrastructure.Data
         {
             using (var cn = new SqlConnection(ConnectionString))
             {
-                await cn.ExecuteAsync(sql);
+                await cn.ExecuteAsync(sql,null,null,0);
             }
             return 1;
         }
