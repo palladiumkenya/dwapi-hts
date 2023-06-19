@@ -12,12 +12,12 @@ namespace Dwapi.Hts.Filters
     {
         public void OnStateUnapplied(ApplyStateContext context, IWriteOnlyTransaction transaction)
         {
-            context.JobExpirationTimeout = TimeSpan.FromDays(270);
+            context.JobExpirationTimeout = TimeSpan.FromDays(30);
         }
 
         public void OnStateApplied(ApplyStateContext context, IWriteOnlyTransaction transaction)
         {
-            context.JobExpirationTimeout = TimeSpan.FromDays(270);
+            context.JobExpirationTimeout = TimeSpan.FromDays(30);
         }
     }
 }

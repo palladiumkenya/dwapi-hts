@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
@@ -48,7 +49,10 @@ namespace Dwapi.Hts.Core.Service
 
             _syncService = syncService;
         }
-
+        
+        [Queue("clients")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsClient> clients)
         {
             List<Guid> facilityIds=new List<Guid>();
@@ -96,6 +100,9 @@ namespace Dwapi.Hts.Core.Service
 
         }
 
+        [Queue("linkages")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsClientLinkage> linkages)
         {
             List<Guid> facilityIds=new List<Guid>();
@@ -142,7 +149,11 @@ namespace Dwapi.Hts.Core.Service
             SyncClients(facilityIds);
 
         }
-
+        
+        
+        [Queue("clientpartner")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsClientPartner> partners)
         {
             List<Guid> facilityIds=new List<Guid>();
@@ -189,7 +200,10 @@ namespace Dwapi.Hts.Core.Service
             SyncClients(facilityIds);
 
         }
-
+        
+        [Queue("clienttests")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsClientTests> clientTestses)
         {
 
@@ -237,6 +251,10 @@ namespace Dwapi.Hts.Core.Service
             SyncClients(facilityIds);
         }
 
+        
+        [Queue("clienttracings")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsClientTracing> clientTracings)
         {
 
@@ -283,6 +301,10 @@ namespace Dwapi.Hts.Core.Service
             SyncClients(facilityIds);
         }
 
+        
+        [Queue("pns")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsPartnerNotificationServices> partners)
         {
             List<Guid> facilityIds=new List<Guid>();
@@ -328,6 +350,10 @@ namespace Dwapi.Hts.Core.Service
             SyncClients(facilityIds);
         }
 
+        
+        [Queue("partnertracing")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsPartnerTracing> partners)
         {
             List<Guid> facilityIds=new List<Guid>();
@@ -373,6 +399,10 @@ namespace Dwapi.Hts.Core.Service
             SyncClients(facilityIds);
         }
 
+        
+        [Queue("testkits")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsTestKits> kits)
         {
             List<Guid> facilityIds=new List<Guid>();
@@ -418,6 +448,10 @@ namespace Dwapi.Hts.Core.Service
             SyncClients(facilityIds);
         }
         
+        
+        [Queue("eligibility")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(IEnumerable<HtsEligibilityExtract> HtsEligibilityExtract)
         {
             List<Guid> facilityIds=new List<Guid>();

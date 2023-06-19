@@ -38,6 +38,7 @@ namespace Dwapi.Hts.Infrastructure.Data
 
         public HtsContext(DbContextOptions<HtsContext> options) : base(options)
         {
+            this.Database.SetCommandTimeout(0);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
