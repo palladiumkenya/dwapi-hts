@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Dwapi.Hts.Core.Domain.Dto;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.Core.Interfaces.Service;
 using Dwapi.Hts.SharedKernel.Enums;
+using Hangfire;
 using Serilog;
 
 namespace Dwapi.Hts.Core.Service
@@ -22,6 +24,9 @@ namespace Dwapi.Hts.Core.Service
             _masterFacilityRepository = masterFacilityRepository;
         }
 
+        [Queue("manifest")]
+        [AutomaticRetry(Attempts = 3)]
+        [DisplayName("{0}")]
         public void Process(int siteCode)
         {
             var manifests = _manifestRepository.GetStaged(siteCode).ToList();

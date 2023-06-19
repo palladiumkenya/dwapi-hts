@@ -123,6 +123,19 @@ namespace Dwapi.Hts
             ServiceProvider = container.GetInstance<IServiceProvider>();
         }
 
+        
+        private void ConfigureWorkers(IApplicationBuilder app,string[] queues)
+        {
+            var hangfireQueueOptions = new BackgroundJobServerOptions
+            {
+                ServerName = $"{Environment.MachineName}:{queues[0].ToUpper()}",
+                WorkerCount = 5,
+                Queues = queues,
+                ShutdownTimeout = TimeSpan.FromMinutes(2),
+            };
+            
+            app.UseHangfireServer(hangfireQueueOptions);
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -163,7 +176,17 @@ namespace Dwapi.Hts
                 app.UseHangfireDashboard();
 
                 var options = new BackgroundJobServerOptions {ServerName  = "DWAPIHTSMAIN",WorkerCount = 1 };
-                app.UseHangfireServer(options);
+                
+                
+                var queues = new List<string>
+                {
+                     "manifest","clients", "linkages", "clientpartner","clienttests", "clienttracings",
+                    "pns", "partnertracing","testkits","eligibility"
+                };
+                
+                queues.ForEach(queue => ConfigureWorkers(app,new[] { queue.ToLower() }));
+
+                // app.UseHangfireServer(queues);
                 GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute());
                 GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute() { Attempts = 3 });
             }
