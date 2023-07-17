@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using Dwapi.Hts.Core.Command;
+using Dwapi.Hts.Core.Domain;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.Core.Interfaces.Service;
 using Hangfire;
@@ -62,6 +63,41 @@ namespace Dwapi.Hts.Controllers
                 return Ok(new
                 {
                     FacilityKey = faciliyKey
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "manifest error");
+                return StatusCode(500, e.Message);
+            }
+        }
+        
+        // POST api/Hts/Manifest
+        [HttpPost("Manifestv2")]
+        public async Task<IActionResult> ProcessManifestV2([FromBody] SaveManifest manifest)
+        {
+            if (null == manifest)
+                return BadRequest();
+
+            // masterFacility = _mediator.Send(new SaveManifest(manifest)).Result;
+            MasterFacility masterFacility = null;
+
+            
+            masterFacility = await _mediator.Send(new SaveManifest(manifest.Manifest));
+            masterFacility.ManifestId = manifest.Manifest.Id;
+            masterFacility.SessionId = manifest.Manifest.Session;
+            masterFacility.JobId = "100dd92e-7562-41dd-99dc-af74392b0fec";
+            try
+            {
+
+               manifest.AllowSnapshot = Startup.AllowSnapshot;
+                var faciliyKey = await _mediator.Send(manifest, HttpContext.RequestAborted);
+                BackgroundJob.Enqueue(() => _manifestService.Process(manifest.Manifest.SiteCode));
+                return Ok(new
+                {
+                    FacilityKey = faciliyKey,
+                    ManifestId = Guid.Parse("8fe4088a-e539-4c9c-a698-affc008ede99"),
+                    SessionId = Guid.Parse("8fe4088a-e539-4c9c-a698-affc008ede99")
                 });
             }
             catch (Exception e)

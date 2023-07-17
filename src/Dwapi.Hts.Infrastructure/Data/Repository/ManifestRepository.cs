@@ -9,11 +9,14 @@ using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.SharedKernel.Enums;
 using Dwapi.Hts.SharedKernel.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Dwapi.Hts.Infrastructure.Data.Repository
 {
     public class ManifestRepository : BaseRepository<Manifest, Guid>, IManifestRepository
     {
+        private readonly HtsContext _context;
+
         public ManifestRepository(HtsContext context) : base(context)
         {
         }
@@ -119,5 +122,47 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
                 Id = x.Id, End = x.End, Session = x.Session, Start = x.Start
             });
         }
+        
+        
+        public Task<MasterFacility> VerifyFacility(int siteCode)
+        {
+            int originalSiteCode = siteCode;
+        
+            string fcode = siteCode.ToString();
+            if (fcode.Length != 5)
+            {
+                Log.Debug(new string('^', 40));
+                Log.Debug($"Invalid SiteCode:{siteCode}");
+                
+                Log.Debug(new string('^', 40));
+            }
+        
+            return _context.MasterFacilities
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == siteCode);
+        }
+        // public Task<MasterFacility> VerifyFacility(int siteCode)
+        // {
+        //     int originalSiteCode = siteCode;
+        //
+        //     string fcode = siteCode.ToString();
+        //     if (fcode.Length != 5)
+        //     {
+        //         Log.Debug(new string('^', 40));
+        //         Log.Debug($"Invalid SiteCode:{siteCode}");
+        //         
+        //         Log.Debug(new string('^', 40));
+        //     }
+        //
+        //     var sql = $"SELECT * FROM {nameof(HtsContext.MasterFacilities)} WHERE Id={siteCode}";
+        //     return Context.Database.GetDbConnection().Query<MasterFacility>(sql);
+        //
+        //     // return HtsContext.MasterFacilities
+        //     //     .AsNoTracking()
+        //     //     .FirstOrDefaultAsync(x => x.Id == siteCode);
+        // }
+        
+        
+
     }
 }

@@ -24,6 +24,7 @@ namespace Dwapi.Hts.Core.Domain
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public string Tag { get; set; }
+        
         public ICollection<Cargo> Cargoes { get; set; } = new List<Cargo>();
 
         public Manifest()
@@ -33,6 +34,16 @@ namespace Dwapi.Hts.Core.Domain
         public void UpdateFacility(Guid facilityId)
         {
             FacilityId = facilityId;
+        }
+        
+        public bool IsValid()
+        {
+            return SiteCode > 0 && Cargoes.Count > 0;
+        }
+        public void Validate()
+        {
+            if (!IsValid())
+                throw new Exception($"Invalid Manifest,Please ensure the SiteCode [{SiteCode}] is valid and there exists at least one (1) Patient record");
         }
     }
 }

@@ -20,6 +20,12 @@ namespace Dwapi.Hts.Core.Domain
         public int? SnapshotSiteCode { get; set; }
         public int? SnapshotVersion { get; set; }
 
+        public Guid? SessionId { get; set; } = Guid.Parse("8fe4088a-e539-4c9c-a698-affc008ede99");
+        [NotMapped]
+        public Guid? ManifestId { get; set; } = Guid.Parse("8fe4088a-e539-4c9c-a698-affc008ede99");
+        [NotMapped]
+        public string JobId { get; set; }
+
         public ICollection<Facility> Mentions { get; set; }=new List<Facility>();
 
         public MasterFacility()
