@@ -37,6 +37,11 @@ namespace Dwapi.Hts.Core.Domain
         public string Approach	 { get; set; }
         public  string HtsRiskCategory	 { get; set; }
         public  decimal? HtsRiskScore	 { get; set; }
+        
+        public  string ReferredForServices { get; set; }
+        public  string ReferredServices { get; set; }
+        public  string OtherReferredServices { get; set; }
+        
         public DateTime? Date_Created { get; set; }
         public DateTime? Date_Last_Modified { get; set; }
         public Guid FacilityId { get; set; }
