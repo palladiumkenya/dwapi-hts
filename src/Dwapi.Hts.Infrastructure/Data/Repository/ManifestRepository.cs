@@ -8,7 +8,9 @@ using Dwapi.Hts.Core.Domain.Dto;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.SharedKernel.Enums;
 using Dwapi.Hts.SharedKernel.Infrastructure.Data;
+using Dwapi.Hts.SharedKernel.Model;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace Dwapi.Hts.Infrastructure.Data.Repository
 {
@@ -61,7 +63,7 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
                      DELETE FROM {nameof(HtsContext.HtsPartnerNotificationServices)} WHERE {nameof(HtsPartnerNotificationServices.FacilityId)} in ({ids}) AND {nameof(HtsPartnerNotificationServices.Project)}='{project}';
                      DELETE FROM {nameof(HtsContext.HtsPartnerTracings)} WHERE {nameof(HtsPartnerTracing.FacilityId)} in ({ids}) AND {nameof(HtsPartnerTracing.Project)}='{project}';
                      DELETE FROM {nameof(HtsContext.HtsTestKits)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsTestKits.Project)}='${project}';
-                     DELETE FROM {nameof(HtsContext.HtsEligibilityExtract)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsEligibilityExtract.Project)}='${project}';
+                     DELETE FROM {nameof(HtsContext.HtsEligibilityExtract)} WHERE {nameof(HtsEligibilityExtract.FacilityId)} in ({ids}) AND {nameof(HtsEligibilityExtract.Project)}='${project}';
 
                  "
             );
@@ -118,6 +120,25 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
             {
                 Id = x.Id, End = x.End, Session = x.Session, Start = x.Start
             });
+        }
+        
+        
+        
+        public string GetDWAPIversionSending(int siteCode)
+        {
+            var ctt = Context as HtsContext;
+            var manifests = DbSet.AsNoTracking().Where(x => x.Status == ManifestStatus.Staged && x.SiteCode == siteCode)
+                .ToList();
+            // DbSet.AsNoTracking().FacMetrics.Select(o => o.Metric).Where(x => x.Contains("CareTreatment")).ToList()[0]
+        
+            foreach (var manifest in manifests)
+            {
+                manifest.Cargoes = ctt.Cargoes.AsNoTracking()
+                    .Where(x => x.Type != CargoType.Patient && x.ManifestId == manifest.Id).ToList();
+            }
+            var version = manifests.Select(o => o.Cargoes).Select(x =>  x.Where(m => m.Items.Contains("HivTestingService"))).FirstOrDefault().ToList()[0].Items;
+            
+            return JObject.Parse(version)["Version"].ToString();
         }
     }
 }

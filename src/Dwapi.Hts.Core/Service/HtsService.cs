@@ -18,6 +18,8 @@ namespace Dwapi.Hts.Core.Service
         private readonly IHtsClientLinkageRepository _linkageRepository;
         private readonly IHtsClientPartnerRepository _partnerRepository;
         private readonly IFacilityRepository _facilityRepository;
+        private readonly IManifestRepository _manifestRepository;
+
 
         private readonly IHtsClientTestsRepository _htsClientTestsRepository;
         private readonly IHtsClientTracingRepository _clientTracingRepository;
@@ -31,7 +33,7 @@ namespace Dwapi.Hts.Core.Service
         private List<SiteProfile> _siteProfiles = new List<SiteProfile>();
 
         public HtsService(IHtsClientRepository clientRepository, IHtsClientLinkageRepository linkageRepository, IHtsClientPartnerRepository partnerRepository, 
-            IFacilityRepository facilityRepository, IHtsClientTestsRepository htsClientTestsRepository, IHtsClientTracingRepository clientTracingRepository, 
+            IFacilityRepository facilityRepository, IManifestRepository manifestRepository,IHtsClientTestsRepository htsClientTestsRepository, IHtsClientTracingRepository clientTracingRepository, 
             IHtsPartnerNotificationServicesRepository htsPartnerNotificationServicesRepository, IHtsPartnerTracingRepository partnerTracingRepository, 
             IHtsHtsTestKitsRepository kitsRepository, ILiveSyncService syncService, IHtsEligibilityExtractRepository HtsEligibilityExtractRepository)
         {
@@ -39,6 +41,7 @@ namespace Dwapi.Hts.Core.Service
             _linkageRepository = linkageRepository;
             _partnerRepository = partnerRepository;
             _facilityRepository = facilityRepository;
+            _manifestRepository = manifestRepository;
             _htsClientTestsRepository = htsClientTestsRepository;
             _clientTracingRepository = clientTracingRepository;
             _htsPartnerNotificationServicesRepository = htsPartnerNotificationServicesRepository;
@@ -51,7 +54,7 @@ namespace Dwapi.Hts.Core.Service
 
         public void Process(IEnumerable<HtsClient> clients)
         {
-            List<Guid> facilityIds=new List<Guid>();
+           List<Guid> facilityIds=new List<Guid>();
 
             if(null==clients)
                 return;
@@ -59,6 +62,15 @@ namespace Dwapi.Hts.Core.Service
                 return;
 
             _siteProfiles = _facilityRepository.GetSiteProfiles().ToList();
+
+            // check if version allowed to send
+            // var DwapiVersionSending = _manifestRepository.GetDWAPIversionSending(clients.FirstOrDefault().SiteCode);
+            // var ver = DwapiVersionSending;
+            // if (DwapiVersionSending != "3.1.1.3")
+            // {
+            //     // throw new Exception($" ====> You're using DWAPI Version [{DwapiVersionSending}]. Older Versions of DWAPI are not allowed to send to NDWH. UPGRADE to the latest version and RETRY");
+            //     throw new DwapiVersionNotAllowedException(DwapiVersionSending);
+            // }
 
             var batch = new List<HtsClient>();
             int count = 0;
@@ -464,6 +476,15 @@ namespace Dwapi.Hts.Core.Service
 
         public Guid GetFacilityId(int siteCode)
         {
+            // // check if version allowed to send
+            // var DwapiVersionSending = _manifestRepository.GetDWAPIversionSending(siteCode);
+            // var ver = DwapiVersionSending;
+            // if (DwapiVersionSending != "3.1.1.3")
+            // {
+            //     // throw new Exception($" ====> You're using DWAPI Version [{DwapiVersionSending}]. Older Versions of DWAPI are not allowed to send to NDWH. UPGRADE to the latest version and RETRY");
+            //     throw new DwapiVersionNotAllowedException(DwapiVersionSending);
+            // }
+            
             var profile = _siteProfiles.FirstOrDefault(x => x.SiteCode == siteCode);
             if (null == profile)
                 throw new FacilityNotFoundException(siteCode);

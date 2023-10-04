@@ -16,5 +16,7 @@ namespace Dwapi.Hts.Core.Interfaces.Repository
         IEnumerable<Manifest> GetStaged(int siteCode);
         Task EndSession(Guid session);
         IEnumerable<HandshakeDto> GetSessionHandshakes(Guid session);
+        string GetDWAPIversionSending(int siteCode);
+
     }
 }
