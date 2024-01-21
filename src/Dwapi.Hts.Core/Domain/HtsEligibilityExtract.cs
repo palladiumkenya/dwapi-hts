@@ -95,7 +95,8 @@ namespace Dwapi.Hts.Core.Domain
                
                public DateTime? DateCreated { get; set; }
                public DateTime? DateLastModified { get; set; }
-               
+               public string RecordUUID { get; set; }
+               public bool? Voided { get; set; }
         
     }
 }
