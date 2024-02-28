@@ -23,118 +23,18 @@ namespace Dwapi.Hts.Infrastructure.Data.Repository
             var ids = string.Join(',', manifests.Select(x =>$"'{x.FacilityId}'"));
             ExecSql(
                 $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.Clients)} WHERE {nameof(HtsClient.FacilityId)} in ({ids}) AND {nameof(HtsClient.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.ClientLinkages)} WHERE {nameof(HtsClientLinkage.FacilityId)} in ({ids}) AND {nameof(HtsClientLinkage.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.ClientPartners)} WHERE {nameof(HtsClientPartner.FacilityId)} in ({ids}) AND {nameof(HtsClientPartner.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.HtsClientTests)} WHERE {nameof(HtsClientTests.FacilityId)} in ({ids}) AND {nameof(HtsClientTests.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.HtsClientTracing)} WHERE {nameof(HtsClientTracing.FacilityId)} in ({ids}) AND {nameof(HtsClientTracing.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.HtsPartnerNotificationServices)} WHERE {nameof(HtsPartnerNotificationServices.FacilityId)} in ({ids}) AND {nameof(HtsPartnerNotificationServices.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.HtsPartnerTracings)} WHERE {nameof(HtsPartnerTracing.FacilityId)} in ({ids}) AND {nameof(HtsPartnerTracing.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.HtsTestKits)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsTestKits.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            ExecSql(
-                $@"
-                    DECLARE @BatchSize INT = 1000; 
-                    DECLARE @RowsAffected INT = 1;
-                    WHILE @RowsAffected > 0
-                    BEGIN
-                        DELETE TOP (@BatchSize) {nameof(HtsContext.HtsEligibilityExtract)} WHERE {nameof(HtsEligibilityExtract.FacilityId)} in ({ids}) AND {nameof(HtsEligibilityExtract.Project)} <> 'IRDO';
-                        SET @RowsAffected = @@ROWCOUNT;
-                    END
-                ");
-            
-            
-//             ExecSql(
-//                 $@"
-//                     DELETE FROM {nameof(HtsContext.Clients)} WHERE {nameof(HtsClient.FacilityId)} in ({ids}) AND {nameof(HtsClient.Project)} <> 'IRDO';
-//                     DELETE FROM {nameof(HtsContext.ClientLinkages)} WHERE {nameof(HtsClientLinkage.FacilityId)} in ({ids}) AND {nameof(HtsClientLinkage.Project)} <> 'IRDO';
-//                     DELETE FROM {nameof(HtsContext.ClientPartners)} WHERE {nameof(HtsClientPartner.FacilityId)} in ({ids}) AND {nameof(HtsClientPartner.Project)} <> 'IRDO';
-//                      DELETE FROM {nameof(HtsContext.HtsClientTests)} WHERE {nameof(HtsClientTests.FacilityId)} in ({ids}) AND {nameof(HtsClientTests.Project)} <> 'IRDO';
-//                      DELETE FROM {nameof(HtsContext.HtsClientTracing)} WHERE {nameof(HtsClientTracing.FacilityId)} in ({ids}) AND {nameof(HtsClientTracing.Project)} <> 'IRDO';
-//                      DELETE FROM {nameof(HtsContext.HtsPartnerNotificationServices)} WHERE {nameof(HtsPartnerNotificationServices.FacilityId)} in ({ids}) AND {nameof(HtsPartnerNotificationServices.Project)} <> 'IRDO';
-//                      DELETE FROM {nameof(HtsContext.HtsPartnerTracings)} WHERE {nameof(HtsPartnerTracing.FacilityId)} in ({ids}) AND {nameof(HtsPartnerTracing.Project)} <> 'IRDO';
-//                      DELETE FROM {nameof(HtsContext.HtsTestKits)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsTestKits.Project)} <> 'IRDO';
-//                      DELETE FROM {nameof(HtsContext.HtsEligibilityExtract)} WHERE {nameof(HtsEligibilityExtract.FacilityId)} in ({ids}) AND {nameof(HtsEligibilityExtract.Project)} <> 'IRDO';
-//
-//                  "
-//                 );
+                    DELETE FROM {nameof(HtsContext.Clients)} WHERE {nameof(HtsClient.FacilityId)} in ({ids}) AND {nameof(HtsClient.Project)} <> 'IRDO';
+                    DELETE FROM {nameof(HtsContext.ClientLinkages)} WHERE {nameof(HtsClientLinkage.FacilityId)} in ({ids}) AND {nameof(HtsClientLinkage.Project)} <> 'IRDO';
+                    DELETE FROM {nameof(HtsContext.ClientPartners)} WHERE {nameof(HtsClientPartner.FacilityId)} in ({ids}) AND {nameof(HtsClientPartner.Project)} <> 'IRDO';
+                     DELETE FROM {nameof(HtsContext.HtsClientTests)} WHERE {nameof(HtsClientTests.FacilityId)} in ({ids}) AND {nameof(HtsClientTests.Project)} <> 'IRDO';
+                     DELETE FROM {nameof(HtsContext.HtsClientTracing)} WHERE {nameof(HtsClientTracing.FacilityId)} in ({ids}) AND {nameof(HtsClientTracing.Project)} <> 'IRDO';
+                     DELETE FROM {nameof(HtsContext.HtsPartnerNotificationServices)} WHERE {nameof(HtsPartnerNotificationServices.FacilityId)} in ({ids}) AND {nameof(HtsPartnerNotificationServices.Project)} <> 'IRDO';
+                     DELETE FROM {nameof(HtsContext.HtsPartnerTracings)} WHERE {nameof(HtsPartnerTracing.FacilityId)} in ({ids}) AND {nameof(HtsPartnerTracing.Project)} <> 'IRDO';
+                     DELETE FROM {nameof(HtsContext.HtsTestKits)} WHERE {nameof(HtsTestKits.FacilityId)} in ({ids}) AND {nameof(HtsTestKits.Project)} <> 'IRDO';
+                     DELETE FROM {nameof(HtsContext.HtsEligibilityExtract)} WHERE {nameof(HtsEligibilityExtract.FacilityId)} in ({ids}) AND {nameof(HtsEligibilityExtract.Project)} <> 'IRDO';
+
+                 "
+                );
 
             var mids = string.Join(',', manifests.Select(x => $"'{x.Id}'"));
             ExecSql(
