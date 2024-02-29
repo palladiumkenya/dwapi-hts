@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Dwapi.Hts.Core.Command;
 using Dwapi.Hts.Core.Interfaces.Repository;
 using Dwapi.Hts.Core.Interfaces.Service;
+using Dwapi.Hts.SharedKernel.Exceptions;
 using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace Dwapi.Hts.Controllers
@@ -19,6 +23,8 @@ namespace Dwapi.Hts.Controllers
         private readonly IManifestService _manifestService;
         private readonly IHtsService _htsService;
         private readonly IHtsClientRepository _htsClientRepository;
+        private readonly IManifestRepository _manifestRepository;
+
 
         public HtsController(IMediator mediator, IManifestRepository manifestRepository, IHtsClientRepository htsClientRepository, IManifestService manifestService, IHtsService htsService)
         {
@@ -26,6 +32,8 @@ namespace Dwapi.Hts.Controllers
             _htsClientRepository = htsClientRepository;
             _manifestService = manifestService;
             _htsService = htsService;
+            _manifestRepository = manifestRepository;
+            
         }
 
         // POST api/Hts/verify
@@ -53,6 +61,27 @@ namespace Dwapi.Hts.Controllers
         {
             if (null == manifest)
                 return BadRequest();
+
+            // check if version allowed to send
+            var version = manifest.Manifest.Cargoes.Select(x =>  x).Where(m => m.Items.Contains("HivTestingService")).FirstOrDefault().Items;
+            // var DwapiVersionSending = _manifestRepository.GetDWAPIversionSending(manifest.Manifest.SiteCode);
+            var DwapiVersionSending = Int32.Parse((JObject.Parse(version)["Version"].ToString()).Replace(".", string.Empty));
+            
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            var DwapiVersionCuttoff = Int32.Parse(config["DwapiVersionCuttoff"]);;
+            
+            var currentLatestVersion = config["currentLatestVersion"];;;
+
+            if (DwapiVersionSending < DwapiVersionCuttoff)
+            {
+                return StatusCode(500, $" ====> You're using DWAPI Version [{DwapiVersionSending}]. Older Versions of DWAPI are " +
+                                       $"not allowed to send to NDWH. UPGRADE to the latest version {currentLatestVersion} and RELOAD and SEND");
+                // throw new Exception($" ====> You're using DWAPI Version [{DwapiVersionSending}]. Older Versions of DWAPI are " +
+                //                     $"not allowed to send to NDWH. UPGRADE to the latest version 3.1.1.0 and RETRY");
+                // throw new DwapiVersionNotAllowedException(DwapiVersionSending);
+            }
 
             try
             {
